@@ -1,0 +1,331 @@
+/* 1. Estilos padrões */
+
+/* Remove marcas e espaçamentos extras da lista */
+.menu, .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 2. Estilo Geral */
+
+/* Definições para o fundo e estilo da página */
+body {
+    margin: 0;
+    padding-top: 0px; 
+    background-color: #111;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o rodapé fique no final */
+}
+
+/* 3. Menu Principal */
+
+/* Parte de cima da página */
+.menu {
+    display: flex;
+    background-color: #0A0A33;
+    padding: 10px 20px; /* Reduzi o padding para ficar mais compacto */
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed; /* Mantém o menu fixo no topo */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Estilos para os itens dentro do menu */
+.menu > li {
+    margin: 0 10px; /* Reduzi a margem */
+    position: relative;
+}
+
+/* Estilos dentro do menu */
+.menu > li > a {
+    text-decoration: none;
+    color: white;
+    padding: 8px 12px; /* Reduzi o padding para botões menores */
+    display: block;
+    transition: 0.3s;
+}
+
+/* Quando passar o mouse em cima */
+.menu > li > a:hover {
+    color: #00D4FF;
+    text-decoration: underline;
+}
+
+/* 4. Submenus */
+
+/* Esconde os submenus inicialmente */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    border-radius: 5px;
+    min-width: 120px; /* Aumentei um pouco o tamanho */
+    z-index: 1;
+}
+
+/* Mostra o submenu ao passar o mouse sobre o item */
+.menu li:hover .submenu {
+    display: block;
+}
+
+/* Estilo dos itens dentro do submenu */
+.submenu li a {
+    padding: 8px; /* Reduzi o padding */
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+/* 5. Notificações */
+
+/* Ícone do sino */
+.bell-icon {
+    position: relative;
+    font-size: 18px; /* Reduzi o tamanho do ícone */
+}
+
+/* Coloca o sino para a direita ou esquerda */
+.menu .bell-icon{
+    margin-left: auto;
+    margin-right: 40px; /* Reduzi o espaço */
+}
+
+/* Cor ao passar o mouse em cima */
+.bell-icon:hover {
+    color: #00D4FF;
+}
+
+/* Bolinha de notificação que aparece no ícone */
+.notification-bubble {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 12px; /* Reduzi o tamanho da bolinha */
+    height: 12px;
+}
+
+/* Menu de Notificações */
+.notification-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #444;
+    padding: 8px;
+    border-radius: 5px;
+    width: 180px; /* Reduzi a largura */
+    z-index: 1;
+}
+
+/* Estilos para os itens da lista de notificações */
+.notification-menu ul li {
+    padding: 6px; /* Reduzi o padding */
+    color: white;
+    border-bottom: 1px solid #666;
+}
+
+/* 6. Imagem */
+
+/* Contêiner para a imagem */
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin-top: 60px; /* Evita que a imagem fique abaixo do cabeçalho */
+    position: relative; /* Mantém a imagem fixa */
+}
+
+/* Ajuste da imagem */
+.image-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 7. Formulário */
+/* Container para o formulário */
+.form-container {
+    background-color: #fff;
+    padding: 60px 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: -250px auto 30px; /*Altura do form de baixo e de cima */
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    padding-top: 8px;
+}
+
+/* Aréa  do texto e dos quadrados*/
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    resize: vertical;
+    height: 50px;
+}
+
+/* Datas */
+.input-group {
+    display: flex;
+    gap: 30px; 
+    justify-content: start;
+}
+
+.date-field {
+    /* display: flex;  deixa o campo da data menor*/ 
+    flex-direction: column;
+    /* flex: 8; se quiser separar as datas */
+    margin-right: 50px;
+}
+
+
+/* Adicionando um estilo para os botões de adicionar */
+#addAluno, #addProfessor, #salvar, #cancelar {
+    background-color: orange;
+    color: #fff;
+    padding: 8px 12px; 
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Ao passar o mouse */
+#addAluno:hover, #addProfessor:hover {
+    background-color: green;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #f10b0b;
+}
+
+
+/* Estilo para os campos de entrada adicionados */
+.form-group input {
+    margin-bottom: 8px; /*Espaço dos quadrados*/
+}
+/* Estilo para os botões na parte de ação do formulário */
+.form-actions {
+    display: flex;           /* Alinha os itens horizontalmente */
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px;               /* Espaçamento entre os botões */
+    margin-top: 20px;        /* Adiciona um pouco de margem superior */
+}
+
+/* Estilo dos botões Salvar e Cancelar */
+#salvar, #cancelar {
+    padding: 8px 16px;  
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100px;        
+}
+
+/* Estilo do botão Salvar */
+#salvar {
+    background-color: #218838; 
+    color: white;              
+}
+
+/* Estilo do botão Cancelar */
+#cancelar {
+    background-color: #dc3545; 
+    color: white;              
+}
+
+/* Efeito ao passar o mouse sobre os botões */
+#salvar:hover {
+    background-color: #52d44e;
+}
+
+#cancelar:hover {
+    background-color: #791c1c;
+}
+
+
+
+/* 8. Rodapé */
+
+/* Rodapé sempre na parte inferior */
+footer {
+    background-color: #0A0A33;
+    color: white;
+    text-align: center;
+    padding: 1px 0;
+    font-size: 10px;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    position: fixed; /* Fixa o rodapé na parte inferior */
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Rodapé fixo */
+footer.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* ajuste para o menu em telas menores */
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu li {
+        margin: 10px 0;
+    }
+
+    .menu > li > a {
+        padding: 10px;
+    }
+
+    .submenu {
+        min-width: 100%;
+    }
+}
