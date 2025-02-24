@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Projeto</title>
+    
+    <!-- <link rel="stylesheet" href="css/Header.css"> -->
+    <!-- <link rel="stylesheet" href="css/Footer.css"> -->
+    
+</head>
+<body>
+
+    <!-- O cabeçalho será carregado aqui -->
+    <div id="header"></div>
+
+    <section class="form-container">
+        <h2>Editar Projeto</h2>
+        <form action="update_project.html" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome do Projeto:</label>
+                <input type="text" id="nome" name="nome" value="Nome Atual do Projeto">
+            </div>
+            
+            <div class="form-group">
+                <label for="descricao">Descrição:</label>
+                <textarea id="descricao" name="descricao">Descrição Atual</textarea>
+            </div>
+            
+            <button type="submit">Salvar Alterações</button>
+        </form>
+    </section>
+
+    <div id="footer"></div>
+
+    <script src="js/Header.js"></script>
+    <script src="js/Footer.js"></script>
+    <!-- <script src="js/Notification.js"></script> -->
+    
+</body>
+</html>
