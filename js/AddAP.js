@@ -3,7 +3,6 @@
 const maxAlunos = 5;
 const maxProfessores = 5;
 
-// Adicionar mais alunos com limite
 document.getElementById("addAluno").addEventListener("click", function () {
     let alunoSection = document.getElementById("alunos-section");
     let alunosAtuais = alunoSection.getElementsByClassName("form-group").length;

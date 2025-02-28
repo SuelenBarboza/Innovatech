@@ -10,44 +10,51 @@
 /* 2. Estilo Geral */
 
 /* Definições para o fundo e estilo da página */
-body {
-    margin: 0; 
+html, body {
+    margin: 0;
     padding: 0;
-    background-color: #111; 
-    font-family: 'Roboto', sans-serif; /* Fonte para a página */
+    height: 100%; 
+    width: 100%; 
+    background-image: url('../img/fundoteste.png'); /*Adicionar uma imagem 1547x867 */
+    background-color: #111;
+    background-size: cover; 
+    background-position: center; 
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden; 
 }
 
 /* 3. Menu Principal */
 
 /* Parte de cima da página */
 .menu {
-    display: flex; /* menu fica alinhado na horizontal */
+    display: flex; 
     background-color: #0A0A33; 
     padding: 15px; 
-    /* justify-content: center; Alinha o conteúdo no centro */
     align-items: center; 
+    z-index: 10; 
 }
 
 /* Estilos para os itens dentro do menu */
 .menu > li {
-    margin: 0 15px; /* Espaço entre os itens do menu */
-    position: relative; /* Para poder mexer no submenus */
+    margin: 0 15px; 
+    position: relative; 
 }
 
 /* Estilos dentro do menu */
 .menu > li > a {
-    text-decoration: none; /* Remove o sublinhado dos links */
+    text-decoration: none; 
     color: white; 
-    padding: 10px 15px; /* Espaço das seções - projeto - tarefas.... */
+    padding: 10px 15px; 
     display: block; 
-    /* font-weight: bold; Deixa o texto em negrito */
     transition: 0.3s; 
 }
 
 /* Quando passar o mouse em cima */
 .menu > li > a:hover {
-    color: #00D4FF; /* Cor  ao passar o mouse */
-    text-decoration: underline; /* Sublinha o texto ao passar o mouse */
+    color: #00D4FF; 
+    text-decoration: underline; 
 }
 
 /* 4. Submenus */
@@ -58,21 +65,21 @@ body {
     position: absolute; 
     top: 100%; 
     left: 0;
-    background-color: #444; /* Cor do fundo do submenu */
-    border-radius: 5px; /* Arredonda as bordas do submenu */
-    min-width: 100px; /* Tamanho  submenu */
+    background-color: #444; 
+    border-radius: 5px; 
+    min-width: 100px; 
     z-index: 1; 
 }
 
 /* Mostra o submenu ao passar o mouse sobre o item */
 .menu li:hover .submenu {
-    display: block; /* Exibe o submenu */
+    display: block; 
 }
 
 /* Estilo dos itens dentro do submenu */
 .submenu li a {
     padding: 10px;
-    color: rgb(253, 252, 252); /*Cor do submenu*/
+    color: rgb(253, 252, 252); 
     display: block;
     text-decoration: none;
 }
@@ -99,20 +106,20 @@ body {
 /* Bolinha de notificação que aparece no ícone */
 .notification-bubble {
     position: absolute;
-    top: 10px; /* Coloca um pouco acima do ícone */
-    right: 12px; /* Coloca um pouco à direita do ícone */
-    background-color: red; /* Cor de fundo da bolinha */
-    color: white; /* Cor do texto dentro da bolinha */
-    border-radius: 50%; /* Deixa a bolinha redonda */
-    width: 13px; /* Tamanho da bolinha */
-    height: 13px; /* Tamanho da bolinha */
+    top: 10px; 
+    right: 12px; 
+    background-color: red; 
+    color: white; 
+    border-radius: 50%; 
+    width: 13px; 
+    height: 13px; 
 }
 
 /* Menu de Notificações */
 .notification-menu {
-    display: none; /* Inicialmente escondido */
+    display: none; 
     position: absolute;
-    top: 30px; /* Distância para o menu aparecer abaixo do sino */
+    top: 30px; 
     right: 0;
     background-color: #444;
     padding: 10px;
@@ -123,7 +130,7 @@ body {
 
 /* Estilos para a lista de notificações dentro do menu */
 .notification-menu ul {
-    list-style: none; /* Remove a lista de pontos */
+    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -132,7 +139,7 @@ body {
 .notification-menu ul li {
     padding: 8px;
     color: white;
-    border-bottom: 1px solid #666; /* Borda separando os itens */
+    border-bottom: 1px solid #666; 
 }
 
 /* Estilos para os links dentro da lista de notificações */
@@ -144,12 +151,12 @@ body {
 /* Estilo para o link de notificação ao passar o mouse */
 .notification-menu ul li a:hover {
     background-color: #666;
-    color: #00D4FF; /* Cor do link quando passa o mouse */
+    color: #00D4FF; 
 }
 
 /* Estilo do item quando passar o mouse em cima */
 .notification-menu ul li:hover {
-    background-color: #555; /* Cor de fundo quando passa o mouse */
+    background-color: #555;
 }
 
 /* Animação de desaparecimento */
@@ -158,45 +165,40 @@ body {
     transform: translateY(-10px);
     transition: opacity 0.5s, transform 0.5s;
 }
+
 /* 6. Imagem */
 
-/* Estilo para a área onde a imagem é exibida */
-.image-container {
+#main-content {
     display: flex;
-    justify-content: center; /* Centraliza a imagem */
-    align-items: center; /* Alinha verticalmente */
-    height: 300px; /* Altura da área da imagem */
-    background-color: #111;
-    margin-bottom: 20px; /* Espaço abaixo da imagem */
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; 
+    width: 100%; 
 }
 
-/* Estilo para a imagem em si */
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; 
+}
+
 .image-container img {
-    max-width: 100%; /* Faz a imagem ocupar toda a largura possível */
-    height: auto; /* Mantém a proporção da imagem */
+    max-width: 100%;
+    max-height: 100%; 
+    object-fit: contain; 
 }
 
 /* 7. Rodapé */
 
-/* Estilos para o rodapé */
+/* Adiciona estilo para footer */
 footer {
     background-color: #0A0A33;
     color: white;
     text-align: center;
-    padding: 5px 0;
+    padding: 15px 0; 
     font-size: 12px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     font-family: 'Arial', sans-serif;
-}
-
-/* Rodapé fixo na parte inferior da tela */
-footer.fixed-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
+    margin-top: auto; 
 }
