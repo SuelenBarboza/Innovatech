@@ -1,4 +1,4 @@
-/* 1. Estilos padrões */
+/*  Estilos padrões */
 
 /* Remove marcas e espaçamentos extras da lista */
 .menu, .menu ul {
@@ -7,15 +7,22 @@
     margin: 0; 
 }
 
-/* 2. Estilo Geral */
+
+/* Logo */
+.logo-container img {
+    width: 55px ;
+    height: auto ;
+    max-width: 100% ;
+}
+
+/*  Estilo Geral */
 
 /* Definições para o fundo e estilo da página */
-html, body {
+body {
     margin: 0;
     padding: 0;
     height: 100%; 
     width: 100%; 
-    background-image: url('../img/fundoteste.png'); /*Adicionar uma imagem 1547x867 */
     background-color: #111;
     background-size: cover; 
     background-position: center; 
@@ -25,13 +32,13 @@ html, body {
     overflow: hidden; 
 }
 
-/* 3. Menu Principal */
+/*  Menu Principal */
 
 /* Parte de cima da página */
 .menu {
     display: flex; 
     background-color: #0A0A33; 
-    padding: 15px; 
+    padding: 10px; 
     align-items: center; 
     z-index: 10; 
 }
@@ -57,7 +64,7 @@ html, body {
     text-decoration: underline; 
 }
 
-/* 4. Submenus */
+/*  Submenus */
 
 /* Esconde os submenus inicialmente */
 .submenu {
@@ -84,7 +91,7 @@ html, body {
     text-decoration: none;
 }
 
-/* 5. Notificações */
+/*  Notificações */
 
 /* Ícone do sino */
 .bell-icon {
@@ -166,37 +173,33 @@ html, body {
     transition: opacity 0.5s, transform 0.5s;
 }
 
-/* 6. Imagem */
-
-#main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1; 
-    width: 100%; 
-}
+/*  Imagem */
 
 .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh; 
+    width: 100%; 
+    overflow: hidden;
 }
 
 .image-container img {
-    max-width: 100%;
-    max-height: 100%; 
-    object-fit: contain; 
+    width: 100%;  
+    height: 100%; 
+    object-fit: cover; 
+
 }
 
-/* 7. Rodapé */
+
+/*  Rodapé */
 
 /* Adiciona estilo para footer */
 footer {
     background-color: #0A0A33;
     color: white;
     text-align: center;
-    padding: 15px 0; 
+    padding: 5px 1px; 
     font-size: 12px;
     width: 100%;
     font-family: 'Arial', sans-serif;

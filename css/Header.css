@@ -1,115 +1,133 @@
-/* Adiciona estilo para header */
-
+/* Essa pagina é só para teste de css NÃO UTILIZAR ELA (não coloque css no header nao vai funcionar as notificações */
 /* 1. Estilos padrões */
+
+/* Remove marcas e espaçamentos extras da lista */
 .menu, .menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+}
+
+.logo-container img {
+    width: 10px !important;
+    height: auto !important;
+    max-width: 100% !important;
+    border: 2px solid red; /* Para testar se está aplicando */
 }
 
 /* 2. Estilo Geral */
-body {
+
+/* Definições para o fundo e estilo da página */
+html, body {
     margin: 0;
     padding: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    height: 100%; 
+    width: 100%; 
+    background-image: url('../img/fundoteste.png'); /*Adicionar uma imagem 1547x867 */
+    background-color: #111;
+    background-size: cover; 
+    background-position: center; 
     font-family: 'Roboto', sans-serif;
-    color: white;
-}
-
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Overlay escuro */
-    z-index: -1;
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden; 
 }
 
 /* 3. Menu Principal */
+
+/* Parte de cima da página */
 .menu {
-    display: flex;
-    background-color: #0A0A33;
-    padding: 15px;
-    align-items: center;
-    margin-bottom: 20px; /* Espaçamento entre o cabeçalho e o conteúdo */
+    display: flex; 
+    background-color: #0A0A33; 
+    padding: 15px; 
+    align-items: center; 
+    z-index: 10; 
 }
 
+/* Estilos para os itens dentro do menu */
 .menu > li {
-    margin: 0 15px;
-    position: relative;
+    margin: 0 15px; 
+    position: relative; 
 }
 
+/* Estilos dentro do menu */
 .menu > li > a {
-    text-decoration: none;
-    color: white;
-    padding: 10px 15px;
-    display: block;
-    transition: 0.3s;
+    text-decoration: none; 
+    color: white; 
+    padding: 10px 15px; 
+    display: block; 
+    transition: 0.3s; 
 }
 
+/* Quando passar o mouse em cima */
 .menu > li > a:hover {
-    color: #00D4FF;
-    text-decoration: underline;
+    color: #00D4FF; 
+    text-decoration: underline; 
 }
 
 /* 4. Submenus */
+
+/* Esconde os submenus inicialmente */
 .submenu {
     display: none;
-    position: absolute;
-    top: 100%;
+    position: absolute; 
+    top: 100%; 
     left: 0;
-    background-color: #444;
-    border-radius: 5px;
-    min-width: 100px;
-    z-index: 1;
+    background-color: #444; 
+    border-radius: 5px; 
+    min-width: 100px; 
+    z-index: 1; 
 }
 
+/* Mostra o submenu ao passar o mouse sobre o item */
 .menu li:hover .submenu {
-    display: block;
+    display: block; 
 }
 
+/* Estilo dos itens dentro do submenu */
 .submenu li a {
     padding: 10px;
-    color: white;
+    color: rgb(253, 252, 252); 
     display: block;
     text-decoration: none;
 }
 
 /* 5. Notificações */
 
-.menu .bell-icon{
-    margin-left: auto;
-}
-
+/* Ícone do sino */
 .bell-icon {
     position: relative;
     font-size: 20px;
     margin-left: auto;
 }
 
+/* Coloca o sino para a direita  */
+.menu .bell-icon{
+    margin-left: auto;
+}
+
+/* Cor ao passar o mouse em cima */
 .bell-icon:hover {
     color: #00D4FF;
 }
 
+/* Bolinha de notificação que aparece no ícone */
 .notification-bubble {
     position: absolute;
-    top: 10px;
-    right: 12px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    width: 13px;
-    height: 13px;
+    top: 10px; 
+    right: 12px; 
+    background-color: red; 
+    color: white; 
+    border-radius: 50%; 
+    width: 13px; 
+    height: 13px; 
 }
 
+/* Menu de Notificações */
 .notification-menu {
-    display: none;
+    display: none; 
     position: absolute;
-    top: 30px;
+    top: 30px; 
     right: 0;
     background-color: #444;
     padding: 10px;
@@ -118,28 +136,77 @@ body::before {
     z-index: 1;
 }
 
+/* Estilos para a lista de notificações dentro do menu */
 .notification-menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
+/* Estilos para os itens da lista de notificações */
 .notification-menu ul li {
     padding: 8px;
     color: white;
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid #666; 
 }
 
+/* Estilos para os links dentro da lista de notificações */
 .notification-menu ul li a {
     color: white;
     text-decoration: none;
 }
 
+/* Estilo para o link de notificação ao passar o mouse */
 .notification-menu ul li a:hover {
     background-color: #666;
-    color: #00D4FF;
+    color: #00D4FF; 
 }
 
+/* Estilo do item quando passar o mouse em cima */
 .notification-menu ul li:hover {
     background-color: #555;
+}
+
+/* Animação de desaparecimento */
+.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+/* 6. Imagem */
+
+#main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; 
+    width: 100%; 
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; 
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%; 
+    object-fit: contain; 
+}
+
+/* 7. Rodapé */
+
+/* Adiciona estilo para footer */
+footer {
+    background-color: #0A0A33;
+    color: white;
+    text-align: center;
+    padding: 15px 0; 
+    font-size: 12px;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    margin-top: auto; 
 }
