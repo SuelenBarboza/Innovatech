@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/Header.css">
+    <!-- Importa jQuery (necessário para o carrossel funcionar) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Importa a biblioteca Slick Carousel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <!-- Importa os estilos do Slick Carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <title>Pagina Inicial</title>
+
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo ao Academic Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre Nós</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <li><a href="login.html" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="inicio" class="banner">
+            <div class="slider">
+                <div><img src="img1.jpg" alt="Imagem 1"></div>
+                <div><img src="img2.jpg" alt="Imagem 2"></div>
+                <div><img src="img3.jpg" alt="Imagem 3"></div>
+            </div>
+            <h2>Gerencie seus projetos acadêmicos de forma eficiente</h2>
+            <p>O Academic Hub é sua plataforma para organizar e acompanhar seus projetos com facilidade.</p>
+            <button onclick="window.location.href='cadastro.html'">Cadastre-se</button>
+        </section>
+        
+        <section id="sobre">
+            <h2>Sobre Nós</h2>
+            <p>O Academic Hub foi criado para ajudar estudantes e pesquisadores a organizarem seus trabalhos acadêmicos.</p>
+        </section>
+        
+        <section id="recursos">
+            <h2>Nossos Recursos</h2>
+            <ul>
+                <li>Gerenciamento de Projetos</li>
+                <li>Colaboração em Equipe</li>
+                <li>Controle de Prazos</li>
+                <li>Armazenamento Seguro</li>
+            </ul>
+        </section>
+    </main>
+    
+    
+    
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                autoplay: true, 
+                autoplaySpeed: 3000, 
+                dots: true, 
+                arrows: false 
+            });
+        });
+    </script>
+
+</body>
+</html>

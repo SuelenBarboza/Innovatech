@@ -1,0 +1,97 @@
+/* Resetando margens e padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Definindo fontes e cores globais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    display: block; /* Alterado para block, garantindo que os elementos não sejam afetados por flexbox */
+    min-height: 100vh;
+}
+
+/* Estilização do Header */
+#header {
+    background-color: #00bcd4;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Estilização da seção sobre */
+.sobre {
+    background-color: #fff;
+    padding: 40px 20px;
+    /* Removi o flexbox para não afetar o layout */
+    margin-top: 20px; /* Apenas um pequeno espaçamento no topo */
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto; /* Centraliza o conteúdo dentro da container */
+}
+
+.titulo {
+    font-size: 2rem;
+    color: #00bcd4;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.texto {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+h2.titulo {
+    border-bottom: 2px solid #00bcd4;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Adicionando um efeito hover nos títulos */
+h2.titulo:hover {
+    color: #fff;
+    background-color: #00bcd4;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Footer */
+#footer {
+    background-color: #00bcd4;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 40px; /* Ajuste para espaçar o footer */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .titulo {
+        font-size: 1.6rem;
+    }
+
+    .texto {
+        font-size: 0.95rem;
+    }
+
+    #header, #footer {
+        font-size: 1.2rem;
+    }
+}

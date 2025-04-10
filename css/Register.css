@@ -93,7 +93,7 @@ a:hover {
 /*parte de lembrar senha */
 .lembrar-esqueci {
     display: flex;
-    justify-content: space-between; /* Um  vai para a esquerda e o outro para a direita */
+    justify-content: space-between; 
     align-items: center;
     font-size: 14px;
     margin: 10px 0;

@@ -1,17 +1,20 @@
-// Aqui é página para esconder a senha da parte de login.
-
-document.getElementById("mostrarSenha").addEventListener("click", function () {
-    let senhaInput = document.getElementById("passwordL");
-    this.classList.toggle("fa-eye-slash");
+// Função para alternar a visibilidade da senha
+function toggleSenha(inputId, iconId) {
+    let senhaInput = document.getElementById(inputId);
+    let icon = document.getElementById(iconId);
 
     if (senhaInput.type === "password") {
         senhaInput.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
     } else {
         senhaInput.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
     }
-});
+}
 
-document.querySelector("form").addEventListener("submit", function(event) {
-window.location.href = "Home.html"; 
-event.preventDefault(); 
+// Adiciona o evento ao botão do olho
+document.getElementById("mostrarSenha").addEventListener("click", function () {
+    toggleSenha("passwordL", "mostrarSenha");
 });

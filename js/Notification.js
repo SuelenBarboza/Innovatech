@@ -1,18 +1,14 @@
-// Aqui é página para a notificação funcionar
+// Carregar a notificação dinamicamente
 
 function toggleNotificationMenu() {
     const notificationMenu = document.querySelector('.notification-menu');
     const notificationBubble = document.querySelector('.notification-bubble');
-    
-    
-    const isVisible = notificationMenu.style.display === 'block';
 
-    if (isVisible) {
-        notificationMenu.style.display = 'none';
-        notificationBubble.style.display = 'none'; 
-    } else {
-        notificationMenu.style.display = 'block';
-        notificationBubble.style.display = 'block'; 
+    if (notificationMenu && notificationBubble) {
+        const isVisible = notificationMenu.style.display === 'block';
+
+        notificationMenu.style.display = isVisible ? 'none' : 'block';
+        notificationBubble.style.display = isVisible ? 'none' : 'block';
     }
 }
 
@@ -24,18 +20,26 @@ function setupNotificationEvents() {
 
     document.querySelectorAll('.notification').forEach(notification => {
         notification.addEventListener('click', function () {
-            this.classList.add('fade-out'); 
+            this.classList.add('fade-out');
             setTimeout(() => {
-                this.remove(); 
-            }, 500); 
+                this.remove();
+            }, 500);
         });
     });
-}
 
+    const notificationBubble = document.querySelector('.notification-bubble');
+    if (notificationBubble) {
+        setTimeout(() => {
+            notificationBubble.style.display = 'block';
+        }, 3000);
+    }
+}
 
 const observer = new MutationObserver((mutationsList, observer) => {
     const header = document.getElementById('header');
-    if (header && header.innerHTML.trim() !== '') {
+    const bellIcon = document.querySelector('.bell-icon');
+
+    if (header && header.innerHTML.trim() !== '' && bellIcon) {
         setupNotificationEvents();
         observer.disconnect(); 
     }
@@ -43,7 +47,13 @@ const observer = new MutationObserver((mutationsList, observer) => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-
 setTimeout(() => {
-    document.querySelector('.notification-bubble').style.display = 'block'; // Exibe a bolinha
-}, 3000);
+    const bellIcon = document.querySelector('.bell-icon');
+    if (bellIcon) {
+        console.log("Fallback: evento adicionado via setTimeout");
+        setupNotificationEvents();
+    } else {
+        console.log("Fallback: bellIcon ainda não encontrado.");
+    }
+}, 2000);
+
