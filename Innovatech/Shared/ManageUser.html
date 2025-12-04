@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerenciar Usuário</title>
+    <link rel="stylesheet" href="../Assets/css/Header.css" />
+    <link rel="stylesheet" href="../Assets/css/Footer.css" />
+    <link rel="stylesheet" href="../Assets/css/ManageUser.css" />
+</head>
+<body>
+    <div id="header"></div>
+
+    <div class="form-container">
+        <h1>Gerenciar Usuário</h1>
+
+        <form id="formManageUser">
+            <div class="form-group">
+                <label for="nomeUsuario">Nome:</label>
+                <input type="text" id="nomeUsuario" name="nomeUsuario" placeholder="Digite o nome" required />
+            </div>
+
+            <div class="form-group">
+                <label for="emailUsuario">Email:</label>
+                <input type="email" id="emailUsuario" name="emailUsuario" placeholder="Digite o email" required />
+            </div>
+
+            <div class="form-group">
+                <label for="senhaUsuario">Senha:</label>
+                <input type="password" id="senhaUsuario" name="senhaUsuario" placeholder="Digite a senha" required />
+            </div>
+
+            <div class="form-group">
+                <label for="perfilUsuario">Perfil:</label>
+                <select id="perfilUsuario" name="perfilUsuario" required>
+                    <option value="">Selecione o perfil</option>
+                    <option value="admin">Administrador</option>
+                    <option value="usuario">Usuário</option>
+                    <option value="visualizador">Visualizador</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="salvarUsuario">Salvar</button>
+                <button type="button" id="cancelarUsuario" onclick="window.location.href='ViewLista.html'">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="footer"></div>
+
+    <script src="../Assets/js/Header.js"></script>
+    <script src="../Assets/js/Footer.js"></script>
+</body>
+</html>

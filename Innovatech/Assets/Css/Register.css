@@ -1,0 +1,116 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: #111;
+}
+
+/* Estrutura principal / quadrado principal*/
+.container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Definir o tamanho do campos de entrada  */
+#passwordL, #passwordConfirm, #email, #user {
+    height: 15px; 
+    width: 440px; 
+}
+
+
+
+
+/* Área da imagem */
+.image-section {
+    flex: 1;
+    background: url('fundo_cadastro.jpg') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+/* Área do form*/
+.form-section {
+    flex: 1;
+    background: #050114;
+    color: white;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    padding: 10px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 55px;
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Botão */
+button {
+    background: #e60099;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Links */
+a {
+    color: #e60099;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Seção específica para o formulário de cadastro 
+.form-section.cadastro {
+    background: #333;
+} */
+
+/*parte de lembrar senha */
+.lembrar-esqueci {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    font-size: 14px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.lembrar-esqueci label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.lembrar-esqueci a {
+    color: white;
+    text-decoration: underline;
+}
+
+.lembrar-esqueci a:hover {
+    text-decoration: underline;
+}

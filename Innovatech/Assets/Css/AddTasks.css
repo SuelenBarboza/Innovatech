@@ -1,0 +1,115 @@
+/*  Container do Formulário  */
+.form-container {
+    background-color: #fff;
+    padding: 60px 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1;
+}
+
+
+/* Título  */
+.form-container h1 {
+    margin-bottom: 20px;
+    font-size: 32px; 
+    color: #333; 
+    text-align: center; 
+}
+
+/*  Grupos de campo  */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/*  Labels  */
+.form-group label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Campos de entrada e textarea  */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+/*  Grupo de datas lado a lado  */
+.input-group {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.date-field {
+    flex: 1;
+}
+
+/*  Ações (Salvar e Cancelar)  */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#salvar, #cancelar {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 120px;
+    transition: background-color 0.3s ease;
+}
+
+#salvar {
+    background-color: #218838;
+    color: white;
+}
+
+#salvar:hover {
+    background-color: #52d44e;
+}
+
+#cancelar {
+    background-color: #dc3545;
+    color: white;
+}
+
+#cancelar:hover {
+    background-color: #791c1c;
+}
+
+
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+
+    .form-container {
+        padding: 30px 20px;
+    }
+
+    #salvar, #cancelar {
+        width: 100%;
+    }
+}

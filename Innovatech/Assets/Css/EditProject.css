@@ -1,0 +1,136 @@
+/*  Formulário */
+.form-container {
+    background-color: #fff;
+    padding: 60px 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1;
+}
+
+html, body {
+    overflow-y: auto !important;
+    height: 100%;
+}
+/* Título do formulário */
+.form-container h1 {
+    margin-bottom: 20px;
+    font-size: 32px; 
+    color: #333; 
+    text-align: center; 
+}
+
+/* Estilo dos campos e labels */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Estilo da label */
+.form-group label {
+    font-size: 16px; 
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block; 
+}
+
+/* Área do texto e dos quadrados */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Removendo o redimensionamento da área de texto */
+textarea {
+    height: 100px; 
+    resize: none;  
+}
+
+
+/* Datas */
+.input-group {
+    display: flex;
+    gap: 30px; 
+    justify-content: start;
+}
+
+.date-field {
+    margin-right: 50px;
+}
+
+/* Botões */
+#addAluno, #addProfessor, #salvar, #cancelar {
+    background-color: orange;
+    color: #fff;
+    padding: 8px 12px; 
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#addAluno:hover, #addProfessor:hover {
+    background-color: green;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #f10b0b;
+}
+
+.form-group input {
+    margin-bottom: 8px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilo dos botões Salvar e Cancelar */
+#salvar, #cancelar {
+    padding: 8px 16px;  
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100px;        
+}
+
+#salvar {
+    background-color: #218838; 
+    color: white;              
+}
+
+#cancelar {
+    background-color: #dc3545; 
+    color: white;              
+}
+
+#salvar:hover {
+    background-color: #52d44e;
+}
+
+#cancelar:hover {
+    background-color: #791c1c;
+}
