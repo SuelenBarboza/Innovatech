@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="../Assets/css/Header.css"> 
+  <link rel="stylesheet" href="../Assets/css/Footer.css">
+  <link rel="stylesheet" href="../Assets/css/EditTasks.css">
+  <title>Editar Tarefa</title>
+
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <div class="form-container">
+    <form id="formTarefa" method="POST" action="../config/edit_tasks.php">
+      <h1>Editar Tarefa</h1>
+
+      <div class="form-group">
+        <label for="nomeTarefa">Nome da Tarefa</label>
+        <input type="text" id="nomeTarefa" name="nomeTarefa" value="">
+      </div>
+
+      <div class="form-group">
+        <label for="descricaoTarefa">Descrição</label>
+        <textarea id="descricaoTarefa" name="descricaoTarefa"></textarea>
+      </div>
+
+      <div class="input-group">
+        <div class="form-group date-field">
+          <label for="dataInicio">Data de Início</label>
+          <input type="date" id="dataInicio" name="dataInicio" value="2024-04-01">
+        </div>
+        <div class="form-group date-field">
+          <label for="dataFim">Data de Fim</label>
+          <input type="date" id="dataFim" name="dataFim" value="2024-04-10">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="aluno">Aluno</label>
+        <input type="text" id="aluno" name="aluno" value="">
+      </div>
+
+      <div class="form-group">
+        <label for="nomeProjeto">Nome do Projeto</label>
+        <input type="text" id="nomeProjeto" name="nomeProjeto" value="">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" id="salvar">Salvar</button>
+        <button type="button" id="cancelar">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="modalConfirmacao" class="modal">
+    <div class="modal-box">
+      <button class="close-button" onclick="fecharModal()">&times;</button>
+      <h2>Você tem certeza?</h2>
+      <p id="mensagemModal">Texto da confirmação</p>
+      <div class="modal-actions">
+        <button id="confirmarAcao">Sim</button>
+        <button onclick="fecharModal()">Não</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+  <script src="../Assets/js/Header.js"></script>
+  <script src="../Assets/js/Footer.js"></script>
+  <script src="../Assets/js/EditTasks.js"></script>
+
+  
+
+</body>
+</html>

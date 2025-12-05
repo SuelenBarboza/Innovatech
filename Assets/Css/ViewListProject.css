@@ -1,0 +1,276 @@
+/* img fundo */
+ body {
+    background-image: url("../Img/FundoInnova.png"); 
+    background-size: cover; /* faz a imagem cobrir toda a tela */
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+/* Geral - Fundo branco mantendo estrutura */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1e293b; /* Texto escuro original */
+  overflow-y: auto !important;
+  height: 100%;
+}
+
+h1 {
+  background-color: #f8fafc; /* Cinza muito claro */
+  color: #3b82f6; /* Azul original */
+  text-align: center;
+  padding: 1rem 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* TABELA - Estilo claro mantendo estrutura */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background-color: #3b82f6; /* Azul original */
+  color: white;
+}
+
+tr:hover {
+  background-color: #f1f5f9; /* Cinza muito claro */
+}
+
+.mensagem-central {
+  text-align: center;
+  font-weight: bold;
+  color: #64748b; /* Cinza médio */
+  padding: 20px;
+  background-color: #ffffff;
+  font-size: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* PRIORIDADE - Cores originais exatas */
+.prioridade {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  min-width: 80px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.prioridade.alta {
+  background-color: #ef4444; /* Vermelho original */
+  border: 1px solid #b91c1c; /* Borda original */
+}
+
+.prioridade.media {
+  background-color: #facc15; /* Amarelo original */
+  color: #1e293b; /* Texto escuro original */
+  border: 1px solid #eab308; /* Borda original */
+}
+
+.prioridade.baixa {
+  background-color: #22c55e; /* Verde original */
+  border: 1px solid #15803d; /* Borda original */
+}
+
+/* STATUS - Cores originais exatas */
+.status {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  min-width: 100px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status.andamento {
+  background-color: #3b82f6; /* Azul original */
+  border: 1px solid #2563eb; /* Borda original */
+}
+
+.status.concluido {
+  background-color: #10b981; /* Verde original */
+  border: 1px solid #059669; /* Borda original */
+}
+
+.status.pendente {
+  background-color: #ef4444; /* Vermelho original */
+  border: 1px solid #b91c1c; /* Borda original */
+}
+
+.status.planejamento {
+  background-color: #60a5fa; /* Azul claro original */
+  border: 1px solid #3b82f6; /* Borda original */
+}
+
+/* Link do projeto título - Original */
+a.link-projeto {
+  color: #3b82f6; /* Azul original */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.link-projeto:hover {
+  text-decoration: underline;
+}
+
+/* SELECT - Estilo original adaptado para fundo claro */
+select {
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-weight: bold;
+  border: 2px solid #cbd5e1;
+  outline: none;
+  background-color: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-size: 0.9rem;
+}
+
+select option {
+  font-weight: bold;
+  color: #1e293b;
+}
+
+select option[value="alta"] {
+  background-color: #ef4444;
+  color: white;
+}
+
+select option[value="media"] {
+  background-color: #facc15;
+  color: #1e293b;
+}
+
+select option[value="baixa"] {
+  background-color: #22c55e;
+  color: white;
+}
+
+/* BARRA DE PROGRESSO - Original adaptada */
+progress {
+  width: 80px;
+  height: 10px;
+  accent-color: #3b82f6; /* Azul original */
+}
+
+/* BOTÕES - Estilo original */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 5px;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button.salvar {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
+}
+
+button.salvar:hover {
+  background-color: #2563eb;
+}
+
+#btnToggleArquivar {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+#btnToggleArquivar:hover {
+  background-color: #2563eb;
+}
+
+/* MODAL - Original adaptado para fundo claro */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-conteudo {
+  background-color: #ffffff;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  width: 60%;
+  max-width: 500px;
+  color: #1e293b;
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+}
+
+.modal-conteudo h2 {
+  margin-top: 0;
+  color: #3b82f6;
+}
+
+.fechar {
+  color: #64748b;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fechar:hover {
+  color: #1e293b;
+}
+
+/* RESPONSIVO - Original */
+@media (max-width: 600px) {
+  .modal-conteudo {
+    width: 90%;
+    padding: 1rem;
+  }
+}

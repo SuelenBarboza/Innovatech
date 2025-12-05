@@ -1,0 +1,82 @@
+/* img fundo */
+ body {
+    background-image: url("../Img/FundoInnova.png"); 
+    background-size: cover; /* faz a imagem cobrir toda a tela */
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+/* ===== Estilo da Página de Missão, Visão e Valores ===== */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.7;
+}
+
+/* Container central */
+.sobre .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Títulos */
+.sobre .titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #004aad; /* Azul moderno, pode trocar pela cor principal do Innovatech */
+    margin-top: 40px;
+    margin-bottom: 15px;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Linha decorativa embaixo dos títulos */
+.sobre .titulo::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #00c9a7; /* Verde/água para contraste */
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+/* Texto */
+.sobre .texto {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: justify;
+    margin-bottom: 30px;
+    padding: 10px 15px;
+    background: #fff;
+    border-left: 4px solid #004aad;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease-in-out;
+}
+
+.sobre .texto:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sobre .container {
+        padding: 40px 15px;
+    }
+
+    .sobre .titulo {
+        font-size: 1.6rem;
+    }
+
+    .sobre .texto {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}

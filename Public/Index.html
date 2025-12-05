@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+    <title>Academic Hub - Plataforma Acadêmica Premium</title>
+    <style>
+
+    /* img fundo */
+    body {
+       background-image: url("../Assets/Img/FundoInnova.png"); 
+       background-size: cover; /* faz a imagem cobrir toda a tela */
+       background-position: center; 
+       background-repeat: no-repeat; 
+    }
+
+        /* Reset e configurações básicas */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0A0A33;
+            --primary-dark-hover: #070725;
+            --primary-light: #00D4FF;
+            --primary-light-hover: #00b8e0;
+            --primary-accent: #2A5EE8;
+            --text-dark: #1A1A3A;
+            --text-light: #FFFFFF;
+            --background: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-accent) 100%);
+            --gradient-light: linear-gradient(135deg, var(--primary-light) 0%, #2A5EE8 100%);
+            --shadow-sm: 0 4px 6px rgba(10, 10, 51, 0.1);
+            --shadow-md: 0 8px 15px rgba(10, 10, 51, 0.15);
+            --shadow-lg: 0 15px 30px rgba(10, 10, 51, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header - estilo premium */
+        header {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.8rem 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        header h1 {
+            font-size: 1.9rem;
+            color: var(--text-light);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        header h1 i {
+            color: var(--primary-light);
+            font-size: 2.2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a:not(.btn-login):after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--primary-light);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:not(.btn-login):hover:after {
+            width: 70%;
+        }
+
+        nav a:hover {
+            color: var(--primary-light);
+        }
+
+        .btn-login {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-login:hover {
+            background-color: var(--text-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 212, 255, 0.35);
+            color: var(--primary-dark);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1300px;
+            margin: 3rem auto;
+            padding: 0 2.5rem;
+            flex: 1;
+        }
+
+        /* Banner section */
+        .banner {
+            text-align: center;
+            margin-bottom: 4rem;
+            background: var(--card-bg);
+            padding: 3.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+
+        /* Slider - estilo premium */
+        .slider {
+            margin: 3rem auto;
+            max-width: 1100px;
+            height: 65vh;
+            min-height: 450px;
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 3px solid var(--primary-dark);
+            position: relative;
+        }
+
+        .slider div {
+            height: 65vh;
+            min-height: 450px;
+            position: relative;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .slider div:hover img {
+            transform: scale(1.05);
+        }
+
+        .slider-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2.5rem;
+            background: linear-gradient(to top, rgba(10, 10, 51, 0.85), transparent);
+            color: white;
+            text-align: left;
+        }
+
+        .slider-overlay h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .slider-overlay p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .banner h2 {
+            font-size: 2.8rem;
+            margin: 2rem 0 1.5rem;
+            color: var(--primary-dark);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .banner p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            color: #4A5568;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .banner button {
+            background: var(--gradient-primary);
+            color: var(--text-light);
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(10, 10, 51, 0.25);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 0 auto;
+        }
+
+        .banner button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: var(--gradient-light);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+
+        .banner button:hover:before {
+            width: 100%;
+        }
+
+        .banner button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(10, 10, 51, 0.35);
+        }
+
+        /* Stats section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            flex: 1;
+            min-width: 200px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(10, 10, 51, 0.08);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(10, 10, 51, 0.15);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-text {
+            color: #4A5568;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Sections comuns */
+        section {
+            background: var(--card-bg);
+            padding: 3.5rem;
+            margin-bottom: 3.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(10, 10, 51, 0.08);
+        }
+
+        section:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        section h2 {
+            color: var(--primary-dark);
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+            padding-bottom: 0.8rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        section h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: var(--primary-light);
+            border-radius: 4px;
+        }
+
+        section p {
+            color: #4A5568;
+            line-height: 1.8;
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Recursos section */
+        #recursos ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        #recursos li {
+            background-color: #F7FAFC;
+            margin: 0.5rem 0;
+            padding: 2.2rem;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid #E2E8F0;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        #recursos li i {
+            color: var(--primary-light);
+            font-size: 1.8rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background-color: rgba(10, 10, 51, 0.08);
+        }
+
+        #recursos li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 212, 255, 0.15);
+            background-color: #EDF2F7;
+            border-color: var(--primary-light);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial {
+            background: #F7FAFC;
+            padding: 2.2rem;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .testimonial:before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--primary-light);
+            opacity: 0.2;
+            position: absolute;
+            top: -1rem;
+            left: 0.8rem;
+            line-height: 1;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial .author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial .author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+
+        .testimonial .author .name {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .testimonial .author .role {
+            font-size: 0.95rem;
+            color: #718096;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 4rem 0;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 20%);
+            transform: rotate(30deg);
+        }
+
+        .newsletter h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter p {
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.15rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1.1rem 1.5rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1.05rem;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(10, 10, 51, 0.2);
+        }
+
+        .newsletter-form button {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            border: none;
+            padding: 0 2rem;
+            border-radius: 0 50px 50px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(10, 10, 51, 0.2);
+        }
+
+        .newsletter-form button:hover {
+            background: white;
+        }
+
+        /* Estilos do Slick Carousel */
+        .slick-dots {
+            bottom: 30px;
+        }
+
+        .slick-dots li button:before {
+            color: white;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .slick-dots li.slick-active button:before {
+            color: var(--primary-light);
+            opacity: 1;
+        }
+
+        /* Footer - estilo premium */
+        footer {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: 4rem 2.5rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-light);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+            transform: translateX(8px);
+        }
+
+        .footer-links a i {
+            font-size: 0.9rem;
+            color: var(--primary-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        /* Efeitos de destaque com as cores do tema */
+        .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        /* Botão de voltar ao topo */
+        .back-to-top {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(10, 10, 51, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 999;
+            font-size: 1.2rem;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 22px rgba(10, 10, 51, 0.4);
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            
+            header h1 {
+                margin-bottom: 1.2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+            }
+            
+            nav a {
+                display: block;
+                text-align: center;
+            }
+            
+            .slider {
+                height: 50vh;
+                min-height: 380px;
+            }
+            
+            .slider div {
+                height: 50vh;
+                min-height: 380px;
+            }
+            
+            .banner h2 {
+                font-size: 2.3rem;
+            }
+            
+            #recursos ul {
+                grid-template-columns: 1fr;
+            }
+            
+            main {
+                padding: 0 1.5rem;
+            }
+            
+            section {
+                padding: 2.5rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 50px;
+                margin-bottom: 1rem;
+            }
+            
+            .newsletter-form button {
+                border-radius: 50px;
+                padding: 1rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+            
+            .banner {
+                padding: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slider {
+                height: 40vh;
+                min-height: 300px;
+            }
+            
+            .slider div {
+                height: 40vh;
+                min-height: 300px;
+            }
+            
+            .banner h2 {
+                font-size: 2rem;
+            }
+            
+            .banner button {
+                padding: 1rem 2.2rem;
+                font-size: 1.1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonials {
+                grid-template-columns: 1fr;
+            }
+            
+            .slider-overlay h3 {
+                font-size: 1.5rem;
+            }
+            
+            .slider-overlay p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider {
+                height: 35vh;
+                min-height: 250px;
+            }
+            
+            .slider div {
+                height: 35vh;
+                min-height: 250px;
+            }
+            
+            .banner h2 {
+                font-size: 1.8rem;
+            }
+            
+            .banner button {
+                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 1.8rem;
+            }
+            
+            .newsletter {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animações suaves */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.7s ease-out;
+        }
+
+        .banner {
+            animation: fadeIn 0.9s ease-out;
+        }
+
+        /* Efeito de digitação no banner */
+        .typewriter {
+            overflow: hidden;
+            border-right: 0.15em solid var(--primary-light);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.05em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-light) }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-graduation-cap"></i> Academic Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre Nós</a></li>
+                <li><a href="#recursos">Recursos</a></li>
+                <li><a href="#contato">Contato</a></li>
+                <li><a href="Login.php" class="btn-login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="inicio" class="banner">
+            <div class="slider">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.1&auto=format&fit=crop&w=1350&q=80" alt="Estudantes colaborando">
+                    <div class="slider-overlay">
+                        <h3>Colaboração Acadêmica Avançada</h3>
+                        <p>Trabalhe em equipe com ferramentas especializadas para pesquisas</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.1&auto=format&fit=crop&w=1350&q=80" alt="Organização de projetos">
+                    <div class="slider-overlay">
+                        <h3>Organização Inteligente</h3>
+                        <p>Mantenha todos os seus projetos acadêmicos organizados em um só lugar</p>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.1&auto=format&fit=crop&w=1350&q=80" alt="Controle de prazos">
+                    <div class="slider-overlay">
+                        <h3>Controle de Prazos</h3>
+                        <p>Nunca mais perca um prazo importante com nosso sistema de alertas</p>
+                    </div>
+                </div>
+            </div>
+            <h2>Transforme sua <span class="highlight">produção acadêmica</span> com ferramentas profissionais</h2>
+            <p>O Academic Hub é a plataforma definitiva para pesquisadores, estudantes e instituições
+             que buscam excelência em organização, colaboração e produtividade acadêmica.</p>
+            <button onclick="window.location.href='cadastro.html'">Comece Agora <i class="fas fa-arrow-right"></i></button>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">5,000+</div>
+                    <div class="stat-text">Usuários Ativos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">12,500+</div>
+                    <div class="stat-text">Projetos Concluídos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-text">Satisfação dos Usuários</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-text">Universidades Parceiras</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sobre">
+            <h2>Sobre Nós</h2>
+            <p>O Academic Hub nasceu da necessidade de uma plataforma unificada para gerenciamento de projetos acadêmicos. Desenvolvido por uma equipe de pesquisadores e especialistas em tecnologia educacional, nosso objetivo é simplificar e potencializar o trabalho acadêmico.</p>
+            <p>Nossa missão é fornecer ferramentas poderosas mas intuitivas que permitam a estudantes, pesquisadores e instituições focarem no que realmente importa: a produção de conhecimento de qualidade.</p>
+            
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"O Academic Hub transformou completamente como nosso grupo de pesquisa organiza e colabora em projetos. A ferramenta de versionamento de documentos é incrível!"</p>
+                    <div class="author">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.1&auto=format&fit=crop&w=100&q=80" alt="Professor Silva">
+                        <div>
+                            <div class="name">Prof. Dr. Silva</div>
+                            <div class="role">Coordenador de Pesquisa - UFMG</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>"Como estudante de doutorado, esta plataforma me ajuda a manter todos os meus projetos organizados e sob controle. A integração com ferramentas de referência bibliográfica salvou minha vida!"</p>
+                    <div class="author">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.1&auto=format&fit=crop&w=100&q=80" alt="Ana Santos">
+                        <div>
+                            <div class="name">Ana Santos</div>
+                            <div class="role">Doutoranda em Biologia Molecular</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="recursos">
+            <h2>Recursos Exclusivos</h2>
+            <ul>
+                <li><i class="fas fa-tasks"></i> Gerenciamento Completo de Projetos</li>
+                <li><i class="fas fa-users"></i> Colaboração em Equipe em Tempo Real</li>
+                <li><i class="fas fa-calendar-alt"></i> Controle de Prazos Inteligente</li>
+                <li><i class="fas fa-cloud"></i> Armazenamento Seguro em Nuvem</li>
+                <li><i class="fas fa-comments"></i> Sistema de Comentários Contextual</li>
+                <li><i class="fas fa-bell"></i> Notificações Personalizadas</li>
+                <li><i class="fas fa-file-pdf"></i> Integração com Ferramentas Bibliográficas</li>
+                <li><i class="fas fa-chart-line"></i> Relatórios de Produtividade</li>
+            </ul>
+        </section>
+        
+        <div class="newsletter">
+            <h3>Junte-se à revolução acadêmica</h3>
+            <p>Inscreva-se para receber atualizações exclusivas, dicas de produtividade e ofertas especiais.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Seu e-mail acadêmico" required>
+                <button type="submit">Inscrever <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Academic Hub</h3>
+                <p>Sua plataforma completa para gerenciamento de projetos acadêmicos. Transformando a maneira como o conhecimento é produzido e compartilhado.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#inicio"><i class="fas fa-chevron-right"></i> Início</a></li>
+                    <li><a href="#sobre"><i class="fas fa-chevron-right"></i> Sobre Nós</a></li>
+                    <li><a href="#recursos"><i class="fas fa-chevron-right"></i> Recursos</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Preços</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Suporte</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contato</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Política de Privacidade</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Termos de Uso</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tutorial em Vídeo</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Rua da Inovação, 123 - Araçatuba, SP</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> (18) 98765-4321</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> contato@innovatech.com</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Seg-Sex: 9h-18h</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Innovatech. Todos os direitos reservados. Desenvolvido com <i class="fas fa-heart" style="color: var(--primary-light);"></i> para a comunidade acadêmica.</p>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+    
+    <script>
+        $(document).ready(function(){
+            // Inicializa o slider
+            $('.slider').slick({
+                autoplay: true, 
+                autoplaySpeed: 6000, 
+                dots: true, 
+                arrows: false,
+                fade: true,
+                cssEase: 'linear'
+            });
+            
+            // Header scroll effect
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 50) {
+                    $('header').addClass('scrolled');
+                } else {
+                    $('header').removeClass('scrolled');
+                }
+                
+                // Back to top button
+                if ($(this).scrollTop() > 300) {
+                    $('.back-to-top').addClass('visible');
+                } else {
+                    $('.back-to-top').removeClass('visible');
+                }
+            });
+            
+            // Smooth scrolling para links âncora
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                var target = this.hash;
+                var $target = $(target);
+                $('html, body').animate({
+                    'scrollTop': $target.offset().top - 100
+                }, 900, 'swing');
+            });
+            
+            // Back to top
+            $('.back-to-top').click(function(e) {
+                e.preventDefault();
+                $('html, body').animate({scrollTop:0}, '900', 'swing');
+            });
+            
+            // Animação de digitação no banner
+            setTimeout(function() {
+                $('.banner p').addClass('typewriter');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

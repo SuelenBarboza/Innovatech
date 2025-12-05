@@ -1,0 +1,192 @@
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border-left: 4px solid #c62828;
+}
+
+/* Ajustes na introdução */
+.intro-section {
+    text-align: left;
+    margin-bottom: 20px;
+    max-width: 80%; /* Evita que o texto fique muito largo */
+}
+
+.intro-section h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #e60099; /* Destaca o título */
+}
+
+.intro-section p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ccc; /* Deixa o texto mais suave */
+}
+
+
+
+/* Estilos geral*/
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: #050114;
+} 
+
+/*Cor link do cadastro*/
+.logcad{
+    color: #e60099;
+}
+/* Estrutura */
+.container{
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(255,255,255,0.2);
+
+}
+.dadoslogin input{
+    width: 80%;
+}
+
+
+/* Imagem*/
+.image-section{
+    justify-content: center; /* centraliza horizontal */
+    align-items: center;     /* centraliza vertical */
+    height: 300px; 
+    color: white;
+    padding: 10px;
+    
+}
+
+.img-menor {
+    width: 60%;  /* reduz a imagem para 60% da div */
+    height: auto; /* mantém proporção */
+}
+
+
+/* Area do form*/
+.form-section{
+    flex: 1;
+    background: #050114;
+    color: white;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/*Form*/
+/*quadrados*/
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 55px;
+    background-color: #050114;
+    color: white;
+}
+/*parte do botao de login*/
+button{
+    background: #e60099;
+    color: white; 
+    padding: 10px;
+    border: none;
+    cursor: pointer; 
+    border-radius: 10px; 
+    margin-top: 10px;
+}
+
+/*parte de lembrar senha */
+.lembrar-esqueci {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    font-size: 14px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.lembrar-esqueci label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.lembrar-esqueci a {
+    color: white;
+    text-decoration: underline;
+}
+
+.lembrar-esqueci a:hover {
+    text-decoration: underline;
+}
+
+
+/*parte das redes sociais*/
+.social-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+
+.link-social-media:not(:first-child) {
+    margin-left: 10px;
+}
+
+.link-social-media .item-social-media {
+    transition: background-color .5s;
+}
+
+.link-social-media:hover .item-social-media {
+    /*background-color: #e20e0e;*/
+    color: #fff; 
+    border: #078bb9;
+}
+.facebook:hover{
+    background-color: #3b5998;
+}
+.google:hover{
+    background-color: #db4a39;
+}
+.linkedin:hover{
+    background-color: #0e76a8;
+}
+.list-social-media {
+    display: flex;
+    list-style-type: none;
+}
+
+.item-social-media {
+    border: 1px solid #95a5a6;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    color: #95a5a6;
+}
+
+
+
+
