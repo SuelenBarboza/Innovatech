@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
     
     <section class="sobre">
     <div class="container">
@@ -55,9 +55,7 @@
 </section>
 
     
-    <div id="footer"></div>
-    <script src="../Assets/js/Footer.js"></script>
-    <script src="../Assets/js/Header.js"></script>
+    <?php include("../Includes/Footer.php"); ?> 
 
 </body>
 </html>

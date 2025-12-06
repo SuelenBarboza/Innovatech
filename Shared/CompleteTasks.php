@@ -26,7 +26,7 @@ if ($idTarefa) {
     <link rel="stylesheet" href="../Assets/css/CompleteTasks.css">
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Concluir Tarefa</h1>
@@ -50,14 +50,11 @@ if ($idTarefa) {
 
             <div class="form-actions">
                 <button type="submit" id="salvarTarefa">Salvar</button>
-                <button type="button" id="cancelarTarefa" onclick="window.location.href='ViewTasks.html'">Cancelar</button>
+                <button type="button" id="cancelarTarefa" onclick="window.location.href='ViewTasks.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script> 
+    <?php include("../Includes/Footer.php"); ?> 
 </body>
 </html>

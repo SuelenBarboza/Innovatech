@@ -21,9 +21,7 @@ $resultMembros = $conn->query($sqlMembros);
 
 </head>
 <body>
-    <div id="header"></div>
-
-
+     <?php include("../Includes/Header.php"); ?>
     
     <div class="form-container">
       <h1>Adicionar Nova Tarefa</h1>
@@ -73,15 +71,12 @@ $resultMembros = $conn->query($sqlMembros);
 
       <div class="form-actions">
         <button type="submit" id="salvar">Salvar</button>
-        <button type="button" id="cancelar" onclick="window.location.href='index.html'">Cancelar</button>
+        <button type="button" id="cancelar" onclick="window.location.href='../Public/Home.php'">Cancelar</button>
       </div>
 
     </form>
   </div>
 
-  <div id="footer"></div>
-
-  <script src="../Assets/js/Header.js"></script>
-  <script src="../Assets/js/Footer.js"></script>
+  <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

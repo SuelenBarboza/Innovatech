@@ -16,21 +16,19 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-  <div id="header"></div>
+  <?php include("../Includes/Header.php"); ?>
 
   <section class="form-container">
     <h2>Detalhes do Projeto</h2>
     <div id="dados-projeto">
     </div>
-    <a href="ViewListProject.html" class="btn-voltar">⬅️ Voltar para a Lista</a>
+    <a href="ViewListProject.php" class="btn-voltar">⬅️ Voltar para a Lista</a>
 
 
 </section>
 
-  <div id="footer"></div>
+   <?php include("../Includes/Footer.php"); ?>
 
-  <script src="../Includes/js/Header.js"></script>
-  <script src="../Includes/Footer.html"></script>
   <script>
     // Lista simulada de projetos
     const projetos = [

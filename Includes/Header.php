@@ -16,26 +16,28 @@
          <ul class="menu">
             <li>
                 <div class="logo-container">
-                    <img src="/Assets/Img/logo/logo.png" alt="Logo">
+                    <a href="../Public/Home.php">
+                        <img src="../Assets/Img/logo/logo.png" alt="Logo">
+                    </a>
                 </div>
               </li>
              <li>
                  <a href="#">Projetos</a>
                     <ul class="submenu">
-                        <li><a href="/Shared/RegisterProject.html">Cadastrar Projetos</a></li>
-                        <li><a href="/Shared/EditProject.html">Editar Projetos</a></li>
-                        <li><a href="/Shared/ViewListProject.html">Visualizar Lista de Projetos</a></li>
-                        <li><a href="/Shared/CompleteProject.html">Concluir Projeto</a></li>
+                        <li><a href="../Shared/RegisterProject.php">Cadastrar Projetos</a></li>
+                        <li><a href="../Shared/EditProject.php">Editar Projetos</a></li>
+                        <li><a href="../Shared/ViewListProject.php">Visualizar Lista de Projetos</a></li>
+                        <li><a href="../Shared/CompleteProject.php">Concluir Projeto</a></li>
                     </ul>
              </li>
  
              <li>
                  <a href="#">Tarefas</a>
                  <ul class="submenu">
-                     <li><a href="/Shared/AddTasks.html">Adicionar Tarefas</a></li>
-                     <li><a href="/Shared/EditTasks.html">Editar Tarefas</a></li>
-                     <li><a href="/Shared/ViewListTasks.html">Visualizar Lista de Tarefas</a></li>
-                     <li><a href="/Shared/CompleteTasks.html">Concluir Tarefas</a></li>
+                     <li><a href="../Shared/AddTasks.php">Adicionar Tarefas</a></li>
+                     <li><a href="../Shared/EditTasks.php">Editar Tarefas</a></li>
+                     <li><a href="../Shared/ViewListTasks.php">Visualizar Lista de Tarefas</a></li>
+                     <li><a href="../Shared/CompleteTasks.php">Concluir Tarefas</a></li>
 
                  </ul>
              </li>
@@ -43,11 +45,11 @@
              <li>
                  <a href="#">Colaboração</a>
                  <ul class="submenu">
-                     <li><a href="/Shared/AddMembers.html">Adicionar Membros</a></li>
-                     <li><a href="/Shared/DeleteMember.html">Excluir Membro</a></li>
-                     <li><a href="/Shared/AssignTasks.html">Atribuir Tarefas</a></li>
-                     <li><a href="/Shared/DeleteTasks.html">Excluir Tarefa</a></li>
-                     <li><a href="/Shared/Comments.html">Comentários</a></li>
+                     <li><a href="../Shared/AddMembers.php">Adicionar Membros</a></li>
+                     <li><a href="../Shared/DeleteMember.php">Excluir Membro</a></li>
+                     <li><a href="../Shared/AssignTasks.php">Atribuir Tarefas</a></li>
+                     <li><a href="../Shared/DeleteTasks.php">Excluir Tarefa</a></li>
+                     <li><a href="../Shared/Comments.php">Comentários</a></li>
                  </ul>
              </li>
  
@@ -61,20 +63,20 @@
              <li>
                  <a href="#">Relatórios</a>
                  <ul class="submenu">
-                     <li><a href="/Shared/ProgressReport.html">Relatório de Progresso</a></li>
-                     <li><a href="/Shared/PerformanceReport.html">Relatório de Desempenho</a></li>
+                     <li><a href="../Shared/ProgressReport.php">Relatório de Progresso</a></li>
+                     <li><a href="../Shared/PerformanceReport.php">Relatório de Desempenho</a></li>
                  </ul>
              </li>
  
              <li>
                  <a href="#">Configurações</a>
                  <ul class="submenu">
-                     <li><a href="/Shared/SystemSettings.html">Configurações do Sistema</a></li>
-                     <li><a href="/Shared/ManageUser.html">Gerenciar Usuários</a></li>
+                     <li><a href="../Shared/SystemSettings.php">Configurações do Sistema</a></li>
+                     <li><a href="../Shared/ManageUser.php">Gerenciar Usuários</a></li>
                  </ul>
              </li>
  
-             <li><a href="/Shared/Support.html">Suporte</a></li>
+             <li><a href="../Shared/Support.php">Suporte</a></li>
              <li><a href="#">Sair</a></li>
  
              <li class="bell-icon">

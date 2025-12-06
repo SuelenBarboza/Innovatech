@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../Assets/css/PerformanceReport.css" />
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Relatório de Desempenho</h1>
@@ -37,14 +37,11 @@
 
             <div class="form-actions">
                 <button type="submit" id="enviarRelatorioDesempenho">Enviar</button>
-                <button type="button" id="cancelarRelatorioDesempenho" onclick="window.location.href='ViewLista.html'">Cancelar</button>
+                <button type="button" id="cancelarRelatorioDesempenho" onclick="window.location.href='ViewLista.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+   <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../Assets/css/Support.css" />
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Contato de Suporte</h1>
@@ -42,9 +42,6 @@
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+    <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <section class="form-container">
         <h1>Editar Projetos</h1>
@@ -59,10 +59,7 @@
         </form>
     </section>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+    <?php include("../Includes/Footer.php"); ?>
     <script src="../Assets/js/AddAP.js"></script>
 
     

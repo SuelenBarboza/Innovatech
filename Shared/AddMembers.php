@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="../Assets/css/AddMembers.css">
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php") ?>
 
     <div class="form-container">
         <h1>Adicionar Membros ao Projeto</h1>
 
-        <form id="formMembros">
+        <form id="formMembros" method="POST" action="../config/add_members.php">
             <div class="form-group">
                 <label for="nomeProjeto">Nome do Projeto:</label>
                 <input type="text" id="nomeProjeto" name="nomeProjeto" placeholder="Digite o nome do projeto">
@@ -37,14 +37,11 @@
 
             <div class="form-actions">
                 <button type="submit" id="salvarMembro">Adicionar</button>
-                <button type="button" id="cancelarMembro" onclick="window.location.href='ViewLista.html'">Cancelar</button>
+                <button type="button" id="cancelarMembro" onclick="window.location.href='ViewLista.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+    <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

@@ -19,7 +19,7 @@ $resultMembros = $conn->query($sqlMembros);
     <link rel="stylesheet" href="../Assets/css/AssignTasks.css" />
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Atribuir Tarefa ao Membro</h1>
@@ -54,14 +54,11 @@ $resultMembros = $conn->query($sqlMembros);
 
             <div class="form-actions">
                 <button type="submit" id="atribuirTarefa">Atribuir</button>
-                <button type="button" id="cancelarTarefa" onclick="window.location.href='ViewLista.html'">Cancelar</button>
+                <button type="button" id="cancelarTarefa" onclick="window.location.href='ViewLista.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+    <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

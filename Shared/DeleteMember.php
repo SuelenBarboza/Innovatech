@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../Assets/css/DeleteMember.css">
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Excluir Membro do Projeto</h1>
@@ -27,14 +27,11 @@
 
             <div class="form-actions">
                 <button type="submit" id="excluirMembro">Excluir</button>
-                <button type="button" id="cancelarMembro" onclick="window.location.href='../Public/Home.html'">Cancelar</button>
+                <button type="button" id="cancelarMembro" onclick="window.location.href='../Public/Home.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+    <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

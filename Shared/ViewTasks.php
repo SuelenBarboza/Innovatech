@@ -16,20 +16,18 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-  <div id="header"></div>
+  <?php include("../Includes/Header.php"); ?>
 
   <section class="form-container">
     <h2>Detalhes da Tarefa</h2>
     <div id="dados-tarefa">
       <!-- Conteúdo inserido via JavaScript -->
     </div>
-    <a href="ViewListTasks.html" class="btn-voltar">⬅️ Voltar para a Lista de Tarefas</a>
+    <a href="ViewListTasks.php" class="btn-voltar">⬅️ Voltar para a Lista de Tarefas</a>
   </section>
 
-  <div id="footer"></div>
+  <?php include("../Includes/Footer.php"); ?>
 
-  <script src="../Includes/js/Header.js"></script>
-  <script src="../Includes/js/Footer.js"></script>
   <script>
     const tarefas = [
       {

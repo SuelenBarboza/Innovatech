@@ -28,7 +28,7 @@ if ($idProjeto) {
     <link rel="stylesheet" href="../Assets/css/CompleteProject.css"> 
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Concluir Projeto</h1>
@@ -53,14 +53,11 @@ if ($idProjeto) {
 
             <div class="form-actions">
                 <button type="submit" id="salvar">Salvar</button>
-                <button type="button" id="cancelar" onclick="window.location.href='viewlista.html'">Cancelar</button>
+                <button type="button" id="cancelar" onclick="window.location.href='viewlista.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+    <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

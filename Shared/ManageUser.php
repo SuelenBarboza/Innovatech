@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../Assets/css/ManageUser.css" />
 </head>
 <body>
-    <div id="header"></div>
+    <?php include("../Includes/Header.php"); ?>
 
     <div class="form-container">
         <h1>Gerenciar Usuário</h1>
@@ -42,14 +42,11 @@
 
             <div class="form-actions">
                 <button type="submit" id="salvarUsuario">Salvar</button>
-                <button type="button" id="cancelarUsuario" onclick="window.location.href='ViewLista.html'">Cancelar</button>
+                <button type="button" id="cancelarUsuario" onclick="window.location.href='ViewLista.php'">Cancelar</button>
             </div>
         </form>
     </div>
 
-    <div id="footer"></div>
-
-    <script src="../Assets/js/Header.js"></script>
-    <script src="../Assets/js/Footer.js"></script>
+     <?php include("../Includes/Footer.php"); ?>
 </body>
 </html>

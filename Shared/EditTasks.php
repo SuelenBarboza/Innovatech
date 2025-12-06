@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <div id="header"></div>
+  <?php include("../Includes/Header.php"); ?>
 
   <div class="form-container">
     <form id="formTarefa" method="POST" action="../config/edit_tasks.php">
@@ -67,10 +67,7 @@
     </div>
   </div>
 
-  <div id="footer"></div>
-
-  <script src="../Assets/js/Header.js"></script>
-  <script src="../Assets/js/Footer.js"></script>
+   <?php include("../Includes/Footer.php"); ?>
   <script src="../Assets/js/EditTasks.js"></script>
 
   

@@ -17,7 +17,7 @@ $result = $conn->query($sql);
 </head>
 <body>
 
-  <div id="header"></div>
+   <?php include("../Includes/Header.php"); ?>
 
   <h1>Lista de Projetos</h1>
 
@@ -120,11 +120,10 @@ $result = $conn->query($sql);
     </div>
   </div>
 
-  <div id="footer"></div>
+  <?php include("../Includes/Footer.php"); ?>
 
   <script src="../Assets/js/ViewListProject.js"></script>
-  <script src="../Assets/js/Header.js"></script>
-  <script src="../Assets/js/Footer.js"></script>
+  
 
 </body>
 </html>

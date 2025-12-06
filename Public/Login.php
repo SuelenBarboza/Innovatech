@@ -38,7 +38,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="/Public/Home.html" method="POST">
+            <form action="Home.php" method="POST">
                 <div class="dadoslogin">
                     <label for="email">E-mail</label>
                     <div>
