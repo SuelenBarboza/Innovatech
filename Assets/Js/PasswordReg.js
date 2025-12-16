@@ -16,9 +16,9 @@ function toggleSenha(inputId, iconId) {
 }
 
 document.getElementById("mostrarSenha").addEventListener("click", function () {
-    toggleSenha("passwordL", "mostrarSenha");
+    toggleSenha("password", "mostrarSenha"); // Corrigido
 });
 
 document.getElementById("mostrarConfirmarSenha").addEventListener("click", function () {
-    toggleSenha("passwordConfirm", "mostrarConfirmarSenha");
+    toggleSenha("confirmPassword", "mostrarConfirmarSenha"); // Corrigido
 });

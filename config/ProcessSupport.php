@@ -1,5 +1,5 @@
 <?php
-include("conexao.php"); 
+include("../Config/db.php"); 
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $nome = $_POST['nomeUsuario'];

@@ -1,13 +1,15 @@
 <?php
-include("../config/conexao.php");
+include("../Config/db.php");
+
 
 $sqlProjetos = "SELECT id, nome FROM projetos";
 $resultProjetos = $conn->query($sqlProjetos);
 
 
-$sqlMembros = "SELECT id, nome FROM membros";
+$sqlMembros = "SELECT id, nome FROM usuarios";
 $resultMembros = $conn->query($sqlMembros);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">

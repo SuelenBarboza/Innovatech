@@ -1,10 +1,13 @@
 <?php
-include("../config/conexao.php");
+session_start();
+include("../Config/db.php");
 
+// Puxa todos os projetos
 $sqlProjetos = "SELECT id, nome FROM projetos";
 $resultProjetos = $conn->query($sqlProjetos);
 
-$sqlMembros = "SELECT id, nome FROM membros";
+// Puxa todos os usuários (membros)
+$sqlMembros = "SELECT id, nome FROM usuarios";
 $resultMembros = $conn->query($sqlMembros);
 ?>
 
@@ -24,34 +27,36 @@ $resultMembros = $conn->query($sqlMembros);
     <div class="form-container">
         <h1>Atribuir Tarefa ao Membro</h1>
 
-        <form id="formAtribuirTarefa">
+        <form action="../Config/process_assign_task.php" method="POST">
+            <!-- Projeto -->
             <div class="form-group">
                <label for="projeto_id">Nome do Projeto:</label>
                  <select id="projeto_id" name="projeto_id" required>
                    <option value="">Selecione</option>
-                     <?php while($p = $resultProjetos->fetch_assoc()) { ?>
-                   <option value="<?= $p['id'] ?>"><?= $p['nome'] ?></option>
-                     <?php } ?>
+                   <?php while($p = $resultProjetos->fetch_assoc()) { ?>
+                       <option value="<?= $p['id'] ?>"><?= htmlspecialchars($p['nome']) ?></option>
+                   <?php } ?>
                  </select>
             </div>
 
+            <!-- Membro -->
             <div class="form-group">
                <label for="membro_id">Nome do Membro:</label>
                  <select id="membro_id" name="membro_id" required>
                    <option value="">Selecione</option>
-                     <?php while($m = $resultMembros->fetch_assoc()) { ?>
-                   <option value="<?= $m['id'] ?>"><?= $m['nome'] ?></option>
-                     <?php } ?>
+                   <?php while($m = $resultMembros->fetch_assoc()) { ?>
+                       <option value="<?= $m['id'] ?>"><?= htmlspecialchars($m['nome']) ?></option>
+                   <?php } ?>
                  </select>
             </div>
 
-<div class="form-group">
-    <label for="descricaoTarefa">Descrição da Tarefa:</label>
-    <textarea id="descricaoTarefa" name="descricaoTarefa" placeholder="Descreva a tarefa" required></textarea>
-</div>
+            <!-- Descrição da Tarefa -->
+            <div class="form-group">
+                <label for="descricaoTarefa">Descrição da Tarefa:</label>
+                <textarea id="descricaoTarefa" name="descricaoTarefa" placeholder="Descreva a tarefa" required></textarea>
+            </div>
 
-            
-
+            <!-- Ações -->
             <div class="form-actions">
                 <button type="submit" id="atribuirTarefa">Atribuir</button>
                 <button type="button" id="cancelarTarefa" onclick="window.location.href='ViewLista.php'">Cancelar</button>

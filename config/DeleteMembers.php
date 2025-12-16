@@ -1,5 +1,5 @@
 <?php
-include("../config/conexao.php");
+include("../Config/db.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $nomeProjeto = $_POST['nomeProjeto'];

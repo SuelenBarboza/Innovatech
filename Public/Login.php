@@ -18,7 +18,7 @@
 
         <main class="form-section">
             <h2>Entrar</h2>
-            <p>Se você não tem uma conta <a class="logcad" href="Re‌gister.html">Cadastre-se aqui</a></p>
+            <p>Se você não tem uma conta <a class="logcad" href="Register.php">Cadastre-se aqui</a></p>
 
              <!-- Exibir mensagens de erro/sucesso -->
             <?php if (isset($_GET['error'])): ?>

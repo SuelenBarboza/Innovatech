@@ -1,5 +1,5 @@
 <?php
-include("../config/conexao.php");
+include("../Config/db.php");
 
 $nome = $_POST['nome'];
 $email = $_POST['email'];

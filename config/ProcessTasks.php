@@ -1,5 +1,5 @@
 <?php
-include("../config/conexao.php");
+include("../Config/db.php");
 
 $projeto_id   = $_POST['projeto'];      
 $nome         = $_POST['nome_tarefa']; 

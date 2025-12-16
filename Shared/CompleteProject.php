@@ -1,5 +1,5 @@
 <?php
-include("../Config/Conexao.php"); 
+include("../Config/db.php"); 
 
 
 $idProjeto = $_GET['id'] ?? null;

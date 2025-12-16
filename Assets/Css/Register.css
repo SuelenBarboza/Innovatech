@@ -20,11 +20,7 @@ body {
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Definir o tamanho do campos de entrada  */
-#passwordL, #passwordConfirm, #email, #user {
-    height: 15px; 
-    width: 440px; 
-}
+
 
 
 /* Imagem*/
@@ -60,13 +56,18 @@ form {
 }
 
 input {
-    padding: 10px;
-    margin: 15px 0;
+    width: 100%;
+    max-width: 380px;   
+    height: 28px;       
+    padding: 0 18px;   
+    margin: 12px 0;
     border: none;
     border-radius: 55px;
-    background-color:#050114;
+    background-color: #050114;
     color: white;
+    box-sizing: border-box;
 }
+
 
 /* Botão */
 button {
@@ -89,10 +90,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Seção específica para o formulário de cadastro 
-.form-section.cadastro {
-    background: #333;
-} */
 
 /*parte de lembrar senha */
 .lembrar-esqueci {
@@ -118,3 +115,39 @@ a:hover {
 .lembrar-esqueci a:hover {
     text-decoration: underline;
 }
+
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.input-container i.fa-eye {
+    position: absolute;
+    right: 15px; /* distância do lado direito */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #ccc;
+    z-index: 2;
+}
+
+
+
+.input-container i.fa-eye:hover {
+    color: #e60099;
+}
+.input-container input[type="password"] {
+    width: 100%;
+    max-width: 380px; /* ou 400px se quiser maior */
+    height: 45px;      /* aumentar altura para caber o ícone melhor */
+    padding-left: 45px;  /* espaço para o ícone da esquerda (usuário/email) */
+    padding-right: 45px; /* espaço para o ícone do olho */
+    border-radius: 55px;
+    background-color: #050114;
+    color: white;
+    border: none;
+    box-sizing: border-box;
+}
+
+

@@ -72,7 +72,7 @@
                  <a href="#">Configurações</a>
                  <ul class="submenu">
                      <li><a href="../Shared/SystemSettings.php">Configurações do Sistema</a></li>
-                     <li><a href="../Shared/ManageUser.php">Gerenciar Usuários</a></li>
+                     <li><a href="../Users/Admin/ValidateUser.php">Gerenciar Usuários</a></li>
                  </ul>
              </li>
  

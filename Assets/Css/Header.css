@@ -189,3 +189,7 @@ header {
         justify-content: space-around;
     }
 }
+/* Para aparecer o sino só tirar essa parte */
+.bell-icon {
+    display: none !important;
+}

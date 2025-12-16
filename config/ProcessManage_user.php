@@ -1,5 +1,5 @@
 <?php
-include("conexao.php");
+include("db.php");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $nome = $_POST['nomeUsuario'];
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $stmt->bind_param("ssss", $nome, $email, $senha, $perfil);
 
     if ($stmt->execute()) {
-        header("Location: ../ViewLista.html?msg=sucesso");
+        header("Location: ../ViewList.html?msg=sucesso");
     } else {
         echo "Erro: " . $conn->error;
     }

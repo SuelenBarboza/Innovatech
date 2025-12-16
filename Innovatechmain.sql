@@ -3,19 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09/09/2025 às 03:43
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
--- Banco de dados: `Innovatechmain`
-CREATE DATABASE IF NOT EXISTS Innovatechmain 
-DEFAULT CHARACTER SET utf8mb4 
-COLLATE utf8mb4_general_ci;
-
-USE Innovatechmain;
+-- Tempo de geração: 16/12/2025 às 06:13
+-- Versão do servidor: 10.4.28-MariaDB
+-- Versão do PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,7 +18,7 @@ START TRANSACTION;
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `Innovatechmain`
+-- Banco de dados: `innovatechmain`
 --
 
 -- --------------------------------------------------------
@@ -188,7 +183,7 @@ CREATE TABLE `usuarios` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(255) NOT NULL,
-  `tipo_solicitado` enum('Aluno','Professor','Coordenador') DEFAULT 'Aluno',
+  `tipo_solicitado` enum('Aluno','Professor','Coordenador','Admin') DEFAULT 'Aluno',
   `aprovado` tinyint(1) DEFAULT 0,
   `ativo` tinyint(1) DEFAULT 1,
   `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
@@ -199,7 +194,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo_solicitado`, `aprovado`, `ativo`, `criado_em`) VALUES
-(1, 'Suelen', 'suelen@admin.com.br', 'f83b5f702bf500112c352454df3868f250d6b43c55a61eec08fd41f4baec6055', 'Coordenador', 1, 1, '2025-09-09 01:34:19');
+(1, 'Suelen', 'suelen@admin.com.br', 'f83b5f702bf500112c352454df3868f250d6b43c55a61eec08fd41f4baec6055', 'Coordenador', 1, 1, '2025-09-09 04:34:19'),
+(2, 'admin1', 'admin1@admin.com', '$2y$10$u6LN07HsKNRCxaRLB9q.c.CbIjiynjTa4y5m4Oeu5mfp4Rtptz/CG', 'Admin', 0, 1, '2025-12-16 04:25:32'),
+(3, 'teste', 'teste@admin.com.br', '$2y$10$hg4RXTtj6gwic.xpvOzA/.rP4vmOlqE0evc4Iq/ovN.YVz0b5MnhW', 'Admin', 0, 1, '2025-12-16 04:32:13');
 
 -- --------------------------------------------------------
 
@@ -370,7 +367,7 @@ ALTER TABLE `tarefas`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios_roles`
