@@ -1,3 +1,12 @@
+<?php
+if (isset($_GET['error'])) {
+    $error = $_GET['error'];
+    // Remove o parâmetro da URL
+    echo "<script>window.history.replaceState({}, document.title, window.location.pathname);</script>";
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -38,7 +47,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="Home.php" method="POST">
+            <form action="../Config/ProcessLogin.php" method="POST">
                 <div class="dadoslogin">
                     <label for="email">E-mail</label>
                     <div>

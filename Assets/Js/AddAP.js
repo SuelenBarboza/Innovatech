@@ -3,21 +3,31 @@
 const maxAlunos = 5;
 const maxProfessores = 5;
 
+// ================== ALUNOS ==================
 document.getElementById("addAluno").addEventListener("click", function () {
-    let alunoSection = document.getElementById("alunos-section");
-    let alunosAtuais = alunoSection.getElementsByClassName("form-group").length;
+    const alunoSection = document.getElementById("alunos-section");
+
+    const alunosAtuais = alunoSection.querySelectorAll(".aluno-input").length;
 
     if (alunosAtuais < maxAlunos) {
-        let newAlunoField = document.createElement("div");
-        newAlunoField.classList.add("form-group");
+        const newAlunoField = document.createElement("div");
+        newAlunoField.classList.add("form-group", "autocomplete");
+
         newAlunoField.innerHTML = `
-            <label for="aluno">Aluno</label>
-            <input type="text" name="aluno[]" required>
+            <label>Aluno</label>
+            <input 
+                type="text" 
+                name="aluno[]" 
+                class="autocomplete-input aluno-input"
+                autocomplete="off"
+                required
+            >
+            <div class="suggestions"></div>
             <button type="button" class="btn removeAluno">Remover Aluno</button>
         `;
+
         alunoSection.appendChild(newAlunoField);
 
-        // Adicionar funcionalidade para remover o aluno
         newAlunoField.querySelector(".removeAluno").addEventListener("click", function () {
             alunoSection.removeChild(newAlunoField);
         });
@@ -26,22 +36,31 @@ document.getElementById("addAluno").addEventListener("click", function () {
     }
 });
 
-// Adicionar mais professores com limite
+// ================== PROFESSORES ==================
 document.getElementById("addProfessor").addEventListener("click", function () {
-    let professorSection = document.getElementById("professores-section");
-    let professoresAtuais = professorSection.getElementsByClassName("form-group").length;
+    const professorSection = document.getElementById("professores-section");
+
+    const professoresAtuais = professorSection.querySelectorAll(".professor-input").length;
 
     if (professoresAtuais < maxProfessores) {
-        let newProfessorField = document.createElement("div");
-        newProfessorField.classList.add("form-group");
+        const newProfessorField = document.createElement("div");
+        newProfessorField.classList.add("form-group", "autocomplete");
+
         newProfessorField.innerHTML = `
-            <label for="professor">Professor</label>
-            <input type="text" name="professor[]" required>
+            <label>Professor</label>
+            <input 
+                type="text" 
+                name="professor[]" 
+                class="autocomplete-input professor-input"
+                autocomplete="off"
+                required
+            >
+            <div class="suggestions"></div>
             <button type="button" class="btn removeProfessor">Remover Professor</button>
         `;
+
         professorSection.appendChild(newProfessorField);
 
-        // Adicionar funcionalidade para remover o professor
         newProfessorField.querySelector(".removeProfessor").addEventListener("click", function () {
             professorSection.removeChild(newProfessorField);
         });

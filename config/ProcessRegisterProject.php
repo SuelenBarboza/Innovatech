@@ -1,47 +1,81 @@
 <?php
-include("../Config/db.php"); 
+session_start();
+include("../Config/db.php");
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $nome = $_POST['nome'];
-    $descricao = $_POST['descricao'];
-    $data_inicio = $_POST['data_inicio'];
-    $data_fim = $_POST['data_fim'];
-    $alunos = $_POST['aluno']; 
-    $professores = $_POST['professor']; 
+// 1️⃣ Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    die("Usuário não autenticado.");
+}
+$criador_id = $_SESSION['usuario_id'];
 
+// 2️⃣ Verifica se é POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: ../ViewListProject.php");
+    exit;
+}
 
-    $sql = "INSERT INTO projetos (nome, descricao, data_inicio, data_fim) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $nome, $descricao, $data_inicio, $data_fim);
+// 3️⃣ Recebe dados do formulário
+$nome        = trim($_POST['nome'] ?? '');
+$descricao   = trim($_POST['descricao'] ?? '');
+$data_inicio = $_POST['data_inicio'] ?? null;
+$data_fim    = $_POST['data_fim'] ?? null;
 
-    if ($stmt->execute()) {
-        $projeto_id = $conn->insert_id; 
+$alunos      = $_POST['aluno'] ?? [];
+$professores = $_POST['professor'] ?? [];
 
-        
-        foreach($alunos as $aluno) {
-            $sqlAluno = "INSERT INTO projeto_aluno (projeto_id, nome_aluno) VALUES (?, ?)";
-            $stmtAluno = $conn->prepare($sqlAluno);
-            $stmtAluno->bind_param("is", $projeto_id, $aluno);
-            $stmtAluno->execute();
-            $stmtAluno->close();
+// 4️⃣ Inicia transação
+$conn->begin_transaction();
+
+try {
+    // 5️⃣ INSERE PROJETO com prioridade NULL
+    $sqlProjeto = "INSERT INTO projetos (nome, descricao, data_inicio, data_fim, criador_id, prioridade)
+                   VALUES (?, ?, ?, ?, ?, NULL)";
+    $stmtProjeto = $conn->prepare($sqlProjeto);
+    $stmtProjeto->bind_param("ssssi", $nome, $descricao, $data_inicio, $data_fim, $criador_id);
+    $stmtProjeto->execute();
+
+    $projeto_id = $stmtProjeto->insert_id;
+    $stmtProjeto->close();
+
+    // 6️⃣ VINCULA ALUNOS
+    if (!empty($alunos)) {
+        $sqlAluno = "INSERT INTO projeto_aluno (projeto_id, usuario_id) VALUES (?, ?)";
+        $stmtAluno = $conn->prepare($sqlAluno);
+
+        foreach ($alunos as $aluno_id) {
+            $aluno_id = (int)$aluno_id; // garante que seja inteiro
+            if ($aluno_id > 0) {
+                $stmtAluno->bind_param("ii", $projeto_id, $aluno_id);
+                $stmtAluno->execute();
+            }
         }
-
-    
-        foreach($professores as $prof) {
-            $sqlProf = "INSERT INTO projeto_professor (projeto_id, nome_professor) VALUES (?, ?)";
-            $stmtProf = $conn->prepare($sqlProf);
-            $stmtProf->bind_param("is", $projeto_id, $prof);
-            $stmtProf->execute();
-            $stmtProf->close();
-        }
-
-        header("Location: ../ViewListProject.php?msg=sucesso");
-        exit();
-    } else {
-        echo "Erro ao salvar o projeto: " . $conn->error;
+        $stmtAluno->close();
     }
 
-    $stmt->close();
-    $conn->close();
+    // 7️⃣ VINCULA PROFESSORES
+    if (!empty($professores)) {
+        $sqlProf = "INSERT INTO projeto_orientador (projeto_id, professor_id) VALUES (?, ?)";
+        $stmtProf = $conn->prepare($sqlProf);
+
+        foreach ($professores as $prof_id) {
+            $prof_id = (int)$prof_id; // garante que seja inteiro
+            if ($prof_id > 0) {
+                $stmtProf->bind_param("ii", $projeto_id, $prof_id);
+                $stmtProf->execute();
+            }
+        }
+        $stmtProf->close();
+    }
+
+    // 8️⃣ COMMIT
+    $conn->commit();
+    header("Location: ../Shared/ViewListProject.php?msg=sucesso");
+    exit;
+
+} catch (Exception $e) {
+    $conn->rollback();
+    echo "Erro ao salvar projeto: " . $e->getMessage();
 }
+
+$conn->close();
 ?>

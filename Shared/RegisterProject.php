@@ -1,66 +1,103 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Assets/css/Header.css"> 
+
+    <link rel="stylesheet" href="../Assets/css/Header.css">
     <link rel="stylesheet" href="../Assets/css/Footer.css">
-    <link rel="stylesheet" href="../Assets/css/RegisterProject.css">     
-    <title>Registro de Projeto</title>
-    
+    <link rel="stylesheet" href="../Assets/css/RegisterProject.css">
+
+    <title>Cadastro de Projeto</title>
 </head>
 <body>
-    <?php include("../Includes/Header.php"); ?>
-    
-    <section class="form-container">
-        <h2>Cadastro de Projetos</h2>
-        <form action="../config/process_register_project.php" method="POST">
-            <div class="form-group">
-                <label for="nome">Nome do Projeto:</label>
-                <input type="text" id="nome" name="nome" required>
+
+<?php include("../Includes/Header.php"); ?>
+
+<section class="form-container">
+    <h2>Cadastro de Projetos</h2>
+
+    <form action="../Config/ProcessRegisterProject.php" method="POST">
+
+        <!-- Nome -->
+        <div class="form-group">
+            <label>Nome do Projeto</label>
+            <input type="text" name="nome" required>
+        </div>
+
+        <!-- Descrição -->
+        <div class="form-group">
+            <label>Descrição</label>
+            <textarea name="descricao" required></textarea>
+        </div>
+
+        <!-- Datas -->
+        <div class="form-group input-group">
+            <div class="date-field">
+                <label>Data de Início</label>
+                <input type="date" name="data_inicio" required>
             </div>
-    
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <textarea id="descricao" name="descricao" required></textarea>
+
+            <div class="date-field">
+                <label>Data de Conclusão</label>
+                <input type="date" name="data_fim" required>
             </div>
-            
-            <div class="form-group input-group">
-                <div class="date-field">
-                    <label for="data_inicio">Data de Início:</label>
-                    <input type="date" id="data_inicio" name="data_inicio" required>
+        </div>
+
+        <!-- ALUNOS -->
+        <div id="alunos-section">
+            <label>Alunos</label>
+
+            <div class="form-group autocomplete">
+                <div class="autocomplete-wrapper">
+                    <input type="text"
+                           name="aluno[]"
+                           class="autocomplete-input aluno-input"
+                           autocomplete="off"
+                           required>
+                    <div class="suggestions"></div>
                 </div>
-                
-                <div class="date-field">
-                    <label for="data_fim">Data de Conclusão:</label>
-                    <input type="date" id="data_fim" name="data_fim" required>
+            </div>
+
+            <button type="button" id="addAluno">Adicionar Aluno</button>
+        </div>
+
+        <!-- PROFESSORES -->
+        <div id="professores-section">
+            <label>Professores</label>
+
+            <div class="form-group autocomplete">
+                <div class="autocomplete-wrapper">
+                    <input type="text"
+                           name="professor[]"
+                           class="autocomplete-input professor-input"
+                           autocomplete="off"
+                           required>
+                    <div class="suggestions"></div>
                 </div>
             </div>
-            
-            
-            <div class="form-group" id="alunos-section">
-                <label for="aluno">Aluno</label>
-                <input type="text" name="aluno[]" required>
-                <button type="button" id="addAluno">Adicionar Aluno</button>
-            </div>
-            
-            
-            <div class="form-group" id="professores-section">
-                <label for="professor">Professor</label>
-                <input type="text" name="professor[]" required>
-                <button type="button" id="addProfessor">Adicionar Professor</button>
-            </div>
-            
-            <div class="form-actions" id="professores-section">
-                <button type="submit" id="salvar">Salvar</button>
-                <button type="button" id="cancelar">Cancelar</button>
-            </div>
-        </form>
-    </section>
-    
-    <?php include("../Includes/Footer.php"); ?>
-    <!-- <script src="../Assets/js/AddAP.js"></script> -->
+
+            <button type="button" id="addProfessor">Adicionar Professor</button>
+        </div>
+
+        <!-- BOTÕES -->
+        <div class="form-actions">
+            <button type="submit" id="salvar">Salvar</button>
+            <button type="button" id="cancelar" onclick="history.back()">Cancelar</button>
+        </div>
+
+    </form>
+</section>
+
+<?php include("../Includes/Footer.php"); ?>
+
+<script src="../Assets/js/AddAP.js"></script>
+<script src="../Assets/js/AutoComplete.js"></script>
+
 </body>
 </html>

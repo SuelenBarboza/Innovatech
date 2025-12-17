@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db.php';
+include 'db.php'; // seu arquivo atual que cria $conn
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../Public/Login.php");
@@ -10,25 +10,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $email = trim($_POST['email']);
 $senha = $_POST['password'];
 
-$database = new Database();
-$db = $database->getConnection();
-
 // Buscar usuário
 $sql = "SELECT id, nome, email, senha, tipo_solicitado, aprovado, ativo
         FROM usuarios
-        WHERE email = :email
-        LIMIT 1";
+        WHERE email = ? LIMIT 1";
 
-$stmt = $db->prepare($sql);
-$stmt->bindParam(':email', $email);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
 $stmt->execute();
+$result = $stmt->get_result();
 
-if ($stmt->rowCount() !== 1) {
+if ($result->num_rows !== 1) {
     header("Location: ../Public/Login.php?error=invalid_credentials");
     exit;
 }
 
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$user = $result->fetch_assoc();
 
 // Conta inativa
 if ($user['ativo'] != 1) {
@@ -49,23 +46,21 @@ if (!password_verify($senha, $user['senha'])) {
 }
 
 // LOGIN OK
-$_SESSION['user_id']    = $user['id'];
-$_SESSION['user_name']  = $user['nome'];
-$_SESSION['user_email'] = $user['email'];
-$_SESSION['user_tipo']  = $user['tipo_solicitado'];
+$_SESSION['usuario_id']    = $user['id'];
+$_SESSION['usuario_nome']  = $user['nome'];
+$_SESSION['usuario_email'] = $user['email'];
+$_SESSION['usuario_tipo']  = $user['tipo_solicitado'];
 
-// Redirecionamento por perfil
-switch ($user['tipo_solicitado']) {
+// Redirecionamento
+switch (strtolower($user['tipo_solicitado'])) {
     case 'admin':
-        header("Location: ../Users/Admin/dashboard.php");
+        header("Location: ../Public/Home.php");
         break;
-
-    case 'coordinator':
-        header("Location: ../Users/Coordinator/dashboard.php");
+    case 'coordenador':
+        header("Location: ../Public/Home.php");
         break;
-
     default:
         header("Location: ../Public/Home.php");
 }
-
 exit;
+?>
