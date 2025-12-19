@@ -56,7 +56,7 @@
              <li>
                  <a href="#">Calendário</a>
                  <ul class="submenu">
-                     <li><a href="#">Visualizar Calendário</a></li>
+                     <li><a href="http://localhost:3000">Visualizar Calendário</a></li>
                  </ul>
              </li>
  

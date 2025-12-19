@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // 3️⃣ Recebe dados do formulário
 $nome        = trim($_POST['nome'] ?? '');
 $descricao   = trim($_POST['descricao'] ?? '');
+$categoria = !empty($_POST['categoria']) ? $_POST['categoria'] : NULL;
+
 $data_inicio = $_POST['data_inicio'] ?? null;
 $data_fim    = $_POST['data_fim'] ?? null;
 
@@ -28,11 +30,21 @@ $conn->begin_transaction();
 
 try {
     // 5️⃣ INSERE PROJETO com prioridade NULL
-    $sqlProjeto = "INSERT INTO projetos (nome, descricao, data_inicio, data_fim, criador_id, prioridade)
-                   VALUES (?, ?, ?, ?, ?, NULL)";
+    $sqlProjeto = "INSERT INTO projetos 
+        (nome, descricao, categoria, data_inicio, data_fim, criador_id, prioridade)
+        VALUES (?, ?, ?, ?, ?, ?, NULL)";
+
     $stmtProjeto = $conn->prepare($sqlProjeto);
-    $stmtProjeto->bind_param("ssssi", $nome, $descricao, $data_inicio, $data_fim, $criador_id);
-    $stmtProjeto->execute();
+        $stmtProjeto->bind_param(
+            "sssssi",
+            $nome,
+            $descricao,
+            $categoria,
+            $data_inicio,
+            $data_fim,
+            $criador_id
+        );
+        $stmtProjeto->execute();
 
     $projeto_id = $stmtProjeto->insert_id;
     $stmtProjeto->close();

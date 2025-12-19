@@ -2,8 +2,16 @@
 include("../Config/db.php");
 
 
-$sql = "SELECT * FROM projetos ORDER BY data_fim IS NULL, data_fim ASC";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM projetos
+        ORDER BY data_fim IS NULL, data_fim ASC";
+
+        $result = $conn->query($sql);
+
+if (!$result) {
+    die("Erro na consulta: " . $conn->error);
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +37,6 @@ $result = $conn->query($sql);
       <th>Prioridade</th>
       <th>Status</th>
       <th>Prazo</th>
-      <th>Progresso</th>
       <th>Ações</th>
     </tr>
   </thead>
@@ -39,23 +46,52 @@ $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
             // Formatar data_fim para dd/mm/yyyy, se existir
             $prazo = $row['data_fim'] ? date("d/m/Y", strtotime($row['data_fim'])) : "-";
-            echo "<tr data-descricao='" . htmlspecialchars($row['descricao']) . "'>
-                    <td><a href='ViewListProject.html?nome=" . urlencode($row['nome']) . "' class='link-projeto'>" . htmlspecialchars($row['nome']) . "</a></td>
-                    <td>-</td>
-                    <td><span class='prioridade " . strtolower($row['prioridade']) . "'>" . $row['prioridade'] . "</span></td>
-                    <td><span class='status " . strtolower(str_replace(' ', '', $row['status'])) . "'>" . $row['status'] . "</span></td>
-                    <td>$prazo</td>
-                    <td><progress value='0' max='100'></progress> 0%</td>
-                    <td>
-                      <button class='botao-visualizar'>👁️</button>
-                      <button class='botao-editar'>✏️</button>
-                      <button class='botao-ocultar'>📂</button>
-                    </td>
-                  </tr>";
+            $categoria_nome = !empty($row['categoria']) ? htmlspecialchars($row['categoria']) : "-";
+          
+            echo "<tr 
+              data-id='" . $row['id'] . "'
+              data-descricao='" . htmlspecialchars($row['descricao']) . "'
+              data-prioridade='" . htmlspecialchars($row['prioridade']) . "'
+            >
+              <td>
+                <a href='ViewProject.html?nome=" . urlencode($row['nome']) . "' class='link-projeto'>
+                  " . htmlspecialchars($row['nome']) . "
+                </a>
+              </td>
+
+              <td class='categoria-cell'>" . $categoria_nome . "</td>
+
+              <td class='prioridade-cell'>
+                <span class='prioridade-display prioridade-" . strtolower($row['prioridade']) . "'>
+                  " . ($row['prioridade'] ? htmlspecialchars($row['prioridade']) : "Não definida") . "
+                </span>
+                <select class='select-prioridade hidden' data-id='" . $row['id'] . "'>
+                  <option value='' " . (empty($row['prioridade']) ? 'selected' : '') . ">Selecionar</option>
+                  <option value='Baixa' " . ($row['prioridade'] == 'Baixa' ? 'selected' : '') . ">Baixa</option>
+                  <option value='Média' " . ($row['prioridade'] == 'Média' ? 'selected' : '') . ">Média</option>
+                  <option value='Alta' " . ($row['prioridade'] == 'Alta' ? 'selected' : '') . ">Alta</option>
+                </select>
+              </td>
+
+              <td>
+                <span class='status " . strtolower(str_replace(' ', '', $row['status'])) . "'>
+                  " . htmlspecialchars($row['status']) . "
+                </span>
+              </td>
+
+              <td>$prazo</td>
+
+              <td>
+                <button class='botao-visualizar'>👁️</button>
+                <button class='botao-editar'>✏️</button>
+                <button class='botao-ocultar'>📂</button>
+              </td>
+            </tr>";
+
         }
     } else {
         echo "<tr id='linha-sem-projetos'>
-                <td colspan='7' class='mensagem-central'>Você ainda não possui nenhum projeto cadastrado.</td>
+                <td colspan='6' class='mensagem-central'>Você ainda não possui nenhum projeto cadastrado.</td>
               </tr>";
     }
     ?>
@@ -73,13 +109,12 @@ $result = $conn->query($sql);
         <th>Prioridade</th>
         <th>Status</th>
         <th>Prazo</th>
-        <th>Progresso</th>
         <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       <tr id="linha-arquivar-vazia" style="display: none;">
-        <td colspan="7" class="mensagem-central">Seus arquivos ocultos estão vazios.</td>
+        <td colspan="6" class="mensagem-central">Seus arquivos ocultos estão vazios.</td>
       </tr>
     </tbody>
   </table>
@@ -94,10 +129,11 @@ $result = $conn->query($sql);
     <p><strong>Prioridade:</strong> <span id="detalhe-prioridade"></span></p>
     <p><strong>Status:</strong> <span id="detalhe-status"></span></p>
     <p><strong>Prazo:</strong> <span id="detalhe-prazo"></span></p>
-    <p><strong>Progresso:</strong> <span id="detalhe-progresso"></span></p>
     <p><strong>Descrição:</strong> <span id="detalhe-descricao"></span></p>
   </div>
 </div>
+
+
 
 <?php include("../Includes/Footer.php"); ?>
 

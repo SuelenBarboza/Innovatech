@@ -16,7 +16,7 @@ document.addEventListener("input", function (e) {
 
     const tipo = input.classList.contains("aluno-input") ? "Aluno" : "Professor";
 
-    fetch("/Innovatechmain/Config/SearchUsers.php", {
+    fetch("/Innovatech/Config/SearchUsers.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `termo=${encodeURIComponent(termo)}&tipo=${tipo}`

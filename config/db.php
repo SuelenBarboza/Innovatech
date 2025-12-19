@@ -2,7 +2,7 @@
 $host = "localhost"; 
 $usuario = "root"; 
 $senha = "";       
-$banco = "Innovatechmain";
+$banco = "Innovatech_db";
 
 $conn = new mysqli($host, $usuario, $senha, $banco);
 

@@ -35,6 +35,20 @@
             <label>Descrição</label>
             <textarea name="descricao" required></textarea>
         </div>
+        
+        <!-- Categoria -->
+        <div class="form-group">
+            <label>Categoria do Projeto</label>
+            <select name="categoria">
+                <option value="">- Sem categoria -</option>
+                <option value="TCC">TCC</option>
+                <option value="Pesquisa">Pesquisa</option>
+                <option value="Extensão">Extensão</option>
+                <option value="Pessoal">Pessoal</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+
 
         <!-- Datas -->
         <div class="form-group input-group">
