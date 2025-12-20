@@ -1,276 +1,548 @@
 /* img fundo */
- body {
+body {
     background-image: url("../Img/FundoInnova.png"); 
-    background-size: cover; /* faz a imagem cobrir toda a tela */
+    background-size: cover;
     background-position: center; 
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
 }
 
 /* Geral - Fundo branco mantendo estrutura */
 html, body {
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff;
-  font-family: 'Segoe UI', sans-serif;
-  color: #1e293b; /* Texto escuro original */
-  overflow-y: auto !important;
-  height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    color: #1e293b;
+    overflow-y: auto !important;
+    height: 100%;
 }
 
 h1 {
-  background-color: #f8fafc; /* Cinza muito claro */
-  color: #3b82f6; /* Azul original */
-  text-align: center;
-  padding: 1rem 0;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #3b82f6;
+    text-align: center;
+    padding: 1rem 0;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 /* TABELA - Estilo claro mantendo estrutura */
 table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
 }
 
 th, td {
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 th {
-  background-color: #3b82f6; /* Azul original */
-  color: white;
+    background-color: #3b82f6;
+    color: white;
 }
 
 tr:hover {
-  background-color: #f1f5f9; /* Cinza muito claro */
+    background-color: #f1f5f9;
 }
 
 .mensagem-central {
-  text-align: center;
-  font-weight: bold;
-  color: #64748b; /* Cinza médio */
-  padding: 20px;
-  background-color: #ffffff;
-  font-size: 16px;
-  border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+    font-weight: bold;
+    color: #64748b;
+    padding: 20px;
+    background-color: #ffffff;
+    font-size: 16px;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-/* PRIORIDADE - Cores originais exatas */
-.prioridade {
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  color: white;
-  font-weight: bold;
-  display: inline-block;
-  text-align: center;
-  min-width: 80px;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+/* ===================== */
+/* CLASSE HIDDEN */
+/* ===================== */
+.hidden {
+    display: none !important;
 }
 
-.prioridade.alta {
-  background-color: #ef4444; /* Vermelho original */
-  border: 1px solid #b91c1c; /* Borda original */
+/* ===================== */
+/* CÉLULAS EDITÁVEIS */
+/* ===================== */
+.prioridade-cell,
+.status-cell {
+    position: relative;
+    min-width: 140px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.prioridade.media {
-  background-color: #facc15; /* Amarelo original */
-  color: #1e293b; /* Texto escuro original */
-  border: 1px solid #eab308; /* Borda original */
+.prioridade-cell:hover,
+.status-cell:hover {
+    background-color: #f8fafc;
 }
 
-.prioridade.baixa {
-  background-color: #22c55e; /* Verde original */
-  border: 1px solid #15803d; /* Borda original */
+/* ===================== */
+/* DISPLAYS (VISUALIZAÇÃO) - CORREÇÃO AQUI */
+/* ===================== */
+.prioridade-display,
+.status-display {
+    padding: 6px 14px;
+    border-radius: 20px;
+    /* REMOVI: color: white; ← ESTA LINHA CAUSAVA O PROBLEMA */
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    min-width: 110px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
 }
 
-/* STATUS - Cores originais exatas */
-.status {
-  padding: 0.4rem 0.8rem;
-  border-radius: 20px;
-  color: white;
-  font-weight: bold;
-  display: inline-block;
-  text-align: center;
-  min-width: 100px;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.prioridade-display:hover,
+.status-display:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
-.status.andamento {
-  background-color: #3b82f6; /* Azul original */
-  border: 1px solid #2563eb; /* Borda original */
+/* ===================== */
+/* DROPDOWNS (EDIÇÃO) */
+/* ===================== */
+.select-prioridade,
+.select-status {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 2px solid #3b82f6;
+    font-weight: bold;
+    min-width: 120px;
+    background-color: white;
+    color: #1e293b;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%233b82f6' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
 }
 
-.status.concluido {
-  background-color: #10b981; /* Verde original */
-  border: 1px solid #059669; /* Borda original */
+.select-prioridade:focus,
+.select-status:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-.status.pendente {
-  background-color: #ef4444; /* Vermelho original */
-  border: 1px solid #b91c1c; /* Borda original */
+/* Opções dos dropdowns com cores */
+.select-prioridade option {
+    padding: 8px;
+    font-weight: bold;
 }
 
-.status.planejamento {
-  background-color: #60a5fa; /* Azul claro original */
-  border: 1px solid #3b82f6; /* Borda original */
+.select-prioridade option[value=""] {
+    color: #64748b;
+    font-style: italic;
 }
 
-/* Link do projeto título - Original */
+.select-prioridade option[value="Alta"] {
+    background-color: #ef4444;
+    color: white;
+}
+
+.select-prioridade option[value="Média"] {
+    background-color: #facc15;
+    color: #1e293b;
+}
+
+.select-prioridade option[value="Baixa"] {
+    background-color: #22c55e;
+    color: white;
+}
+
+.select-status option {
+    padding: 8px;
+    font-weight: bold;
+}
+
+.select-status option[value=""] {
+    color: #64748b;
+    font-style: italic;
+}
+
+.select-status option[value="Planejamento"] {
+    background-color: #60a5fa;
+    color: white;
+}
+
+.select-status option[value="Andamento"] {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.select-status option[value="Concluído"] {
+    background-color: #10b981;
+    color: white;
+}
+
+.select-status option[value="Pendente"] {
+    background-color: #ef4444;
+    color: white;
+}
+
+/* ===================== */
+/* CORES DAS PRIORIDADES */
+/* ===================== */
+.prioridade-alta {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-color: #b91c1c;
+    box-shadow: 0 3px 6px rgba(239, 68, 68, 0.3);
+    color: #ffffff !important;
+}
+
+.prioridade-média {
+    background: linear-gradient(135deg, #facc15, #eab308);
+    color: #000000 !important;
+    border-color: #ca8a04;
+    box-shadow: 0 3px 6px rgba(250, 204, 21, 0.3);
+}
+
+.prioridade-baixa {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-color: #15803d;
+    box-shadow: 0 3px 6px rgba(34, 197, 94, 0.3);
+    color: #ffffff !important;
+}
+
+/* ===================== */
+/* CORES DOS STATUS - GARANTINDO CORES ESPECÍFICAS */
+/* ===================== */
+
+/* STATUS INICIO - TEXTO PRETO COM FUNDO CLARO */
+.status-inicio {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    color: #000000 !important;
+    border-color: #cbd5e1;
+    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3);
+}
+
+/* STATUS PLANEJAMENTO - AZUL CLARO */
+.status-planejamento {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #ffffff !important;
+    border-color: #2563eb;
+    box-shadow: 0 3px 6px rgba(96, 165, 250, 0.3);
+}
+
+/* STATUS ANDAMENTO - AZUL */
+.status-andamento {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff !important;
+    border-color: #1d4ed8;
+    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3);
+}
+
+/* STATUS CONCLUÍDO - VERDE */
+.status-concluido {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff !important;
+    border-color: #047857;
+    box-shadow: 0 3px 6px rgba(16, 185, 129, 0.3);
+}
+
+/* STATUS PENDENTE - VERMELHO */
+.status-pendente {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff !important;
+    border-color: #b91c1c;
+    box-shadow: 0 3px 6px rgba(239, 68, 68, 0.3);
+}
+
+/* ===================== */
+/* PARA VARIANTES SEM ACENTO */
+/* ===================== */
+/* Se o PHP gerar sem acento */
+.status-incio {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    color: #000000 !important;
+    border-color: #cbd5e1;
+    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3);
+}
+
+/* ===================== */
+/* CORES PARA VALORES INDEFINIDOS/VAZIOS */
+/* ===================== */
+.prioridade-indefinida,
+.status-indefinido {
+    background: linear-gradient(135deg, #94a3b8, #64748b);
+    color: #ffffff !important;
+    border: 2px solid #475569;
+    box-shadow: 0 3px 6px rgba(100, 116, 139, 0.3);
+}
+
+/* ===================== */
+/* REGRAS DE FALLBACK PARA GARANTIR CORES */
+/* ===================== */
+
+/* Garantir que todos os displays de prioridade tenham cores definidas */
+.prioridade-display {
+    color: inherit; /* Herda da classe específica */
+}
+
+/* Garantir que todos os displays de status tenham cores definidas */
+.status-display {
+    color: inherit; /* Herda da classe específica */
+}
+
+/* Fallback para status não identificados - SERÁ PRETO */
+.status-display:not(.status-inicio):not(.status-incio):not(.status-planejamento):not(.status-andamento):not(.status-concluido):not(.status-pendente):not(.status-indefinido) {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0) !important;
+    color: #000000 !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3) !important;
+}
+
+/* Fallback para prioridade não identificada */
+.prioridade-display:not(.prioridade-alta):not(.prioridade-média):not(.prioridade-baixa):not(.prioridade-indefinida) {
+    background: linear-gradient(135deg, #f1f5f9, #e2e8f0) !important;
+    color: #000000 !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3) !important;
+}
+
+/* ===================== */
+/* LINK DO PROJETO */
+/* ===================== */
 a.link-projeto {
-  color: #3b82f6; /* Azul original */
-  text-decoration: none;
-  font-weight: bold;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+    display: inline-block;
+    padding: 2px 0;
 }
 
 a.link-projeto:hover {
-  text-decoration: underline;
+    color: #2563eb;
+    text-decoration: underline;
 }
 
-/* SELECT - Estilo original adaptado para fundo claro */
-select {
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  font-weight: bold;
-  border: 2px solid #cbd5e1;
-  outline: none;
-  background-color: #ffffff;
-  color: #1e293b;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  font-size: 0.9rem;
-}
-
-select option {
-  font-weight: bold;
-  color: #1e293b;
-}
-
-select option[value="alta"] {
-  background-color: #ef4444;
-  color: white;
-}
-
-select option[value="media"] {
-  background-color: #facc15;
-  color: #1e293b;
-}
-
-select option[value="baixa"] {
-  background-color: #22c55e;
-  color: white;
-}
-
-/* BARRA DE PROGRESSO - Original adaptada */
-progress {
-  width: 80px;
-  height: 10px;
-  accent-color: #3b82f6; /* Azul original */
-}
-
-/* BOTÕES - Estilo original */
+/* ===================== */
+/* BOTÕES */
+/* ===================== */
 button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-right: 5px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-right: 5px;
+    transition: all 0.2s ease;
+    padding: 5px;
+    border-radius: 4px;
 }
 
 button:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
+    background-color: #f1f5f9;
+}
+
+.botao-editar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.botao-editar:hover {
+    background-color: #e2e8f0;
 }
 
 button.salvar {
-  background-color: #3b82f6;
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  margin-left: 10px;
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
 button.salvar:hover {
-  background-color: #2563eb;
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.4);
 }
 
 #btnToggleArquivar {
-  margin: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3);
 }
 
 #btnToggleArquivar:hover {
-  background-color: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 8px rgba(37, 99, 235, 0.4);
 }
 
-/* MODAL - Original adaptado para fundo claro */
+/* ===================== */
+/* MODAL */
+/* ===================== */
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  padding-top: 80px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    position: fixed;
+    z-index: 999;
+    padding-top: 80px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
 }
 
 .modal-conteudo {
-  background-color: #ffffff;
-  margin: auto;
-  padding: 20px;
-  border: 2px solid #3b82f6;
-  border-radius: 12px;
-  width: 60%;
-  max-width: 500px;
-  color: #1e293b;
-  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+    background-color: #ffffff;
+    margin: auto;
+    padding: 25px;
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    width: 60%;
+    max-width: 500px;
+    color: #1e293b;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .modal-conteudo h2 {
-  margin-top: 0;
-  color: #3b82f6;
+    margin-top: 0;
+    color: #3b82f6;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-conteudo p {
+    margin: 12px 0;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.modal-conteudo strong {
+    color: #475569;
+    min-width: 100px;
+    display: inline-block;
 }
 
 .fechar {
-  color: #64748b;
-  float: right;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
+    color: #64748b;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
 }
 
 .fechar:hover {
-  color: #1e293b;
+    color: #ef4444;
 }
 
-/* RESPONSIVO - Original */
-@media (max-width: 600px) {
-  .modal-conteudo {
-    width: 90%;
-    padding: 1rem;
-  }
+/* ===================== */
+/* ANIMAÇÕES DE TRANSICAO */
+/* ===================== */
+.prioridade-display,
+.status-display {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ===================== */
+/* RESPONSIVO */
+/* ===================== */
+@media (max-width: 768px) {
+    .modal-conteudo {
+        width: 85%;
+        padding: 1.2rem;
+    }
+    
+    .prioridade-cell,
+    .status-cell {
+        min-width: 120px;
+    }
+    
+    .prioridade-display,
+    .status-display,
+    .select-prioridade,
+    .select-status {
+        min-width: 90px;
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+    
+    th, td {
+        padding: 0.8rem 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-conteudo {
+        width: 95%;
+        padding: 1rem;
+    }
+    
+    .prioridade-cell,
+    .status-cell {
+        min-width: 100px;
+    }
+    
+    .prioridade-display,
+    .status-display,
+    .select-prioridade,
+    .select-status {
+        min-width: 80px;
+        font-size: 0.7rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        padding: 0.8rem 0;
+    }
 }

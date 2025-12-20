@@ -1,17 +1,12 @@
 <?php
 include("../Config/db.php");
 
-
-$sql = "SELECT * FROM projetos
-        ORDER BY data_fim IS NULL, data_fim ASC";
-
-        $result = $conn->query($sql);
+$sql = "SELECT * FROM projetos ORDER BY data_fim IS NULL, data_fim ASC";
+$result = $conn->query($sql);
 
 if (!$result) {
     die("Erro na consulta: " . $conn->error);
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +39,6 @@ if (!$result) {
     <?php
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            // Formatar data_fim para dd/mm/yyyy, se existir
             $prazo = $row['data_fim'] ? date("d/m/Y", strtotime($row['data_fim'])) : "-";
             $categoria_nome = !empty($row['categoria']) ? htmlspecialchars($row['categoria']) : "-";
           
@@ -52,6 +46,7 @@ if (!$result) {
               data-id='" . $row['id'] . "'
               data-descricao='" . htmlspecialchars($row['descricao']) . "'
               data-prioridade='" . htmlspecialchars($row['prioridade']) . "'
+              data-status='" . htmlspecialchars($row['status']) . "'
             >
               <td>
                 <a href='ViewProject.html?nome=" . urlencode($row['nome']) . "' class='link-projeto'>
@@ -62,22 +57,29 @@ if (!$result) {
               <td class='categoria-cell'>" . $categoria_nome . "</td>
 
               <td class='prioridade-cell'>
-                <span class='prioridade-display prioridade-" . strtolower($row['prioridade']) . "'>
-                  " . ($row['prioridade'] ? htmlspecialchars($row['prioridade']) : "Não definida") . "
+                <span class='prioridade-display prioridade-" . (!empty($row['prioridade']) ? strtolower($row['prioridade']) : 'indefinida') . "'>
+                    " . ($row['prioridade'] ? htmlspecialchars($row['prioridade']) : "Não definida") . "
                 </span>
-                <select class='select-prioridade hidden' data-id='" . $row['id'] . "'>
-                  <option value='' " . (empty($row['prioridade']) ? 'selected' : '') . ">Selecionar</option>
-                  <option value='Baixa' " . ($row['prioridade'] == 'Baixa' ? 'selected' : '') . ">Baixa</option>
-                  <option value='Média' " . ($row['prioridade'] == 'Média' ? 'selected' : '') . ">Média</option>
-                  <option value='Alta' " . ($row['prioridade'] == 'Alta' ? 'selected' : '') . ">Alta</option>
+                <select class='select-prioridade hidden' data-id='" . $row['id'] . "' data-field='prioridade'>
+                    <option value='' " . (empty($row['prioridade']) ? 'selected' : '') . ">Selecionar</option>
+                    <option value='Baixa' " . ($row['prioridade'] == 'Baixa' ? 'selected' : '') . ">Baixa</option>
+                    <option value='Média' " . ($row['prioridade'] == 'Média' ? 'selected' : '') . ">Média</option>
+                    <option value='Alta' " . ($row['prioridade'] == 'Alta' ? 'selected' : '') . ">Alta</option>
                 </select>
-              </td>
+            </td>
 
-              <td>
-                <span class='status " . strtolower(str_replace(' ', '', $row['status'])) . "'>
-                  " . htmlspecialchars($row['status']) . "
+            <td class='status-cell'>
+                <span class='status-display status-" . (!empty($row['status']) ? strtolower(str_replace(' ', '', $row['status'])) : 'indefinido') . "'>
+                    " . htmlspecialchars($row['status']) . "
                 </span>
-              </td>
+                <select class='select-status hidden' data-id='" . $row['id'] . "' data-field='status'>
+                    <option value='' " . (empty($row['status']) ? 'selected' : '') . ">Selecionar</option>
+                    <option value='Planejamento' " . ($row['status'] == 'Planejamento' ? 'selected' : '') . ">Planejamento</option>
+                    <option value='Andamento' " . ($row['status'] == 'Andamento' ? 'selected' : '') . ">Andamento</option>
+                    <option value='Concluído' " . ($row['status'] == 'Concluído' ? 'selected' : '') . ">Concluído</option>
+                    <option value='Pendente' " . ($row['status'] == 'Pendente' ? 'selected' : '') . ">Pendente</option>
+                </select>
+            </td>
 
               <td>$prazo</td>
 
@@ -87,7 +89,6 @@ if (!$result) {
                 <button class='botao-ocultar'>📂</button>
               </td>
             </tr>";
-
         }
     } else {
         echo "<tr id='linha-sem-projetos'>
@@ -132,8 +133,6 @@ if (!$result) {
     <p><strong>Descrição:</strong> <span id="detalhe-descricao"></span></p>
   </div>
 </div>
-
-
 
 <?php include("../Includes/Footer.php"); ?>
 
