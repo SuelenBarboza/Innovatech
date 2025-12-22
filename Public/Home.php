@@ -17,7 +17,7 @@
     
     <section class="sobre">
         <div class="container">
-             <img src="../Assets/Img/FundoInnova.png" alt="Innovatech" class="logo"> 
+             <!-- <img src="../Assets/Img/FundoInnova.png" alt="Innovatech" class="logo">  -->
            
     </section>    
     

@@ -21,6 +21,12 @@
                     </a>
                 </div>
               </li>
+              <li>
+                 <a href="#">Inicio</a>
+                    <ul class="submenu">
+                        <li><a href="../Public/Home.php">Inicio</a></li>
+                    </ul>
+             </li>
              <li>
                  <a href="#">Projetos</a>
                     <ul class="submenu">
@@ -72,7 +78,8 @@
                  <a href="#">Configurações</a>
                  <ul class="submenu">
                      <li><a href="../Shared/SystemSettings.php">Configurações do Sistema</a></li>
-                     <li><a href="../Users/Admin/ValidateUser.php">Gerenciar Usuários</a></li>
+                     <li><a href="../Users/Admin/UserManagerAdmin.php">Gerenciar Usuários</a></li>
+                     
                  </ul>
              </li>
  
