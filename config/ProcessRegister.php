@@ -1,39 +1,36 @@
 <?php
-require_once 'db.php'; 
+require_once 'db.php';
 
-// Recebendo dados do formulário
+// Recebendo dados
 $nome  = trim($_POST['username'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $senha = $_POST['password'] ?? '';
 $confirmar = $_POST['confirmPassword'] ?? '';
 $tipo  = $_POST['tipo_solicitado'] ?? '';
 
-// Validações básicas
+// Validações
 if (!$nome || !$email || !$senha || !$confirmar || !$tipo) {
-    echo "Preencha todos os campos.";
-    exit;
+    die("Preencha todos os campos.");
 }
 
 if ($senha !== $confirmar) {
-    echo "As senhas não coincidem.";
-    exit;
+    die("As senhas não coincidem.");
 }
 
-// Verifica se email já existe
+// Verifica email
 $check = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
 $check->bind_param("s", $email);
 $check->execute();
 $check->store_result();
 
 if ($check->num_rows > 0) {
-    echo "Este e-mail já está cadastrado.";
-    exit;
+    die("Este e-mail já está cadastrado.");
 }
 
-// Criptografa senha
+// Criptografia
 $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-// Insere usuário como NÃO aprovado
+// Inserção
 $sql = $conn->prepare("
     INSERT INTO usuarios 
     (nome, email, senha, tipo_solicitado, aprovado, ativo)
@@ -43,10 +40,8 @@ $sql = $conn->prepare("
 $sql->bind_param("ssss", $nome, $email, $senhaHash, $tipo);
 
 if ($sql->execute()) {
-    // Redireciona para a página de login
     header("Location: ../Public/Login.php");
     exit;
 } else {
-    echo "Erro ao cadastrar usuário.";
+    die("Erro ao cadastrar usuário.");
 }
-

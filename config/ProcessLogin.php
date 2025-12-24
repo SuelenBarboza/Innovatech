@@ -1,14 +1,14 @@
 <?php
 session_start();
-include 'db.php'; // seu arquivo atual que cria $conn
+require_once "db.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../Public/Login.php");
     exit;
 }
 
-$email = trim($_POST['email']);
-$senha = $_POST['password'];
+$email = trim($_POST['email'] ?? '');
+$senha = $_POST['password'] ?? '';
 
 // Buscar usuário
 $sql = "SELECT id, nome, email, senha, tipo_solicitado, aprovado, ativo
@@ -28,13 +28,13 @@ if ($result->num_rows !== 1) {
 $user = $result->fetch_assoc();
 
 // Conta inativa
-if ($user['ativo'] != 1) {
+if ((int)$user['ativo'] !== 1) {
     header("Location: ../Public/Login.php?error=inactive");
     exit;
 }
 
 // Conta não aprovada
-if ($user['aprovado'] != 1) {
+if ((int)$user['aprovado'] !== 1) {
     header("Location: ../Public/Login.php?error=not_approved");
     exit;
 }
@@ -51,16 +51,25 @@ $_SESSION['usuario_nome']  = $user['nome'];
 $_SESSION['usuario_email'] = $user['email'];
 $_SESSION['usuario_tipo']  = $user['tipo_solicitado'];
 
-// Redirecionamento
-switch (strtolower($user['tipo_solicitado'])) {
-    case 'admin':
+// Redirecionamento por tipo
+switch ($user['tipo_solicitado']) {
+    case 'Admin':
         header("Location: ../Public/Home.php");
         break;
-    case 'coordenador':
+
+    case 'coordinator':
         header("Location: ../Public/Home.php");
         break;
+
+    case 'teacher':
+        header("Location: ../Public/Home.php");
+        break;
+
+    case 'student':
+        header("Location: ../Public/Home.php");
+        break;
+
     default:
         header("Location: ../Public/Home.php");
 }
 exit;
-?>

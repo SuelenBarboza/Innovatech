@@ -41,9 +41,9 @@
                 <select name="tipo_solicitado" id="tipo" required>
                     <option value="">Selecione</option>
                     <option value="Admin">Admin</option>
-                    <option value="student">Aluno</option>
-                    <option value="teacher">Professor</option>
-                    <option value="coordinator">Coordenador</option>
+                    <option value="Aluno">Aluno</option>
+                    <option value="Professor">Professor</option>
+                    <option value="Coordenador">Coordenador</option>
                 </select>
             </div>
 

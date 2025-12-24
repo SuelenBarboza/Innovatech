@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -35,7 +33,7 @@
             <label>Descrição</label>
             <textarea name="descricao" required></textarea>
         </div>
-        
+
         <!-- Categoria -->
         <div class="form-group">
             <label>Categoria do Projeto</label>
@@ -48,7 +46,6 @@
                 <option value="Outro">Outro</option>
             </select>
         </div>
-
 
         <!-- Datas -->
         <div class="form-group input-group">
@@ -70,10 +67,12 @@
             <div class="form-group autocomplete">
                 <div class="autocomplete-wrapper">
                     <input type="text"
-                           name="aluno[]"
                            class="autocomplete-input aluno-input"
                            autocomplete="off"
                            required>
+
+                    <input type="hidden" name="aluno[]" class="aluno-id">
+
                     <div class="suggestions"></div>
                 </div>
             </div>
@@ -88,10 +87,12 @@
             <div class="form-group autocomplete">
                 <div class="autocomplete-wrapper">
                     <input type="text"
-                           name="professor[]"
                            class="autocomplete-input professor-input"
                            autocomplete="off"
                            required>
+
+                    <input type="hidden" name="professor[]" class="professor-id">
+
                     <div class="suggestions"></div>
                 </div>
             </div>
@@ -101,8 +102,8 @@
 
         <!-- BOTÕES -->
         <div class="form-actions">
-            <button type="submit" id="salvar">Salvar</button>
-            <button type="button" id="cancelar" onclick="history.back()">Cancelar</button>
+            <button type="submit">Salvar</button>
+            <button type="button" onclick="history.back()">Cancelar</button>
         </div>
 
     </form>
