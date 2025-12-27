@@ -249,4 +249,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     atualizarMensagens();
+
+
+    const filtroStatus = document.getElementById("filtro-status");
+    const filtroPrioridade = document.getElementById("filtro-prioridade");
+
+    function filtrarTabela() {
+    const linhas = document.querySelectorAll("#tabela-projetos tbody tr");
+
+    linhas.forEach(linha => {
+        const status = linha.dataset.status;
+        const prioridade = linha.dataset.prioridade;
+
+        const statusOK = !filtroStatus.value || filtroStatus.value === status;
+        const prioridadeOK = !filtroPrioridade.value || filtroPrioridade.value === prioridade;
+
+        linha.style.display = (statusOK && prioridadeOK) ? "" : "none";
+    });
+    }
+
+    filtroStatus.addEventListener("change", filtrarTabela);
+    filtroPrioridade.addEventListener("change", filtrarTabela);
+
 });

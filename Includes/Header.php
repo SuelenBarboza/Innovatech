@@ -22,16 +22,15 @@
                 </div>
               </li>
               <li>
-                 <a href="#">Inicio</a>
+                 <a href="../Public/Home.php">Inicio</a>
                     <ul class="submenu">
-                        <li><a href="../Public/Home.php">Inicio</a></li>
+                        
                     </ul>
              </li>
              <li>
                  <a href="#">Projetos</a>
                     <ul class="submenu">
                         <li><a href="../Shared/RegisterProject.php">Cadastrar Projetos</a></li>
-                        <li><a href="../Shared/EditProject.php">Editar Projetos</a></li>
                         <li><a href="../Shared/ViewListProject.php">Visualizar Lista de Projetos</a></li>
                         <li><a href="../Shared/CompleteProject.php">Concluir Projeto</a></li>
                     </ul>
@@ -44,6 +43,10 @@
                      <li><a href="../Shared/EditTasks.php">Editar Tarefas</a></li>
                      <li><a href="../Shared/ViewListTasks.php">Visualizar Lista de Tarefas</a></li>
                      <li><a href="../Shared/CompleteTasks.php">Concluir Tarefas</a></li>
+                     <li><a href="../Shared/AddMembers.php">Adicionar Membros</a></li>
+                     <li><a href="../Shared/DeleteMember.php">Excluir Membro</a></li>
+                     <li><a href="../Shared/AssignTasks.php">Atribuir Tarefas</a></li>
+                     <li><a href="../Shared/DeleteTasks.php">Excluir Tarefa</a></li>
 
                  </ul>
              </li>
@@ -51,11 +54,10 @@
              <li>
                  <a href="#">Colaboração</a>
                  <ul class="submenu">
-                     <li><a href="../Shared/AddMembers.php">Adicionar Membros</a></li>
-                     <li><a href="../Shared/DeleteMember.php">Excluir Membro</a></li>
-                     <li><a href="../Shared/AssignTasks.php">Atribuir Tarefas</a></li>
-                     <li><a href="../Shared/DeleteTasks.php">Excluir Tarefa</a></li>
                      <li><a href="../Shared/Comments.php">Comentários</a></li>
+                    <li><a href="../Shared/ProgressReport.php">Relatório de Progresso</a></li>
+                    <li><a href="../Shared/PerformanceReport.php">Relatório de Desempenho</a></li>
+
                  </ul>
              </li>
  
@@ -66,13 +68,6 @@
                  </ul>
              </li>
  
-             <li>
-                 <a href="#">Relatórios</a>
-                 <ul class="submenu">
-                     <li><a href="../Shared/ProgressReport.php">Relatório de Progresso</a></li>
-                     <li><a href="../Shared/PerformanceReport.php">Relatório de Desempenho</a></li>
-                 </ul>
-             </li>
  
              <li>
                  <a href="#">Configurações</a>

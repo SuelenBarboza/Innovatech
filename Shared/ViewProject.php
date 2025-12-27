@@ -1,8 +1,69 @@
 <?php
-include("../config/conexao.php");
+include("../Config/db.php");
 
-$sql = "SELECT * FROM projetos";
-$result = $conn->query($sql);
+// ==========================
+// VALIDAÇÃO DO ID
+// ==========================
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    header("Location: ViewListProject.php");
+    exit;
+}
+
+$id = (int) $_GET['id'];
+
+// ==========================
+// BUSCA DO PROJETO
+// ==========================
+$sqlProjeto = "SELECT * FROM projetos WHERE id = ?";
+$stmtProjeto = $conn->prepare($sqlProjeto);
+$stmtProjeto->bind_param("i", $id);
+$stmtProjeto->execute();
+$resultProjeto = $stmtProjeto->get_result();
+
+if ($resultProjeto->num_rows === 0) {
+    echo "Projeto não encontrado.";
+    exit;
+}
+
+$projeto = $resultProjeto->fetch_assoc();
+
+// ==========================
+// BUSCA DOS ALUNOS
+// ==========================
+$sqlAlunos = "
+    SELECT u.nome
+    FROM projeto_aluno pa
+    INNER JOIN usuarios u ON pa.usuario_id = u.id
+    WHERE pa.projeto_id = ?
+";
+$stmtAlunos = $conn->prepare($sqlAlunos);
+$stmtAlunos->bind_param("i", $id);
+$stmtAlunos->execute();
+$resultAlunos = $stmtAlunos->get_result();
+
+$alunos = [];
+while ($row = $resultAlunos->fetch_assoc()) {
+    $alunos[] = $row['nome'];
+}
+
+// ==========================
+// BUSCA DOS ORIENTADORES
+// ==========================
+$sqlProfessores = "
+    SELECT u.nome
+    FROM projeto_orientador po
+    INNER JOIN usuarios u ON po.professor_id = u.id
+    WHERE po.projeto_id = ?
+";
+$stmtProfessores = $conn->prepare($sqlProfessores);
+$stmtProfessores->bind_param("i", $id);
+$stmtProfessores->execute();
+$resultProfessores = $stmtProfessores->get_result();
+
+$professores = [];
+while ($row = $resultProfessores->fetch_assoc()) {
+    $professores[] = $row['nome'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,84 +71,71 @@ $result = $conn->query($sql);
 <head>
   <meta charset="UTF-8">
   <title>Detalhes do Projeto</title>
+
   <link rel="stylesheet" href="../Assets/css/Header.css">
   <link rel="stylesheet" href="../Assets/css/Footer.css">
-  <link rel="stylesheet" href="../Assets/css/ViewProject.css"> 
+  <link rel="stylesheet" href="../Assets/css/ViewProject.css">
 </head>
 <body>
 
-  <?php include("../Includes/Header.php"); ?>
+<?php include("../Includes/Header.php"); ?>
 
-  <section class="form-container">
-    <h2>Detalhes do Projeto</h2>
-    <div id="dados-projeto">
-    </div>
-    <a href="ViewListProject.php" class="btn-voltar">⬅️ Voltar para a Lista</a>
+<section class="form-container">
+  <h2>Detalhes do Projeto</h2>
 
+  <div id="dados-projeto">
 
+    <p><strong>Nome:</strong> <?= htmlspecialchars($projeto['nome']) ?></p>
+
+    <p><strong>Categoria:</strong>
+      <?= !empty($projeto['categoria']) ? htmlspecialchars($projeto['categoria']) : 'Não definida' ?>
+    </p>
+
+    <p><strong>Prioridade:</strong>
+      <?= !empty($projeto['prioridade']) ? htmlspecialchars($projeto['prioridade']) : 'Não definida' ?>
+    </p>
+
+    <p><strong>Status:</strong>
+      <?= !empty($projeto['status']) ? htmlspecialchars($projeto['status']) : 'Não definido' ?>
+    </p>
+
+    <p><strong>Data de Início:</strong>
+      <?= date("d/m/Y", strtotime($projeto['data_inicio'])) ?>
+    </p>
+
+    <p><strong>Data de Conclusão:</strong>
+      <?= !empty($projeto['data_fim'])
+          ? date("d/m/Y", strtotime($projeto['data_fim']))
+          : 'Não definida' ?>
+    </p>
+
+    <p><strong>Alunos:</strong><br>
+      <?= !empty($alunos) ? implode(", ", array_map("htmlspecialchars", $alunos)) : 'Não definido' ?>
+    </p>
+
+    <p><strong>Orientador(es):</strong><br>
+      <?= !empty($professores) ? implode(", ", array_map("htmlspecialchars", $professores)) : 'Não definido' ?>
+    </p>
+
+    <p><strong>Descrição:</strong><br>
+      <?= nl2br(htmlspecialchars($projeto['descricao'])) ?>
+    </p>
+
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="acoes-projeto">
+    <a href="EditProject.php?id=<?= $projeto['id'] ?>" class="btn-editar">
+      ✏️ Editar Projeto
+    </a>
+
+    <a href="ViewListProject.php" class="btn-voltar">
+      ⬅️ Voltar para a Lista
+    </a>
+  </div>
 </section>
 
-   <?php include("../Includes/Footer.php"); ?>
-
-  <script>
-    // Lista simulada de projetos
-    const projetos = [
-      {
-        nome: "Portal Acadêmico",
-        data_inicio: "2024-01-10",
-        data_fim: "2025-06-30",
-        alunos: ["João Silva", "Maria Souza"],
-        professores: ["Prof. Ana Lima", "Prof. Carlos Mendes"],
-        descricao: "Sistema acadêmico completo com controle de disciplinas, notas e calendário."
-      },
-      {
-        nome: "Loja Online",
-        data_inicio: "2024-03-01",
-        data_fim: "2025-04-10",
-        alunos: ["Lucas Rocha"],
-        professores: ["Prof. Fernanda Tavares"],
-        descricao: "Loja virtual com carrinho de compras, login e painel administrativo."
-      },
-      {
-        nome: "App de Tarefas",
-        data_inicio: "2025-01-01",
-        data_fim: "2025-08-15",
-        alunos: ["Carla Dias", "Igor Santos"],
-        professores: ["Prof. Roberto Maia"],
-        descricao: "Aplicativo para gerenciamento de tarefas diárias com notificações."
-      }
-    ];
-
-    // Função para pegar o nome da URL
-    function obterNomeProjeto() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('nome');
-    }
-
-    function exibirDadosProjeto(projeto) {
-      const container = document.getElementById("dados-projeto");
-
-      if (!projeto) {
-        container.innerHTML = "<p>Projeto não encontrado.</p>";
-        return;
-      }
-
-      container.innerHTML = `
-        <p><strong>Nome:</strong> ${projeto.nome}</p>
-        <p><strong>Data de Início:</strong> ${projeto.data_inicio}</p>
-        <p><strong>Data de Conclusão:</strong> ${projeto.data_fim}</p>
-        <p><strong>Alunos:</strong> ${projeto.alunos.join(", ")}</p>
-        <p><strong>Professores:</strong> ${projeto.professores.join(", ")}</p>
-        <p><strong>Descrição:</strong> ${projeto.descricao}</p>
-      `;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const nomeProjeto = decodeURIComponent(obterNomeProjeto());
-      const projetoEncontrado = projetos.find(p => p.nome === nomeProjeto);
-      exibirDadosProjeto(projetoEncontrado);
-    });
-  </script>
+<?php include("../Includes/Footer.php"); ?>
 
 </body>
 </html>

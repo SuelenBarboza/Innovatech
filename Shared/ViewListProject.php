@@ -1,7 +1,8 @@
 <?php
 include("../Config/db.php");
 
-$sql = "SELECT * FROM projetos ORDER BY data_fim IS NULL, data_fim ASC";
+// ORDEM: projeto mais novo em cima
+$sql = "SELECT * FROM projetos ORDER BY id DESC";
 $result = $conn->query($sql);
 
 if (!$result) {
@@ -13,16 +14,37 @@ if (!$result) {
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <title>Lista de Projetos</title>
+
   <link rel="stylesheet" href="../Assets/css/Header.css">
   <link rel="stylesheet" href="../Assets/css/Footer.css">
   <link rel="stylesheet" href="../Assets/css/ViewListProject.css">
-  <title>Lista de Projetos</title>
 </head>
 <body>
 
 <?php include("../Includes/Header.php"); ?>
 
 <h1>Lista de Projetos</h1>
+
+<!-- ================= FILTROS ================= -->
+<div class="filtros">
+  <select id="filtro-status">
+    <option value="">Status</option>
+    <option value="Planejamento">Planejamento</option>
+    <option value="Andamento">Andamento</option>
+    <option value="Concluído">Concluído</option>
+    <option value="Pendente">Pendente</option>
+    <option value="Não definido">Não definido</option>
+  </select>
+
+  <select id="filtro-prioridade">
+    <option value="">Prioridade</option>
+    <option value="Alta">Alta</option>
+    <option value="Média">Média</option>
+    <option value="Baixa">Baixa</option>
+    <option value="Não definido">Não definido</option>
+  </select>
+</div>
 
 <table id="tabela-projetos">
   <thead>
@@ -35,73 +57,107 @@ if (!$result) {
       <th>Ações</th>
     </tr>
   </thead>
+
   <tbody>
-    <?php
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $prazo = $row['data_fim'] ? date("d/m/Y", strtotime($row['data_fim'])) : "-";
-            $categoria_nome = !empty($row['categoria']) ? htmlspecialchars($row['categoria']) : "-";
-          
-            echo "<tr 
-              data-id='" . $row['id'] . "'
-              data-descricao='" . htmlspecialchars($row['descricao']) . "'
-              data-prioridade='" . htmlspecialchars($row['prioridade']) . "'
-              data-status='" . htmlspecialchars($row['status']) . "'
-            >
-              <td>
-                <a href='ViewProject.html?nome=" . urlencode($row['nome']) . "' class='link-projeto'>
-                  " . htmlspecialchars($row['nome']) . "
-                </a>
-              </td>
+<?php
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
 
-              <td class='categoria-cell'>" . $categoria_nome . "</td>
+        $id = (int) $row['id'];
+        $nome = htmlspecialchars($row['nome']);
 
-              <td class='prioridade-cell'>
-                <span class='prioridade-display prioridade-" . (!empty($row['prioridade']) ? strtolower($row['prioridade']) : 'indefinida') . "'>
-                    " . ($row['prioridade'] ? htmlspecialchars($row['prioridade']) : "Não definida") . "
-                </span>
-                <select class='select-prioridade hidden' data-id='" . $row['id'] . "' data-field='prioridade'>
-                    <option value='' " . (empty($row['prioridade']) ? 'selected' : '') . ">Selecionar</option>
-                    <option value='Baixa' " . ($row['prioridade'] == 'Baixa' ? 'selected' : '') . ">Baixa</option>
-                    <option value='Média' " . ($row['prioridade'] == 'Média' ? 'selected' : '') . ">Média</option>
-                    <option value='Alta' " . ($row['prioridade'] == 'Alta' ? 'selected' : '') . ">Alta</option>
-                </select>
-            </td>
+        $categoria = !empty($row['categoria'])
+            ? htmlspecialchars($row['categoria'])
+            : "Não definido";
 
-            <td class='status-cell'>
-                <span class='status-display status-" . (!empty($row['status']) ? strtolower(str_replace(' ', '', $row['status'])) : 'indefinido') . "'>
-                    " . htmlspecialchars($row['status']) . "
-                </span>
-                <select class='select-status hidden' data-id='" . $row['id'] . "' data-field='status'>
-                    <option value='' " . (empty($row['status']) ? 'selected' : '') . ">Selecionar</option>
-                    <option value='Planejamento' " . ($row['status'] == 'Planejamento' ? 'selected' : '') . ">Planejamento</option>
-                    <option value='Andamento' " . ($row['status'] == 'Andamento' ? 'selected' : '') . ">Andamento</option>
-                    <option value='Concluído' " . ($row['status'] == 'Concluído' ? 'selected' : '') . ">Concluído</option>
-                    <option value='Pendente' " . ($row['status'] == 'Pendente' ? 'selected' : '') . ">Pendente</option>
-                </select>
-            </td>
+        $prioridadeTexto = !empty($row['prioridade'])
+            ? htmlspecialchars($row['prioridade'])
+            : "Não definido";
 
-              <td>$prazo</td>
+        $prioridadeClasse = !empty($row['prioridade'])
+            ? strtolower($row['prioridade'])
+            : "indefinida";
 
-              <td>
-                <button class='botao-visualizar'>👁️</button>
-                <button class='botao-editar'>✏️</button>
-                <button class='botao-ocultar'>📂</button>
-              </td>
-            </tr>";
-        }
-    } else {
-        echo "<tr id='linha-sem-projetos'>
-                <td colspan='6' class='mensagem-central'>Você ainda não possui nenhum projeto cadastrado.</td>
-              </tr>";
+        $statusTexto = !empty($row['status'])
+            ? htmlspecialchars($row['status'])
+            : "Não definido";
+
+        $statusClasse = !empty($row['status'])
+            ? strtolower(str_replace(' ', '', $row['status']))
+            : "indefinido";
+
+        $prazo = !empty($row['data_fim'])
+            ? date("d/m/Y", strtotime($row['data_fim']))
+            : "Não definido";
+
+        $descricao = htmlspecialchars($row['descricao']);
+
+        echo "
+        <tr
+          data-id=\"$id\"
+          data-status=\"$statusTexto\"
+          data-prioridade=\"$prioridadeTexto\"
+          data-descricao=\"$descricao\"
+        >
+          <td>
+            <a href=\"ViewProject.php?id=$id\" class=\"link-projeto\">
+              $nome
+            </a>
+          </td>
+
+          <td class=\"categoria-cell\">$categoria</td>
+
+          <td class=\"prioridade-cell\">
+            <span class=\"prioridade-display prioridade-$prioridadeClasse\">
+              $prioridadeTexto
+            </span>
+
+            <select class=\"select-prioridade hidden\" data-id=\"$id\" data-field=\"prioridade\">
+              <option value=\"\">Selecionar</option>
+              <option value=\"Baixa\">Baixa</option>
+              <option value=\"Média\">Média</option>
+              <option value=\"Alta\">Alta</option>
+            </select>
+          </td>
+
+          <td class=\"status-cell\">
+            <span class=\"status-display status-$statusClasse\">
+              $statusTexto
+            </span>
+
+            <select class=\"select-status hidden\" data-id=\"$id\" data-field=\"status\">
+              <option value=\"\">Selecionar</option>
+              <option value=\"Planejamento\">Planejamento</option>
+              <option value=\"Andamento\">Andamento</option>
+              <option value=\"Concluído\">Concluído</option>
+              <option value=\"Pendente\">Pendente</option>
+            </select>
+          </td>
+
+          <td>$prazo</td>
+
+          <td>
+            <button class=\"botao-visualizar\">👁️</button>
+            <button class=\"botao-editar\">✏️</button>
+            <button class=\"botao-ocultar\">📂</button>
+          </td>
+        </tr>";
     }
-    ?>
+} else {
+    echo "
+    <tr>
+      <td colspan=\"6\" class=\"mensagem-central\">
+        Você ainda não possui nenhum projeto cadastrado.
+      </td>
+    </tr>";
+}
+?>
   </tbody>
 </table>
 
 <button id="btnToggleArquivar">📂 Ver Projetos Arquivados</button>
 
-<div id="containerArquivar" style="display: none;">
+<div id="containerArquivar" style="display:none;">
   <table id="tabela-ocultos">
     <thead>
       <tr>
@@ -114,8 +170,10 @@ if (!$result) {
       </tr>
     </thead>
     <tbody>
-      <tr id="linha-arquivar-vazia" style="display: none;">
-        <td colspan="6" class="mensagem-central">Seus arquivos ocultos estão vazios.</td>
+      <tr>
+        <td colspan="6" class="mensagem-central">
+          Seus arquivos ocultos estão vazios.
+        </td>
       </tr>
     </tbody>
   </table>
