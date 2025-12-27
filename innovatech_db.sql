@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24/12/2025 às 05:57
+-- Tempo de geração: 27/12/2025 às 05:43
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -40,6 +40,14 @@ CREATE TABLE `projetos` (
   `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `projetos`
+--
+
+INSERT INTO `projetos` (`id`, `nome`, `descricao`, `categoria`, `data_inicio`, `data_fim`, `prioridade`, `status`, `criador_id`, `criado_em`) VALUES
+(1, 'teste', 'test1', 'TCC', '2025-12-26', '2025-12-27', 'Média', 'Concluído', 1, '2025-12-27 00:56:34'),
+(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Início', 1, '2025-12-27 02:59:58');
+
 -- --------------------------------------------------------
 
 --
@@ -52,6 +60,16 @@ CREATE TABLE `projeto_aluno` (
   `usuario_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `projeto_aluno`
+--
+
+INSERT INTO `projeto_aluno` (`id`, `projeto_id`, `usuario_id`) VALUES
+(1, 1, 128),
+(2, 1, 111),
+(6, 2, 128),
+(7, 2, 111);
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +81,16 @@ CREATE TABLE `projeto_orientador` (
   `projeto_id` int(11) NOT NULL,
   `professor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `projeto_orientador`
+--
+
+INSERT INTO `projeto_orientador` (`id`, `projeto_id`, `professor_id`) VALUES
+(1, 1, 196),
+(2, 1, 199),
+(6, 2, 199),
+(7, 2, 197);
 
 -- --------------------------------------------------------
 
@@ -227,19 +255,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_aluno`
 --
 ALTER TABLE `projeto_aluno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_orientador`
 --
 ALTER TABLE `projeto_orientador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
