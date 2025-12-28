@@ -32,7 +32,6 @@
                     <ul class="submenu">
                         <li><a href="../Shared/RegisterProject.php">Cadastrar Projetos</a></li>
                         <li><a href="../Shared/ViewListProject.php">Visualizar Lista de Projetos</a></li>
-                        <li><a href="../Shared/CompleteProject.php">Concluir Projeto</a></li>
                     </ul>
              </li>
  

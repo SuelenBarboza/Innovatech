@@ -85,53 +85,76 @@ while ($row = $resultProfessores->fetch_assoc()) {
 
   <div id="dados-projeto">
 
-    <p><strong>Nome:</strong> <?= htmlspecialchars($projeto['nome']) ?></p>
+    <p>
+      <strong>Nome</strong>
+      <?= htmlspecialchars($projeto['nome']) ?>
+    </p>
 
-    <p><strong>Categoria:</strong>
+    <p>
+      <strong>Categoria</strong>
       <?= !empty($projeto['categoria']) ? htmlspecialchars($projeto['categoria']) : 'Não definida' ?>
     </p>
 
-    <p><strong>Prioridade:</strong>
+    <p>
+      <strong>Prioridade</strong>
       <?= !empty($projeto['prioridade']) ? htmlspecialchars($projeto['prioridade']) : 'Não definida' ?>
     </p>
 
-    <p><strong>Status:</strong>
+    <p>
+      <strong>Status</strong>
       <?= !empty($projeto['status']) ? htmlspecialchars($projeto['status']) : 'Não definido' ?>
     </p>
 
-    <p><strong>Data de Início:</strong>
+    <p>
+      <strong>Data de Início</strong>
       <?= date("d/m/Y", strtotime($projeto['data_inicio'])) ?>
     </p>
 
-    <p><strong>Data de Conclusão:</strong>
+    <p>
+      <strong>Data de Conclusão</strong>
       <?= !empty($projeto['data_fim'])
           ? date("d/m/Y", strtotime($projeto['data_fim']))
           : 'Não definida' ?>
     </p>
 
-    <p><strong>Alunos:</strong><br>
+    <p>
+      <strong>Alunos</strong>
       <?= !empty($alunos) ? implode(", ", array_map("htmlspecialchars", $alunos)) : 'Não definido' ?>
     </p>
 
-    <p><strong>Orientador(es):</strong><br>
+    <p>
+      <strong>Orientador(es)</strong>
       <?= !empty($professores) ? implode(", ", array_map("htmlspecialchars", $professores)) : 'Não definido' ?>
     </p>
 
-    <p><strong>Descrição:</strong><br>
+    <p>
+      <strong>Descrição</strong>
       <?= nl2br(htmlspecialchars($projeto['descricao'])) ?>
     </p>
 
   </div>
 
-  <!-- AÇÕES -->
+  <!-- AÇÕES DO PROJETO -->
   <div class="acoes-projeto">
+
     <a href="EditProject.php?id=<?= $projeto['id'] ?>" class="btn-editar">
       ✏️ Editar Projeto
     </a>
 
+    <a href="CalendarView.php?projeto=<?= $projeto['id'] ?>" class="btn-editar">
+      📅 Ver no Calendário
+    </a>
+
+    <?php if ($projeto['status'] !== 'Concluído'): ?>
+      <a href="CompleteProject.php?id=<?= $projeto['id'] ?>" class="btn-editar">
+        ✅ Concluir Projeto
+      </a>
+    <?php endif; ?>
+
     <a href="ViewListProject.php" class="btn-voltar">
       ⬅️ Voltar para a Lista
     </a>
+
   </div>
 </section>
 
@@ -139,3 +162,4 @@ while ($row = $resultProfessores->fetch_assoc()) {
 
 </body>
 </html>
+

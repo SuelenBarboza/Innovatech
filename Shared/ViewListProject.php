@@ -129,7 +129,6 @@ if ($result->num_rows > 0) {
               <option value=\"\">Selecionar</option>
               <option value=\"Planejamento\">Planejamento</option>
               <option value=\"Andamento\">Andamento</option>
-              <option value=\"Concluído\">Concluído</option>
               <option value=\"Pendente\">Pendente</option>
             </select>
           </td>

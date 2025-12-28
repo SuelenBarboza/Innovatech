@@ -2,8 +2,8 @@
 include("../Config/db.php");
 
 // Ordena pelo término da tarefa (data_fim), tarefas sem data vão para o final
-$sql = "SELECT * FROM tarefas ORDER BY data_fim IS NULL, data_fim ASC";
-$result = $conn->query($sql);
+// $sql = "SELECT * FROM tarefas ORDER BY data_fim IS NULL, data_fim ASC";
+// $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>

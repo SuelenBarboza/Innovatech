@@ -1,555 +1,702 @@
-/* img fundo */
-body {
-    background-image: url("../Img/FundoInnova.png"); 
-    background-size: cover;
-    background-position: center; 
-    background-repeat: no-repeat;
+/* ViewListProject.css - Versão Aprimorada */
+
+/* ================= VARIÁVEIS CSS ================= */
+:root {
+    /* Cores principais */
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    
+    /* Cores de fundo */
+    --bg-body: #ffffff;
+    --bg-header: #f8fafc;
+    --bg-table: #ffffff;
+    --bg-hover: #f1f5f9;
+    --bg-modal: #ffffff;
+    
+    /* Cores de texto */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #ffffff;
+    --text-dark: #000000;
+    
+    /* Cores de borda */
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-dark: #475569;
+    
+/* ================= PRIORIDADE ================= */
+--priority-high: #dc2626;        /* Vermelho */
+--priority-medium: #f97316;      /* Laranja */
+--priority-low: #22c55e;         /* Verde */
+--priority-undefined: #64748b;   /* Cinza */
+
+/* ================= STATUS ================= */
+--status-planning: #7c3aed;      /* Roxo */
+--status-progress: #0ea5e9;      /* Azul */
+--status-completed: #16a34a;     /* Verde forte */
+--status-pending: #ef4444;       /* Vermelho */
+--status-start: #e5e7eb;         /* Cinza claro */
+--status-start-text: #334155;    /* Texto cinza escuro */
+--status-undefined: #64748b;
+
+
+    
+    /* Sombras */
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-heavy: 0 10px 25px rgba(59, 130, 246, 0.3);
+    --shadow-button: 0 3px 6px rgba(59, 130, 246, 0.3);
+    
+    /* Bordas */
+    --radius-small: 4px;
+    --radius-medium: 8px;
+    --radius-large: 12px;
+    --radius-pill: 20px;
+    
+    /* Espaçamentos */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
 }
 
-/* Geral - Fundo branco mantendo estrutura */
-html, body {
+/* ================= RESET E BASE ================= */
+body {
+    background-image: url("../Img/FundoInnova.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--bg-body);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
-    font-family: 'Segoe UI', sans-serif;
-    color: #1e293b;
-    overflow-y: auto !important;
-    height: 100%;
+    min-height: 100vh;
 }
 
+/* ================= CABEÇALHO DA PÁGINA ================= */
 h1 {
-    background-color: #f8fafc;
-    color: #3b82f6;
+    background-color: var(--bg-header);
+    color: var(--primary-color);
     text-align: center;
-    padding: 1rem 0;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid #e2e8f0;
+    padding: var(--spacing-md) 0;
+    margin: 0 0 var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 1.75rem;
+    font-weight: 600;
+    position: relative;
 }
 
-/* TABELA - Estilo claro mantendo estrutura */
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+}
+
+/* ================= FILTROS ================= */
+.filtros {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--bg-header);
+    border-radius: var(--radius-medium);
+    margin: var(--spacing-md) auto;
+    max-width: 600px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-light);
+}
+
+.filtros select {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-medium);
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233b82f6' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    padding-right: 40px;
+}
+
+.filtros select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.filtros select:hover {
+    border-color: var(--primary-light);
+}
+
+/* ================= TABELA ================= */
 table {
     width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: var(--bg-table);
+    box-shadow: var(--shadow-medium);
+    border-radius: var(--radius-medium);
     overflow: hidden;
-    border: 1px solid #e2e8f0;
-}
-
-th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
+    border: 1px solid var(--border-light);
+    margin-bottom: var(--spacing-lg);
 }
 
 th {
-    background-color: #3b82f6;
-    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-light);
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
 }
 
-tr:hover {
-    background-color: #f1f5f9;
+th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: middle;
+    transition: background-color 0.2s ease;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: var(--bg-hover);
 }
 
 .mensagem-central {
     text-align: center;
-    font-weight: bold;
-    color: #64748b;
-    padding: 20px;
-    background-color: #ffffff;
-    font-size: 16px;
-    border-bottom: 1px solid #e2e8f0;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: var(--spacing-xl) var(--spacing-md);
+    background-color: var(--bg-table);
+    font-size: 1rem;
 }
 
-/* ===================== */
-/* CLASSE HIDDEN */
-/* ===================== */
-.hidden {
-    display: none !important;
-}
+/* ================= STATUS E PRIORIDADE ================= */
 
-/* ===================== */
-/* CÉLULAS EDITÁVEIS */
-/* ===================== */
-.prioridade-cell,
-.status-cell {
+/* Contêiner comum */
+.status-cell,
+.prioridade-cell {
     position: relative;
     min-width: 140px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
 }
 
-.prioridade-cell:hover,
-.status-cell:hover {
-    background-color: #f8fafc;
-}
+/* Display - VISUALIZAÇÃO */
+.status-display,
+.prioridade-display {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-/* ===================== */
-/* DISPLAYS (VISUALIZAÇÃO) - CORREÇÃO AQUI */
-/* ===================== */
-.prioridade-display,
-.status-display {
     padding: 6px 14px;
-    border-radius: 20px;
-    /* REMOVI: color: white; ← ESTA LINHA CAUSAVA O PROBLEMA */
-    font-weight: bold;
-    display: inline-block;
-    text-align: center;
-    min-width: 110px;
-    font-size: 0.85rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.prioridade-display:hover,
-.status-display:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* ===================== */
-/* DROPDOWNS (EDIÇÃO) */
-/* ===================== */
-.select-prioridade,
-.select-status {
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 2px solid #3b82f6;
-    font-weight: bold;
     min-width: 120px;
-    background-color: white;
-    color: #1e293b;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+
+    border-radius: 6px; /* <<< mudou aqui */
+    border-left: 6px solid transparent; /* detalhe visual */
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     cursor: pointer;
-    font-size: 0.9rem;
-    box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
-    outline: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%233b82f6' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-    padding-right: 30px;
+    transition: all 0.25s ease;
 }
 
-.select-prioridade:focus,
-.select-status:focus {
-    border-color: #2563eb;
+.status-display::before,
+.prioridade-display::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.status-display:hover::before,
+.prioridade-display:hover::before {
+    width: 150px;
+    height: 150px;
+}
+
+.status-display:hover,
+.prioridade-display:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* ================= CORES DE STATUS ================= */
+
+.status-display.status-planejamento {
+    background-color: var(--status-planning);
+    color: white;
+    border-left-color: #5b21b6;
+}
+
+.status-display.status-andamento {
+    background-color: var(--status-progress);
+    color: white;
+    border-left-color: #0369a1;
+}
+
+.status-display.status-concluido {
+    background-color: var(--status-completed);
+    color: white;
+    border-left-color: #14532d;
+}
+
+.status-display.status-pendente {
+    background-color: var(--status-pending);
+    color: white;
+    border-left-color: #991b1b;
+}
+
+/* 🔥 CORRIGIDO: INÍCIO AGORA TEM IDENTIDADE */
+.status-display.status-inicio,
+.status-display.status-incio {
+    background-color: var(--status-start);
+    color: var(--status-start-text);
+    border-left-color: #94a3b8;
+}
+
+.status-display.status-indefinido {
+    background-color: var(--status-undefined);
+    color: white;
+    border-left-color: #334155;
+}
+
+
+/* ================= CORES DE PRIORIDADE ================= */
+
+.prioridade-display.prioridade-alta {
+    background-color: var(--priority-high);
+    color: white;
+    border-left-color: #991b1b;
+}
+
+.prioridade-display.prioridade-média {
+    background-color: var(--priority-medium);
+    color: white;
+    border-left-color: #c2410c;
+}
+
+.prioridade-display.prioridade-baixa {
+    background-color: var(--priority-low);
+    color: white;
+    border-left-color: #166534;
+}
+
+.prioridade-display.prioridade-indefinida {
+    background-color: var(--priority-undefined);
+    color: white;
+    border-left-color: #334155;
+}
+
+
+/* ================= DROPDOWNS DE EDIÇÃO ================= */
+.select-status,
+.select-prioridade {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    width: 100%;
+    min-width: 120px;
+
+    padding: 6px 36px 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+
+    border-radius: 6px;
+    border-left: 6px solid var(--primary-color);
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+
+    background-color: var(--bg-table);
+    color: var(--text-primary);
+
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+
+    /* seta custom */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%233b82f6' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+}
+
+
+.select-status:focus,
+.select-prioridade:focus {
+    outline: none;
+    border-color: var(--primary-dark);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
-/* Opções dos dropdowns com cores */
+.select-status option,
 .select-prioridade option {
-    padding: 8px;
-    font-weight: bold;
+    padding: 8px 12px;
+    font-weight: 600;
 }
 
-.select-prioridade option[value=""] {
-    color: #64748b;
-    font-style: italic;
-}
-
-.select-prioridade option[value="Alta"] {
-    background-color: #ef4444;
-    color: white;
-}
-
-.select-prioridade option[value="Média"] {
-    background-color: #facc15;
-    color: #1e293b;
-}
-
-.select-prioridade option[value="Baixa"] {
-    background-color: #22c55e;
-    color: white;
-}
-
-.select-status option {
-    padding: 8px;
-    font-weight: bold;
-}
-
-.select-status option[value=""] {
-    color: #64748b;
-    font-style: italic;
-}
-
+/* Cores das opções nos dropdowns */
+/* STATUS */
 .select-status option[value="Planejamento"] {
-    background-color: #60a5fa;
+    background-color: var(--status-planning);
     color: white;
 }
 
 .select-status option[value="Andamento"] {
-    background-color: #3b82f6;
+    background-color: var(--status-progress);
     color: white;
 }
 
 .select-status option[value="Concluído"] {
-    background-color: #10b981;
+    background-color: var(--status-completed);
     color: white;
 }
 
 .select-status option[value="Pendente"] {
-    background-color: #ef4444;
+    background-color: var(--status-pending);
     color: white;
 }
 
-/* ===================== */
-/* CORES DAS PRIORIDADES */
-/* ===================== */
-.prioridade-alta {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    border-color: #b91c1c;
-    box-shadow: 0 3px 6px rgba(239, 68, 68, 0.3);
-    color: #ffffff !important;
+.select-status option[value="Início"] {
+    background-color: var(--status-start);
+    color: var(--status-start-text);
 }
 
-.prioridade-média {
-    background: linear-gradient(135deg, #facc15, #eab308);
-    color: #000000 !important;
-    border-color: #ca8a04;
-    box-shadow: 0 3px 6px rgba(250, 204, 21, 0.3);
+/* PRIORIDADE */
+.select-prioridade option[value="Alta"] {
+    background-color: var(--priority-high);
+    color: white;
 }
 
-.prioridade-baixa {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    border-color: #15803d;
-    box-shadow: 0 3px 6px rgba(34, 197, 94, 0.3);
-    color: #ffffff !important;
+.select-prioridade option[value="Média"] {
+    background-color: var(--priority-medium);
+    color: white;
 }
 
-/* ===================== */
-/* CORES DOS STATUS - GARANTINDO CORES ESPECÍFICAS */
-/* ===================== */
-
-/* STATUS INICIO - TEXTO PRETO COM FUNDO CLARO */
-.status-inicio {
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-    color: #000000 !important;
-    border-color: #cbd5e1;
-    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3);
+.select-prioridade option[value="Baixa"] {
+    background-color: var(--priority-low);
+    color: white;
 }
 
-/* STATUS PLANEJAMENTO - AZUL CLARO */
-.status-planejamento {
-    background: linear-gradient(135deg, #60a5fa, #3b82f6);
-    color: #ffffff !important;
-    border-color: #2563eb;
-    box-shadow: 0 3px 6px rgba(96, 165, 250, 0.3);
+
+/* ================= UTILIDADES ================= */
+.hidden {
+    display: none !important;
 }
 
-/* STATUS ANDAMENTO - AZUL */
-.status-andamento {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: #ffffff !important;
-    border-color: #1d4ed8;
-    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3);
-}
-
-/* STATUS CONCLUÍDO - VERDE */
-.status-concluido {
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: #ffffff !important;
-    border-color: #047857;
-    box-shadow: 0 3px 6px rgba(16, 185, 129, 0.3);
-}
-
-/* STATUS PENDENTE - VERMELHO */
-.status-pendente {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    color: #ffffff !important;
-    border-color: #b91c1c;
-    box-shadow: 0 3px 6px rgba(239, 68, 68, 0.3);
-}
-
-/* ===================== */
-/* PARA VARIANTES SEM ACENTO */
-/* ===================== */
-/* Se o PHP gerar sem acento */
-.status-incio {
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-    color: #000000 !important;
-    border-color: #cbd5e1;
-    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3);
-}
-
-/* ===================== */
-/* CORES PARA VALORES INDEFINIDOS/VAZIOS */
-/* ===================== */
-.prioridade-indefinida,
-.status-indefinido {
-    background: linear-gradient(135deg, #94a3b8, #64748b);
-    color: #ffffff !important;
-    border: 2px solid #475569;
-    box-shadow: 0 3px 6px rgba(100, 116, 139, 0.3);
-}
-
-/* ===================== */
-/* REGRAS DE FALLBACK PARA GARANTIR CORES */
-/* ===================== */
-
-/* Garantir que todos os displays de prioridade tenham cores definidas */
-.prioridade-display {
-    color: inherit; /* Herda da classe específica */
-}
-
-/* Garantir que todos os displays de status tenham cores definidas */
-.status-display {
-    color: inherit; /* Herda da classe específica */
-}
-
-/* Fallback para status não identificados - SERÁ PRETO */
-.status-display:not(.status-inicio):not(.status-incio):not(.status-planejamento):not(.status-andamento):not(.status-concluido):not(.status-pendente):not(.status-indefinido) {
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0) !important;
-    color: #000000 !important;
-    border-color: #cbd5e1 !important;
-    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3) !important;
-}
-
-/* Fallback para prioridade não identificada */
-.prioridade-display:not(.prioridade-alta):not(.prioridade-média):not(.prioridade-baixa):not(.prioridade-indefinida) {
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0) !important;
-    color: #000000 !important;
-    border-color: #cbd5e1 !important;
-    box-shadow: 0 3px 6px rgba(203, 213, 225, 0.3) !important;
-}
-
-/* ===================== */
-/* LINK DO PROJETO */
-/* ===================== */
+/* ================= LINKS ================= */
 a.link-projeto {
-    color: #3b82f6;
+    color: var(--primary-color);
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s ease;
-    display: inline-block;
+    font-weight: 600;
     padding: 2px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+a.link-projeto::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 a.link-projeto:hover {
-    color: #2563eb;
-    text-decoration: underline;
+    color: var(--primary-dark);
 }
 
-/* ===================== */
-/* BOTÕES */
-/* ===================== */
+a.link-projeto:hover::after {
+    width: 100%;
+}
+
+/* ================= BOTÕES ================= */
 button {
     border: none;
-    background: none;
+    background: transparent;
     cursor: pointer;
     font-size: 1rem;
-    margin-right: 5px;
-    transition: all 0.2s ease;
-    padding: 5px;
-    border-radius: 4px;
+    margin-right: var(--spacing-xs);
+    transition: all 0.3s ease;
+    padding: 6px;
+    border-radius: var(--radius-small);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button:hover {
     transform: scale(1.1);
-    background-color: #f1f5f9;
-}
-
-.botao-editar {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 6px;
-    border-radius: 4px;
-}
-
-.botao-editar:hover {
-    background-color: #e2e8f0;
-}
-
-button.salvar {
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    margin-left: 10px;
-    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
-}
-
-button.salvar:hover {
-    background-color: #2563eb;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(37, 99, 235, 0.4);
+    background-color: var(--bg-hover);
 }
 
 #btnToggleArquivar {
-    margin: 1rem;
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-md) auto;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-light);
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-medium);
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 6px rgba(59, 130, 246, 0.3);
+    box-shadow: var(--shadow-button);
 }
 
 #btnToggleArquivar:hover {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    transform: translateY(-1px);
-    box-shadow: 0 5px 8px rgba(37, 99, 235, 0.4);
+    background: linear-gradient(135deg, var(--primary-dark), #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
 }
 
-/* ===================== */
-/* MODAL */
-/* ===================== */
+/* ================= MODAL ================= */
 .modal {
     display: none;
     position: fixed;
-    z-index: 999;
-    padding-top: 80px;
-    left: 0;
+    z-index: 1000;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal-conteudo {
-    background-color: #ffffff;
-    margin: auto;
-    padding: 25px;
-    border: 2px solid #3b82f6;
-    border-radius: 12px;
-    width: 60%;
+    position: relative;
+    background-color: var(--bg-modal);
+    margin: 80px auto;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-large);
+    width: 90%;
     max-width: 500px;
-    color: #1e293b;
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-    animation: modalFadeIn 0.3s ease-out;
+    box-shadow: var(--shadow-heavy);
+    border: 2px solid var(--primary-color);
+    animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-@keyframes modalFadeIn {
+@keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-50px) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .modal-conteudo h2 {
+    color: var(--primary-color);
     margin-top: 0;
-    color: #3b82f6;
-    border-bottom: 2px solid #e2e8f0;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--border-light);
 }
 
 .modal-conteudo p {
-    margin: 12px 0;
-    padding: 8px 0;
-    border-bottom: 1px dashed #e2e8f0;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px dashed var(--border-light);
 }
 
 .modal-conteudo strong {
-    color: #475569;
-    min-width: 100px;
+    color: var(--text-secondary);
+    min-width: 120px;
     display: inline-block;
 }
 
 .fechar {
-    color: #64748b;
-    float: right;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: var(--text-secondary);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: color 0.3s ease;
     line-height: 1;
 }
 
 .fechar:hover {
-    color: #ef4444;
+    color: var(--priority-high);
 }
 
-/* ===================== */
-/* ANIMAÇÕES DE TRANSICAO */
-/* ===================== */
-.prioridade-display,
-.status-display {
-    animation: fadeIn 0.3s ease;
+/* ================= RESPONSIVIDADE ================= */
+@media (max-width: 1024px) {
+    .filtros {
+        flex-wrap: wrap;
+    }
+    
+    .filtros select {
+        min-width: 150px;
+    }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* ===================== */
-/* RESPONSIVO */
-/* ===================== */
 @media (max-width: 768px) {
     .modal-conteudo {
-        width: 85%;
-        padding: 1.2rem;
+        width: 90%;
+        margin: 60px auto;
+        padding: var(--spacing-md);
     }
     
-    .prioridade-cell,
-    .status-cell {
-        min-width: 120px;
+    .filtros {
+        flex-direction: column;
+        gap: var(--spacing-sm);
     }
     
-    .prioridade-display,
+    .filtros select {
+        width: 100%;
+    }
+    
     .status-display,
-    .select-prioridade,
-    .select-status {
+    .prioridade-display,
+    .select-status,
+    .select-prioridade {
         min-width: 90px;
         font-size: 0.75rem;
-        padding: 4px 8px;
+        padding: 4px 10px;
     }
     
     th, td {
-        padding: 0.8rem 0.5rem;
+        padding: var(--spacing-sm);
+    }
+    
+    table {
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
-    .modal-conteudo {
-        width: 95%;
-        padding: 1rem;
+    h1 {
+        font-size: 1.4rem;
+        padding: var(--spacing-sm) 0;
     }
     
-    .prioridade-cell,
-    .status-cell {
+    .status-cell,
+    .prioridade-cell {
         min-width: 100px;
     }
     
-    .prioridade-display,
-    .status-display,
-    .select-prioridade,
-    .select-status {
-        min-width: 80px;
-        font-size: 0.7rem;
+    .modal-conteudo {
+        width: 95%;
+        margin: 40px auto;
+        padding: var(--spacing-sm);
     }
     
-    h1 {
-        font-size: 1.5rem;
-        padding: 0.8rem 0;
+    .modal-conteudo p {
+        font-size: 0.9rem;
     }
-
-
-
-.status-display:empty {
-  display: none;
+    
+    button {
+        padding: 4px;
+        font-size: 0.9rem;
+    }
+    
+    #btnToggleArquivar {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
 }
 
+/* ================= ANIMAÇÕES ================= */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.status-display.status-andamento,
+.prioridade-display.prioridade-alta {
+    animation: pulse 2s infinite;
+}
+
+/* ================= ESTADOS DE FOCO E ATIVO ================= */
+.select-status:focus-visible,
+.select-prioridade:focus-visible,
+.filtros select:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ================= SCROLLBAR PERSONALIZADA ================= */
+@media (min-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--bg-hover);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-light);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+    }
 }
