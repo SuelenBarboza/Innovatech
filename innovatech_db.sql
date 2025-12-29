@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28/12/2025 às 07:28
+-- Tempo de geração: 29/12/2025 às 08:12
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `prioridade_usuario`
+--
+
+CREATE TABLE `prioridade_usuario` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `projeto_id` int(11) NOT NULL,
+  `prioridade` enum('Baixa','Média','Alta') NOT NULL DEFAULT 'Média'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `projetos`
 --
 
@@ -37,16 +50,17 @@ CREATE TABLE `projetos` (
   `prioridade` enum('Baixa','Média','Alta') DEFAULT 'Média',
   `status` enum('Planejamento','Andamento','Pendente','Concluído') DEFAULT 'Planejamento',
   `criador_id` int(11) NOT NULL,
-  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+  `criado_em` timestamp NOT NULL DEFAULT current_timestamp(),
+  `arquivado` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `projetos`
 --
 
-INSERT INTO `projetos` (`id`, `nome`, `descricao`, `categoria`, `data_inicio`, `data_fim`, `prioridade`, `status`, `criador_id`, `criado_em`) VALUES
-(1, 'teste', 'test1', 'TCC', '2025-12-26', '2025-12-27', 'Média', '', 1, '2025-12-27 00:56:34'),
-(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Planejamento', 1, '2025-12-27 02:59:58');
+INSERT INTO `projetos` (`id`, `nome`, `descricao`, `categoria`, `data_inicio`, `data_fim`, `prioridade`, `status`, `criador_id`, `criado_em`, `arquivado`) VALUES
+(1, 'teste', 'test1', 'TCC', '2025-12-26', '2025-12-27', 'Média', 'Planejamento', 1, '2025-12-27 00:56:34', 1),
+(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Planejamento', 1, '2025-12-27 02:59:58', 1);
 
 -- --------------------------------------------------------
 
@@ -103,18 +117,18 @@ CREATE TABLE `projeto_usuario` (
   `projeto_id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `papel` enum('Criador','Aluno','Orientador') NOT NULL,
-  `prioridade` enum('Baixa','Média','Alta') DEFAULT NULL
+  `prioridade` enum('Baixa','Média','Alta') DEFAULT NULL,
+  `arquivado` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `projeto_usuario`
 --
 
-INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `papel`, `prioridade`) VALUES
-(1, 2, 1, 'Aluno', 'Baixa'),
-(2, 2, 1, 'Aluno', 'Baixa'),
-(3, 2, 1, 'Aluno', 'Baixa'),
-(4, 2, 1, 'Aluno', 'Baixa');
+INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `papel`, `prioridade`, `arquivado`) VALUES
+(1, 2, 1, 'Aluno', 'Média', 0),
+(12, 1, 1, 'Criador', 'Baixa', 0),
+(23, 2, 1, 'Aluno', 'Média', 0);
 
 -- --------------------------------------------------------
 
@@ -242,6 +256,13 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo_solicitado`, `apro
 --
 
 --
+-- Índices de tabela `prioridade_usuario`
+--
+ALTER TABLE `prioridade_usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario_id` (`usuario_id`,`projeto_id`);
+
+--
 -- Índices de tabela `projetos`
 --
 ALTER TABLE `projetos`
@@ -284,6 +305,12 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `prioridade_usuario`
+--
+ALTER TABLE `prioridade_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
@@ -305,7 +332,7 @@ ALTER TABLE `projeto_orientador`
 -- AUTO_INCREMENT de tabela `projeto_usuario`
 --
 ALTER TABLE `projeto_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

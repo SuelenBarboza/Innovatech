@@ -1,4 +1,5 @@
 <?php
+// Edita um projeto existente no sistema
 include("db.php");
 
 if (!isset($_POST['id_projeto'])) {

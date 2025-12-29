@@ -1,4 +1,5 @@
 <?php
+// Manda o projeto para o banco de dados
 session_start();
 include("../Config/db.php");
 

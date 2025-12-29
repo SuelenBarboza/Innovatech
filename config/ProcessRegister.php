@@ -1,4 +1,5 @@
 <?php
+// Registra o usuarios no sistema
 require_once 'db.php';
 
 // Recebendo dados

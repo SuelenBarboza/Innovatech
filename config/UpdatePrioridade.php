@@ -1,4 +1,5 @@
 <?php
+// Prioridade da lista de projetos
 include("../Config/db.php");
 session_start();
 

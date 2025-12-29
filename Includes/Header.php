@@ -1,3 +1,4 @@
+<!-- Header das páginas do sistema -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -102,7 +103,7 @@
  
  
 
-    <script src="/Assets/Js/Notification.js"></script>
+    <!-- <script src="/Assets/Js/Notification.js"></script> -->
  
     
 </body>

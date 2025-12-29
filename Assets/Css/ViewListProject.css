@@ -700,3 +700,33 @@ button:hover {
         background: var(--primary-color);
     }
 }
+
+/* Garantir que as mensagens fiquem centralizadas */
+.mensagem-tr td {
+    text-align: center !important;
+    padding: 40px !important;
+    font-style: italic;
+    color: #666;
+    background-color: #f9f9f9 !important;
+}
+
+/* Forçar reflow quando necessário */
+.force-reflow {
+    transform: translateZ(0);
+}
+
+/* Estilos para as tabelas */
+#tabela-projetos, #tabela-ocultos {
+    transition: all 0.3s ease;
+}
+
+/* Garantir que botões mantenham estilo após clone */
+.botao-ocultar, .botao-visualizar, .botao-editar-prioridade, .botao-editar-status {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.botao-ocultar:hover, .botao-visualizar:hover, 
+.botao-editar-prioridade:hover, .botao-editar-status:hover {
+    opacity: 0.8;
+}

@@ -1,4 +1,5 @@
 <?php
+// Procurar aluno ou professor pelo nome (autocomplete)
 require_once __DIR__ . "/db.php";
 
 header('Content-Type: application/json; charset=utf-8');

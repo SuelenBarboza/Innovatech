@@ -1,4 +1,5 @@
 <?php
+// Usuarios fazem Login no sistema e são redirecionados conforme o tipo de usuário.
 session_start();
 require_once "db.php";
 
