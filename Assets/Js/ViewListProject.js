@@ -33,6 +33,7 @@ function inicializarProjetos() {
             status: tr.dataset.status,
             prazo: tr.dataset.prazo,
             descricao: tr.dataset.descricao,
+            observacoes: tr.dataset.observacoes || "",
             arquivado: Number(tr.dataset.arquivado)
         });
     });
@@ -120,8 +121,15 @@ function criarLinha(p) {
     tr.dataset.status = p.status;
     tr.dataset.descricao = p.descricao;
 
+    // URL para a página de detalhes do projeto
+    const projetoUrl = `ViewProject.php?id=${p.id}`;
+
     tr.innerHTML = `
-        <td>${p.nome}</td>
+        <td>
+            <a href="${projetoUrl}" class="link-projeto" title="Abrir projeto">
+                ${p.nome}
+            </a>
+        </td>
         <td>${p.categoria}</td>
 
         <td class="prioridade-cell">
@@ -141,17 +149,18 @@ function criarLinha(p) {
                 <option value="Planejamento">Planejamento</option>
                 <option value="Andamento">Andamento</option>
                 <option value="Pendente">Pendente</option>
+                <option value="Concluído">Concluído</option>
             </select>
         </td>
 
         <td>${p.prazo}</td>
 
         <td>
-            <button class="botao-visualizar">👁️</button>
+            <button class="botao-visualizar" title="Ver detalhes rápidos">👁️</button>
             <button class="botao-editar-prioridade" title="Editar Prioridade">📋</button>
             <button class="botao-editar-status" title="Editar Status">📈</button>
             <button class="botao-ocultar">
-                ${p.arquivado ? "♻️ Restaurar" : "📂 Arquivar"}
+                ${p.arquivado ? "♻️" : "📂"}
             </button>
         </td>
     `;
@@ -426,6 +435,12 @@ function abrirModal(linha) {
     document.getElementById("detalhe-prioridade").textContent = linha.dataset.prioridade || "Não definida";
     document.getElementById("detalhe-status").textContent = linha.dataset.status || "Não definido";
     document.getElementById("detalhe-descricao").textContent = linha.dataset.descricao || "Sem descrição";
+    // Mostra observações finais apenas se status = Concluído
+    if (linha.dataset.status === "Concluído" && linha.dataset.observacoes) {
+        const obsElem = document.createElement("p");
+        obsElem.innerHTML = `<strong>Observações finais:</strong> ${linha.dataset.observacoes}`;
+        document.getElementById("detalhe-descricao").appendChild(obsElem);
+    }
 
     document.getElementById("modalDetalhes").style.display = "block";
 }
@@ -635,6 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
         console.log("=== DIAGNÓSTICO INICIAL ===");
         console.log("Total de projetos:", projetos.length);
+        console.log("Links de projeto:", document.querySelectorAll('.link-projeto').length);
         console.log("Botões de edição prioridade:", document.querySelectorAll('.botao-editar-prioridade').length);
         console.log("Botões de edição status:", document.querySelectorAll('.botao-editar-status').length);
         console.log("Botões de visualizar:", document.querySelectorAll('.botao-visualizar').length);

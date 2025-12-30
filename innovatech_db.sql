@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29/12/2025 às 08:12
+-- Tempo de geração: 30/12/2025 às 04:00
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -60,7 +60,7 @@ CREATE TABLE `projetos` (
 
 INSERT INTO `projetos` (`id`, `nome`, `descricao`, `categoria`, `data_inicio`, `data_fim`, `prioridade`, `status`, `criador_id`, `criado_em`, `arquivado`) VALUES
 (1, 'teste', 'test1', 'TCC', '2025-12-26', '2025-12-27', 'Média', 'Planejamento', 1, '2025-12-27 00:56:34', 1),
-(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Planejamento', 1, '2025-12-27 02:59:58', 1);
+(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Concluído', 1, '2025-12-27 02:59:58', 1);
 
 -- --------------------------------------------------------
 
@@ -79,10 +79,11 @@ CREATE TABLE `projeto_aluno` (
 --
 
 INSERT INTO `projeto_aluno` (`id`, `projeto_id`, `usuario_id`) VALUES
-(1, 1, 128),
-(2, 1, 111),
 (6, 2, 128),
-(7, 2, 111);
+(7, 2, 111),
+(8, 1, 128),
+(9, 1, 111),
+(10, 1, 131);
 
 -- --------------------------------------------------------
 
@@ -101,10 +102,10 @@ CREATE TABLE `projeto_orientador` (
 --
 
 INSERT INTO `projeto_orientador` (`id`, `projeto_id`, `professor_id`) VALUES
-(1, 1, 196),
-(2, 1, 199),
 (6, 2, 199),
-(7, 2, 197);
+(7, 2, 197),
+(8, 1, 196),
+(9, 1, 199);
 
 -- --------------------------------------------------------
 
@@ -129,6 +130,48 @@ INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `papel`, `prior
 (1, 2, 1, 'Aluno', 'Média', 0),
 (12, 1, 1, 'Criador', 'Baixa', 0),
 (23, 2, 1, 'Aluno', 'Média', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tarefas`
+--
+
+CREATE TABLE `tarefas` (
+  `id` int(11) NOT NULL,
+  `projeto_id` int(11) NOT NULL,
+  `nome` varchar(150) NOT NULL,
+  `descricao` text DEFAULT NULL,
+  `responsavel_id` int(11) DEFAULT NULL,
+  `prioridade` enum('Baixa','Média','Alta') DEFAULT 'Média',
+  `status` enum('Planejamento','Em Andamento','Concluído') DEFAULT 'Planejamento',
+  `data_inicio` date DEFAULT NULL,
+  `data_fim` date DEFAULT NULL,
+  `arquivado` tinyint(1) DEFAULT 0,
+  `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tarefas`
+--
+
+INSERT INTO `tarefas` (`id`, `projeto_id`, `nome`, `descricao`, `responsavel_id`, `prioridade`, `status`, `data_inicio`, `data_fim`, `arquivado`, `criado_em`) VALUES
+(1, 1, 'aa', 'aaa', 131, 'Média', 'Planejamento', '2025-12-29', '2025-12-30', 0, '2025-12-30 02:58:17'),
+(2, 2, 'aa2', 'aaa2', 111, 'Média', 'Planejamento', '2025-12-29', '2025-12-30', 0, '2025-12-30 02:59:38');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tarefa_usuario`
+--
+
+CREATE TABLE `tarefa_usuario` (
+  `id` int(11) NOT NULL,
+  `tarefa_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `prioridade` enum('Baixa','Média','Alta') DEFAULT 'Média',
+  `arquivado` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -294,6 +337,22 @@ ALTER TABLE `projeto_usuario`
   ADD KEY `fk_pu_usuario` (`usuario_id`);
 
 --
+-- Índices de tabela `tarefas`
+--
+ALTER TABLE `tarefas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projeto_id` (`projeto_id`),
+  ADD KEY `responsavel_id` (`responsavel_id`);
+
+--
+-- Índices de tabela `tarefa_usuario`
+--
+ALTER TABLE `tarefa_usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tarefa_id` (`tarefa_id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -320,19 +379,31 @@ ALTER TABLE `projetos`
 -- AUTO_INCREMENT de tabela `projeto_aluno`
 --
 ALTER TABLE `projeto_aluno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_orientador`
 --
 ALTER TABLE `projeto_orientador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_usuario`
 --
 ALTER TABLE `projeto_usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT de tabela `tarefas`
+--
+ALTER TABLE `tarefas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `tarefa_usuario`
+--
+ALTER TABLE `tarefa_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -370,6 +441,20 @@ ALTER TABLE `projeto_orientador`
 ALTER TABLE `projeto_usuario`
   ADD CONSTRAINT `fk_pu_projeto` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_pu_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `tarefas`
+--
+ALTER TABLE `tarefas`
+  ADD CONSTRAINT `tarefas_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tarefas_ibfk_2` FOREIGN KEY (`responsavel_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL;
+
+--
+-- Restrições para tabelas `tarefa_usuario`
+--
+ALTER TABLE `tarefa_usuario`
+  ADD CONSTRAINT `tarefa_usuario_ibfk_1` FOREIGN KEY (`tarefa_id`) REFERENCES `tarefas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tarefa_usuario_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

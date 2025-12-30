@@ -26,10 +26,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $usuario_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
-// DEBUG: Verifique quantos registros estão sendo retornados
-$row_count = $result->num_rows;
-error_log("Número de projetos retornados: " . $row_count);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -117,7 +113,6 @@ error_log("Número de projetos retornados: " . $row_count);
         
         // Se já processou este ID, pula para o próximo
         if (in_array($id, $ids_processados)) {
-            error_log("ID duplicado ignorado: " . $id);
             continue;
         }
         
@@ -133,7 +128,9 @@ error_log("Número de projetos retornados: " . $row_count);
             ? date("d/m/Y", strtotime($row['data_fim']))
             : "Não definido";
         $descricao = htmlspecialchars($row['descricao'] ?? "");
+        $dataObservacoes = ($status === "Concluído") ? htmlspecialchars($row['observacoes'] ?? "") : "";
         $arquivado = (int) ($row['arquivado_usuario'] ?? 0);
+
 
         echo "
         <tr
@@ -144,11 +141,10 @@ error_log("Número de projetos retornados: " . $row_count);
           data-status='$status'
           data-prazo='$prazo'
           data-descricao='$descricao'
+          data-observacoes='$dataObservacoes'
           data-arquivado='$arquivado'
         ></tr>";
     }
-    
-    error_log("Total de projetos únicos: " . $contador);
     ?>
   </tbody>
 </table>

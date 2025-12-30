@@ -145,11 +145,7 @@ while ($row = $resultProfessores->fetch_assoc()) {
       📅 Ver no Calendário
     </a>
 
-    <?php if ($projeto['status'] !== 'Concluído'): ?>
-      <a href="CompleteProject.php?id=<?= $projeto['id'] ?>" class="btn-editar">
-        ✅ Concluir Projeto
-      </a>
-    <?php endif; ?>
+   
 
     <a href="ViewListProject.php" class="btn-voltar">
       ⬅️ Voltar para a Lista
