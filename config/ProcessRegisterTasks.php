@@ -1,4 +1,5 @@
 <?php
+// Envia ação de formulário para registrar uma nova tarefa no banco de dados.
 include("db.php");
 session_start();
 

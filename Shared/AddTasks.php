@@ -1,4 +1,5 @@
 <?php 
+// Adiciona tarefas a projetos existentes, atribuindo-as a alunos participantes.
 include("../Config/db.php");
 session_start();
 

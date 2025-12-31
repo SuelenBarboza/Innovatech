@@ -1,4 +1,5 @@
 <?php
+// Puxa os alunos do projeto para popular o dropdown na criação de tarefas
 include("../Config/db.php");
 session_start();
 

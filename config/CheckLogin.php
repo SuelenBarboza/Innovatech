@@ -1,9 +1,11 @@
 <?php
+// Para impedir que um aluno entre em páginas/pastas que não são dele, como admin.
 session_start();
 
 function isLoggedIn() {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['usuario_id']);
 }
+
 
 function requireLogin() {
     if (!isLoggedIn()) {

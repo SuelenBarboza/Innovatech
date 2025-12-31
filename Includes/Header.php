@@ -39,14 +39,8 @@
              <li>
                  <a href="#">Tarefas</a>
                  <ul class="submenu">
-                     <li><a href="../Shared/AddTasks.php">Adicionar Tarefas</a></li>
-                     <li><a href="../Shared/EditTasks.php">Editar Tarefas</a></li>
+                     <li><a href="../Shared/AddTasks.php">Adicionar Tarefas</a></li>                     
                      <li><a href="../Shared/ViewListTasks.php">Visualizar Lista de Tarefas</a></li>
-                     <li><a href="../Shared/CompleteTasks.php">Concluir Tarefas</a></li>
-                     <li><a href="../Shared/AddMembers.php">Adicionar Membros</a></li>
-                     <li><a href="../Shared/DeleteMember.php">Excluir Membro</a></li>
-                     <li><a href="../Shared/AssignTasks.php">Atribuir Tarefas</a></li>
-                     <li><a href="../Shared/DeleteTasks.php">Excluir Tarefa</a></li>
 
                  </ul>
              </li>

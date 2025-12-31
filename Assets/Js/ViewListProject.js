@@ -8,9 +8,9 @@ let editandoId = null; // Guarda qual linha está editando
 
 const CONFIG = {
     endpoints: {
-        prioridade: "../Config/UpdatePrioridade.php",
-        status: "../Config/UpdateStatus.php",
-        arquivar: "../Config/UpdateArquivado.php"
+        prioridade: "../Config/UpdatePriorityProject.php",
+        status: "../Config/UpdateStatusProject.php",
+        arquivar: "../Config/UpdateArchivedProject.php"
     }
 };
 
@@ -97,6 +97,9 @@ function renderizarTabelas() {
                 </td>
             </tr>`;
     }
+
+
+    
 
     // Adiciona projetos ativos
     ativos.forEach(p => tbodyProjetos.appendChild(criarLinha(p)));

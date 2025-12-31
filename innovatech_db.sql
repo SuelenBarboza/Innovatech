@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/12/2025 às 04:00
+-- Tempo de geração: 31/12/2025 às 07:27
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -60,7 +60,8 @@ CREATE TABLE `projetos` (
 
 INSERT INTO `projetos` (`id`, `nome`, `descricao`, `categoria`, `data_inicio`, `data_fim`, `prioridade`, `status`, `criador_id`, `criado_em`, `arquivado`) VALUES
 (1, 'teste', 'test1', 'TCC', '2025-12-26', '2025-12-27', 'Média', 'Planejamento', 1, '2025-12-27 00:56:34', 1),
-(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Concluído', 1, '2025-12-27 02:59:58', 1);
+(2, 'teste3', 'tt', 'Outro', '2025-12-25', '2025-12-30', NULL, 'Concluído', 1, '2025-12-27 02:59:58', 1),
+(3, 'eduardateste', 'testetete', 'Extensão', '2025-12-31', '2026-01-01', NULL, 'Planejamento', 1, '2025-12-31 06:24:04', 0);
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,8 @@ INSERT INTO `projeto_aluno` (`id`, `projeto_id`, `usuario_id`) VALUES
 (7, 2, 111),
 (8, 1, 128),
 (9, 1, 111),
-(10, 1, 131);
+(10, 1, 131),
+(11, 3, 131);
 
 -- --------------------------------------------------------
 
@@ -105,7 +107,8 @@ INSERT INTO `projeto_orientador` (`id`, `projeto_id`, `professor_id`) VALUES
 (6, 2, 199),
 (7, 2, 197),
 (8, 1, 196),
-(9, 1, 199);
+(9, 1, 199),
+(10, 3, 203);
 
 -- --------------------------------------------------------
 
@@ -127,9 +130,9 @@ CREATE TABLE `projeto_usuario` (
 --
 
 INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `papel`, `prioridade`, `arquivado`) VALUES
-(1, 2, 1, 'Aluno', 'Média', 0),
+(1, 2, 1, 'Aluno', 'Baixa', 0),
 (12, 1, 1, 'Criador', 'Baixa', 0),
-(23, 2, 1, 'Aluno', 'Média', 0);
+(23, 2, 1, 'Aluno', 'Baixa', 0);
 
 -- --------------------------------------------------------
 
@@ -172,6 +175,41 @@ CREATE TABLE `tarefa_usuario` (
   `prioridade` enum('Baixa','Média','Alta') DEFAULT 'Média',
   `arquivado` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `tarefa_usuario`
+--
+
+INSERT INTO `tarefa_usuario` (`id`, `tarefa_id`, `usuario_id`, `prioridade`, `arquivado`) VALUES
+(1, 2, 1, 'Média', 0),
+(2, 2, 1, 'Média', 0),
+(3, 1, 1, 'Baixa', 0),
+(4, 1, 1, 'Baixa', 0),
+(5, 1, 1, 'Baixa', 0),
+(6, 1, 1, 'Baixa', 0),
+(7, 2, 1, 'Média', 0),
+(8, 2, 1, 'Média', 0),
+(9, 2, 1, 'Média', 0),
+(10, 1, 1, 'Baixa', 0),
+(11, 2, 1, 'Média', 0),
+(12, 1, 1, 'Baixa', 0),
+(13, 2, 1, 'Média', 0),
+(14, 2, 1, 'Média', 0),
+(15, 1, 1, 'Baixa', 0),
+(16, 2, 1, 'Média', 0),
+(17, 2, 1, 'Média', 0),
+(18, 2, 1, 'Média', 0),
+(19, 1, 1, 'Baixa', 0),
+(20, 2, 1, 'Média', 0),
+(22, 2, 1, 'Média', 0),
+(24, 2, 1, 'Média', 0),
+(25, 1, 1, 'Baixa', 0),
+(27, 2, 1, 'Baixa', 0),
+(28, 1, 1, 'Baixa', 0),
+(29, 1, 1, 'Baixa', 0),
+(30, 1, 1, 'Baixa', 0),
+(31, 1, 1, 'Baixa', 0),
+(32, 1, 1, 'Baixa', 0);
 
 -- --------------------------------------------------------
 
@@ -373,19 +411,19 @@ ALTER TABLE `prioridade_usuario`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_aluno`
 --
 ALTER TABLE `projeto_aluno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_orientador`
 --
 ALTER TABLE `projeto_orientador`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `projeto_usuario`
@@ -403,7 +441,7 @@ ALTER TABLE `tarefas`
 -- AUTO_INCREMENT de tabela `tarefa_usuario`
 --
 ALTER TABLE `tarefa_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

@@ -1,41 +1,32 @@
-// Carregamento para editar as tarefas (MODAL)
-let acaoConfirmada = '';
-    const modal = document.getElementById("modalConfirmacao");
-    const mensagem = document.getElementById("mensagemModal");
-    const confirmarBtn = document.getElementById("confirmarAcao");
+document.getElementById('projeto').addEventListener('change', function() {
+    const projetoId = this.value;
+    const alunoSelect = document.getElementById('aluno');
 
-    function abrirModal(texto, acao) {
-      mensagem.innerText = texto;
-      acaoConfirmada = acao;
-      modal.classList.add("ativo");
+    alunoSelect.innerHTML = '<option>Carregando...</option>';
+
+    if (!projetoId) {
+        alunoSelect.innerHTML = '<option>Selecione o projeto primeiro</option>';
+        return;
     }
 
-    function fecharModal() {
-      modal.classList.remove("ativo");
-      acaoConfirmada = '';
-    }
+    fetch('../Config/GetAlunosProjeto.php?projeto_id=' + projetoId)
+        .then(res => res.json())
+        .then(data => {
+            alunoSelect.innerHTML = '<option value="">Selecione um aluno</option>';
 
-    document.getElementById("salvar").addEventListener("click", function (e) {
-      e.preventDefault();
-      abrirModal("Deseja realmente salvar as alterações da tarefa?", "salvar");
-    });
+            if (data.length === 0) {
+                alunoSelect.innerHTML = '<option>Nenhum aluno encontrado</option>';
+                return;
+            }
 
-    document.getElementById("cancelar").addEventListener("click", function () {
-      abrirModal("Deseja cancelar a edição da tarefa?", "cancelar");
-    });
-
-    confirmarBtn.addEventListener("click", function () {
-      if (acaoConfirmada === "salvar") {
-        alert("Salvando tarefa...");
-      } else if (acaoConfirmada === "cancelar") {
-        alert("Cancelando edição...");
-        window.location.href = ""; 
-      }
-      fecharModal();
-    });
-
-    window.addEventListener("click", function (event) {
-      if (event.target === modal) {
-        fecharModal();
-      }
-    });
+            data.forEach(aluno => {
+                const option = document.createElement('option');
+                option.value = aluno.id;
+                option.textContent = aluno.nome;
+                alunoSelect.appendChild(option);
+            });
+        })
+        .catch(() => {
+            alunoSelect.innerHTML = '<option>Erro ao carregar alunos</option>';
+        });
+});

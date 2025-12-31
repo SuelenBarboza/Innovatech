@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM carregado - JS principal iniciado");
 
     /* =====================================================
-       AUTOCOMPLETE
+       AUTOCOMPLETE de ALUNOS e PROFESSORES
     ===================================================== */
 
     function initAutoComplete(inputClass, hiddenClass, tipo) {
