@@ -1,5 +1,5 @@
 <?php
-// Lista de tarefas do usuário logado
+// Lista de tarefas 
 include("../Config/db.php");
 session_start();
 

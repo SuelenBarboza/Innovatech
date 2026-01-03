@@ -1,9 +1,8 @@
 <?php
+// Visualiza o projeto inteiro em outra pagina 
 include("../Config/db.php");
 
-// ==========================
-// VALIDAÇÃO DO ID
-// ==========================
+
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: ViewListProject.php");
     exit;
@@ -11,9 +10,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 
 $id = (int) $_GET['id'];
 
-// ==========================
-// BUSCA DO PROJETO
-// ==========================
+
 $sqlProjeto = "SELECT * FROM projetos WHERE id = ?";
 $stmtProjeto = $conn->prepare($sqlProjeto);
 $stmtProjeto->bind_param("i", $id);
@@ -46,9 +43,7 @@ while ($row = $resultAlunos->fetch_assoc()) {
     $alunos[] = $row['nome'];
 }
 
-// ==========================
-// BUSCA DOS ORIENTADORES
-// ==========================
+
 $sqlProfessores = "
     SELECT u.nome
     FROM projeto_orientador po
@@ -145,7 +140,10 @@ while ($row = $resultProfessores->fetch_assoc()) {
       📅 Ver no Calendário
     </a>
 
-   
+    <a href="ViewComments.php?projeto_id=<?= $projeto['id'] ?>" class="btn-editar">
+    💬 Comentários do Projeto
+    </a>
+
 
     <a href="ViewListProject.php" class="btn-voltar">
       ⬅️ Voltar para a Lista

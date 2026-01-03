@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 31/12/2025 às 07:27
+-- Tempo de geração: 03/01/2026 às 05:46
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,6 +20,30 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `innovatech_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `comentarios`
+--
+
+CREATE TABLE `comentarios` (
+  `id` int(11) NOT NULL,
+  `projeto_id` int(11) NOT NULL,
+  `usuario_id` int(11) NOT NULL,
+  `comentario` text NOT NULL,
+  `criado_em` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `comentarios`
+--
+
+INSERT INTO `comentarios` (`id`, `projeto_id`, `usuario_id`, `comentario`, `criado_em`) VALUES
+(1, 3, 1, 'teste do meu primeiro comentario', '2026-01-02 23:43:12'),
+(2, 3, 1, 'tetetete', '2026-01-03 00:00:56'),
+(3, 3, 1, 'tetetetes', '2026-01-03 00:02:09'),
+(4, 3, 1, '444', '2026-01-03 00:06:40');
 
 -- --------------------------------------------------------
 
@@ -133,6 +157,36 @@ INSERT INTO `projeto_usuario` (`id`, `projeto_id`, `usuario_id`, `papel`, `prior
 (1, 2, 1, 'Aluno', 'Baixa', 0),
 (12, 1, 1, 'Criador', 'Baixa', 0),
 (23, 2, 1, 'Aluno', 'Baixa', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `relatorios`
+--
+
+CREATE TABLE `relatorios` (
+  `id` int(11) NOT NULL,
+  `projeto_id` int(11) NOT NULL,
+  `aluno_id` int(11) NOT NULL,
+  `titulo` varchar(150) NOT NULL,
+  `descricao` text NOT NULL,
+  `criado_em` datetime DEFAULT current_timestamp(),
+  `professor_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `resposta_relatorio`
+--
+
+CREATE TABLE `resposta_relatorio` (
+  `id` int(11) NOT NULL,
+  `relatorio_id` int(11) NOT NULL,
+  `professor_id` int(11) NOT NULL,
+  `resposta` text NOT NULL,
+  `respondido_em` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -337,6 +391,14 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo_solicitado`, `apro
 --
 
 --
+-- Índices de tabela `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projeto_id` (`projeto_id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
 -- Índices de tabela `prioridade_usuario`
 --
 ALTER TABLE `prioridade_usuario`
@@ -375,6 +437,22 @@ ALTER TABLE `projeto_usuario`
   ADD KEY `fk_pu_usuario` (`usuario_id`);
 
 --
+-- Índices de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `projeto_id` (`projeto_id`),
+  ADD KEY `aluno_id` (`aluno_id`);
+
+--
+-- Índices de tabela `resposta_relatorio`
+--
+ALTER TABLE `resposta_relatorio`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `relatorio_id` (`relatorio_id`),
+  ADD KEY `professor_id` (`professor_id`);
+
+--
 -- Índices de tabela `tarefas`
 --
 ALTER TABLE `tarefas`
@@ -400,6 +478,12 @@ ALTER TABLE `usuarios`
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `comentarios`
+--
+ALTER TABLE `comentarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `prioridade_usuario`
@@ -429,7 +513,19 @@ ALTER TABLE `projeto_orientador`
 -- AUTO_INCREMENT de tabela `projeto_usuario`
 --
 ALTER TABLE `projeto_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de tabela `relatorios`
+--
+ALTER TABLE `relatorios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `resposta_relatorio`
+--
+ALTER TABLE `resposta_relatorio`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `tarefas`
@@ -452,6 +548,13 @@ ALTER TABLE `usuarios`
 --
 -- Restrições para tabelas despejadas
 --
+
+--
+-- Restrições para tabelas `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD CONSTRAINT `comentarios_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comentarios_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `projetos`
@@ -479,6 +582,20 @@ ALTER TABLE `projeto_orientador`
 ALTER TABLE `projeto_usuario`
   ADD CONSTRAINT `fk_pu_projeto` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_pu_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `relatorios`
+--
+ALTER TABLE `relatorios`
+  ADD CONSTRAINT `relatorios_ibfk_1` FOREIGN KEY (`projeto_id`) REFERENCES `projetos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `relatorios_ibfk_2` FOREIGN KEY (`aluno_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `resposta_relatorio`
+--
+ALTER TABLE `resposta_relatorio`
+  ADD CONSTRAINT `resposta_relatorio_ibfk_1` FOREIGN KEY (`relatorio_id`) REFERENCES `relatorios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `resposta_relatorio_ibfk_2` FOREIGN KEY (`professor_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `tarefas`

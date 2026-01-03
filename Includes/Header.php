@@ -49,7 +49,9 @@
                  <a href="#">Colaboração</a>
                  <ul class="submenu">
                      <li><a href="../Shared/Comments.php">Comentários</a></li>
-                    <li><a href="../Shared/ProgressReport.php">Relatório de Progresso</a></li>
+                    <li><a href="../Shared/SendReport.php">Relatório de Progresso</a></li>  <!-- //Relatorio que o aluno envia -->
+                    <li><a href="../Shared/ReceivedReports.php">Relatórios Recebidos</a></li> <!-- //Relatorio que o professor recebe -->
+                    <li><a href="../Shared/MyReports.php">Meus Relatórios</a></li>  <!-- //Relatorio que o aluno visualiza -->
                     <li><a href="../Shared/PerformanceReport.php">Relatório de Desempenho</a></li>
 
                  </ul>

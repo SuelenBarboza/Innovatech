@@ -1,5 +1,5 @@
 <?php
-// ================= CONFIGURAÇÃO =================
+// Visualiza a lista de projetos 
 include("../Config/db.php");
 session_start();
 

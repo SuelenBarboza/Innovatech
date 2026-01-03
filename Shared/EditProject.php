@@ -1,4 +1,5 @@
 <?php
+// Edita o projeto existente
 include("../Config/db.php");
 
 if (!isset($_GET['id'])) {

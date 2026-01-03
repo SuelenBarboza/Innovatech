@@ -1,4 +1,5 @@
 <?php
+// Processa as tarefas no banco de dados.
 include("../Config/db.php");
 
 $projeto_id   = $_POST['projeto'];      
