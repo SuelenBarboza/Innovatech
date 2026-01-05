@@ -50,27 +50,11 @@ if (!password_verify($senha, $user['senha'])) {
 $_SESSION['usuario_id']    = $user['id'];
 $_SESSION['usuario_nome']  = $user['nome'];
 $_SESSION['usuario_email'] = $user['email'];
-$_SESSION['usuario_tipo']  = $user['tipo_solicitado'];
+$tipoNormalizado = ucfirst(strtolower(trim($user['tipo_solicitado'])));
+$_SESSION['usuario_tipo'] = $tipoNormalizado;
 
-// Redirecionamento por tipo
-switch ($user['tipo_solicitado']) {
-    case 'Admin':
-        header("Location: ../Public/Home.php");
-        break;
 
-    case 'coordinator':
-        header("Location: ../Public/Home.php");
-        break;
-
-    case 'teacher':
-        header("Location: ../Public/Home.php");
-        break;
-
-    case 'student':
-        header("Location: ../Public/Home.php");
-        break;
-
-    default:
-        header("Location: ../Public/Home.php");
-}
+header("Location: ../Public/Home.php");
 exit;
+
+

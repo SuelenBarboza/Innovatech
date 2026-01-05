@@ -49,10 +49,10 @@
                  <a href="#">Colaboração</a>
                  <ul class="submenu">
                      <li><a href="../Shared/Comments.php">Comentários</a></li>
+                     <li><a href="../Shared/ViewComments.php">Visualizar Comentários</a></li>
                     <li><a href="../Shared/SendReport.php">Relatório de Progresso</a></li>  <!-- //Relatorio que o aluno envia -->
-                    <li><a href="../Shared/ReceivedReports.php">Relatórios Recebidos</a></li> <!-- //Relatorio que o professor recebe -->
                     <li><a href="../Shared/MyReports.php">Meus Relatórios</a></li>  <!-- //Relatorio que o aluno visualiza -->
-                    <li><a href="../Shared/PerformanceReport.php">Relatório de Desempenho</a></li>
+                    <li><a href="../Shared/ViewReportsTeacher.php">Relatórios Recebidos</a></li> <!-- //Relatorio que o professor recebe -->
 
                  </ul>
              </li>
@@ -66,16 +66,15 @@
  
  
              <li>
-                 <a href="#">Configurações</a>
+                 <a href="#">Gerenciamento</a>
                  <ul class="submenu">
-                     <li><a href="../Shared/SystemSettings.php">Configurações do Sistema</a></li>
                      <li><a href="../Users/Admin/UserManagerAdmin.php">Gerenciar Usuários</a></li>
-                     
+                     <li><a href="../Shared/ManageCalls.php">Gerenciar Chamados</a></li>
                  </ul>
              </li>
  
              <li><a href="../Shared/Support.php">Suporte</a></li>
-             <li><a href="#">Sair</a></li>
+             <li><a href="../Public/Logout.php">Sair</a></li>
  
              <li class="bell-icon">
                  <a href="javascript:void(0)">

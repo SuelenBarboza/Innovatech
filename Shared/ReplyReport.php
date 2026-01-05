@@ -1,5 +1,5 @@
 <?php
-// Visualizar e responder a um relatório enviado por um aluno
+// Garante que só Professor ou Admin entra
 session_start();
 include("../Config/db.php");
 
@@ -8,11 +8,13 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 $usuario_id = $_SESSION['usuario_id'];
-$tipo = $_SESSION['tipo'] ?? '';
+$tipo = $_SESSION['usuario_tipo'] ?? '';
 
-if ($tipo !== 'professor' && $tipo !== 'admin') {
+
+if ($tipo !== 'Professor' && $tipo !== 'Admin') {
     die("Acesso negado.");
 }
+
 
 if (!isset($_GET['id'])) {
     header("Location: ViewReportsTeacher.php");

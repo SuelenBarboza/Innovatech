@@ -9,40 +9,41 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 $usuario_id = $_SESSION['usuario_id'];
-$tipo = $_SESSION['tipo'] ?? 'aluno';
+$tipo = $_SESSION['usuario_tipo'] ?? 'Aluno';
 
-// professor ou admin
-if ($tipo !== 'professor' && $tipo !== 'admin') {
+// Professor ou Admin
+if ($tipo !== 'Professor' && $tipo !== 'Admin') {
     die("Acesso negado.");
 }
 
-if ($tipo === 'admin') {
+
+if ($tipo === 'Admin') {
     $sql = "
-    SELECT 
-        r.id,
-        r.titulo,
-        r.criado_em,
-        p.nome AS projeto,
-        u.nome AS aluno
-    FROM relatorios r
-    INNER JOIN projetos p ON p.id = r.projeto_id
-    INNER JOIN usuarios u ON u.id = r.aluno_id
-    ORDER BY r.criado_em DESC
+        SELECT 
+            r.id,
+            r.titulo,
+            r.criado_em,
+            p.nome AS projeto,
+            u.nome AS aluno
+        FROM relatorios r
+        INNER JOIN projetos p ON p.id = r.projeto_id
+        INNER JOIN usuarios u ON u.id = r.aluno_id
+        ORDER BY r.criado_em DESC
     ";
     $stmt = $conn->prepare($sql);
 } else {
     $sql = "
-    SELECT 
-        r.id,
-        r.titulo,
-        r.criado_em,
-        p.nome AS projeto,
-        u.nome AS aluno
-    FROM relatorios r
-    INNER JOIN projetos p ON p.id = r.projeto_id
-    INNER JOIN usuarios u ON u.id = r.aluno_id
-    WHERE r.professor_id = ?
-    ORDER BY r.criado_em DESC
+        SELECT 
+            r.id,
+            r.titulo,
+            r.criado_em,
+            p.nome AS projeto,
+            u.nome AS aluno
+        FROM relatorios r
+        INNER JOIN projetos p ON p.id = r.projeto_id
+        INNER JOIN usuarios u ON u.id = r.aluno_id
+        WHERE r.professor_id = ?
+        ORDER BY r.criado_em DESC
     ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $usuario_id);
@@ -50,6 +51,7 @@ if ($tipo === 'admin') {
 
 $stmt->execute();
 $result = $stmt->get_result();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

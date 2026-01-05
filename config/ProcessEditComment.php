@@ -1,5 +1,5 @@
 <?php
-// Edita o comentario para o banco de dados
+// Processa a edição de um comentário existente
 session_start();
 include("../Config/db.php");
 
@@ -8,27 +8,55 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: ../Shared/ViewComments.php");
     exit;
 }
 
-$usuario_id = $_SESSION['usuario_id'];
-$id = (int)($_POST['id'] ?? 0);
-$projeto_id = (int)($_POST['projeto_id'] ?? 0);
-$comentario = trim($_POST['comentario'] ?? '');
+$usuario_id = (int) $_SESSION['usuario_id'];
+$tipo = $_SESSION['usuario_tipo'] ?? 'Aluno';
 
-if ($id <= 0 || empty($comentario)) {
+$comentario_id = (int) ($_POST['comentario_id'] ?? 0);
+$novo_comentario = trim($_POST['comentario'] ?? '');
+
+if ($comentario_id <= 0 || $novo_comentario === '') {
     die("Dados inválidos.");
 }
 
-$sql = "
-    UPDATE comentarios 
-    SET comentario = ?
-    WHERE id = ? AND usuario_id = ?
-";
-
+// ==========================
+// Verificar se o comentário pertence ao usuário
+// ==========================
+$sql = "SELECT usuario_id, projeto_id FROM comentarios WHERE id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sii", $comentario, $id, $usuario_id);
+$stmt->bind_param("i", $comentario_id);
 $stmt->execute();
+$result = $stmt->get_result();
 
-header("Location: ../Shared/ViewComments.php?projeto_id=$projeto_id");
-exit;
+if ($result->num_rows === 0) {
+    die("Comentário não encontrado.");
+}
+
+$comentario = $result->fetch_assoc();
+$result->free();
+
+// Apenas o dono do comentário pode editar
+if ($comentario['usuario_id'] !== $usuario_id) {
+    die("Acesso negado.");
+}
+
+// ==========================
+// Atualizar comentário
+// ==========================
+$sqlUpdate = "UPDATE comentarios SET comentario = ?, atualizado_em = NOW() WHERE id = ?";
+$stmtUpdate = $conn->prepare($sqlUpdate);
+$stmtUpdate->bind_param("si", $novo_comentario, $comentario_id);
+
+if ($stmtUpdate->execute()) {
+    header("Location: ../Shared/ViewComments.php?projeto_id=" . $comentario['projeto_id'] . "&msg=editado");
+    exit;
+} else {
+    echo "Erro ao atualizar comentário: " . $stmtUpdate->error;
+}
+
+$stmtUpdate->close();
+$conn->close();
+?>

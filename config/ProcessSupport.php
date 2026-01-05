@@ -1,24 +1,20 @@
 <?php
-include("../Config/db.php"); 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome = htmlspecialchars($_POST['nomeUsuario']);
+    $email = filter_var($_POST['emailUsuario'], FILTER_VALIDATE_EMAIL);
+    $assunto = htmlspecialchars($_POST['assunto']);
+    $mensagem = htmlspecialchars($_POST['mensagem']);
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $nome = $_POST['nomeUsuario'];
-    $email = $_POST['emailUsuario'];
-    $assunto = $_POST['assunto'];
-    $mensagem = $_POST['mensagem'];
-
-    $sql = "INSERT INTO suporte (nome, email, assunto, mensagem) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $nome, $email, $assunto, $mensagem);
-
-    if ($stmt->execute()) {
-        header("Location: ../Public/Home.html?msg=sucesso");
-        exit();
+    if ($email) {
+        $to = "suporte@seudominio.com";
+        $headers = "From: $email\r\nReply-To: $email";
+        if (mail($to, $assunto, $mensagem, $headers)) {
+            echo "Mensagem enviada com sucesso!";
+        } else {
+            echo "Erro ao enviar a mensagem.";
+        }
     } else {
-        echo "Erro ao enviar sua mensagem: " . $conn->error;
+        echo "Email inválido.";
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>

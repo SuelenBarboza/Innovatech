@@ -1,55 +1,73 @@
 <?php
-// Visualiza os comentarios do projeto
 session_start();
 include("../Config/db.php");
 
-// 🔐 valida login
 if (!isset($_SESSION['usuario_id'])) {
-    die("Usuário não logado.");
-}
-
-$usuario_id = $_SESSION['usuario_id'];
-
-// 🔎 valida projeto
-if (!isset($_GET['projeto_id'])) {
-    header("Location: ViewListProject.php");
+    header("Location: ../Public/Login.php");
     exit;
 }
 
-$projeto_id = (int) $_GET['projeto_id'];
+$usuario_id = (int) $_SESSION['usuario_id'];
+$tipo = $_SESSION['usuario_tipo'] ?? 'Aluno';
 
-// 📌 busca dados do projeto
-$sqlProjeto = "SELECT nome FROM projetos WHERE id = ?";
-$stmt = $conn->prepare($sqlProjeto);
-$stmt->bind_param("i", $projeto_id);
-$stmt->execute();
-$projeto = $stmt->get_result()->fetch_assoc();
+// ==========================
+// Determinar projeto selecionado
+// ==========================
+$projeto_id = isset($_GET['projeto_id']) ? (int) $_GET['projeto_id'] : 0;
 
-if (!$projeto) {
-    die("Projeto não encontrado.");
+// ==========================
+// Buscar projetos do usuário (ou todos se Admin)
+// ==========================
+if ($tipo !== 'Admin') {
+    $sqlProjetos = "
+        SELECT DISTINCT p.id, p.nome
+        FROM projetos p
+        LEFT JOIN projeto_aluno pa ON pa.projeto_id = p.id
+        LEFT JOIN projeto_orientador po ON po.projeto_id = p.id
+        WHERE p.criador_id = ? OR pa.usuario_id = ? OR po.professor_id = ?
+        ORDER BY p.nome
+    ";
+    $stmt = $conn->prepare($sqlProjetos);
+    $stmt->bind_param("iii", $usuario_id, $usuario_id, $usuario_id);
+} else {
+    $sqlProjetos = "SELECT id, nome FROM projetos ORDER BY nome";
+    $stmt = $conn->prepare($sqlProjetos);
 }
 
-// 💬 busca comentários
-$sqlComentarios = "
-    SELECT 
-        c.id,
-        c.comentario,
-        c.criado_em,
-        c.usuario_id,
-        u.nome
-    FROM comentarios c
-    INNER JOIN usuarios u ON c.usuario_id = u.id
-    WHERE c.projeto_id = ?
-    ORDER BY c.criado_em DESC
-";
-
-
-$stmt = $conn->prepare($sqlComentarios);
-$stmt->bind_param("i", $projeto_id);
 $stmt->execute();
-$resultComentarios = $stmt->get_result();
-?>
+$resultProjetos = $stmt->get_result();
+$projetos = $resultProjetos->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 
+if ($projeto_id <= 0 || ($tipo !== 'Admin' && !in_array($projeto_id, array_column($projetos, 'id')))) {
+    $projeto_id = $projetos[0]['id'] ?? 0;
+}
+
+// ==========================
+// Buscar comentários do projeto
+// ==========================
+if ($projeto_id > 0) {
+    $sqlComentarios = "
+        SELECT c.id AS comentario_id, c.comentario, c.criado_em, u.nome AS usuario_nome, u.tipo_solicitado, c.usuario_id, p.nome AS projeto_nome
+        FROM comentarios c
+        INNER JOIN usuarios u ON u.id = c.usuario_id
+        INNER JOIN projetos p ON p.id = c.projeto_id
+        WHERE c.projeto_id = ?
+        ORDER BY c.criado_em ASC
+    ";
+    $stmt = $conn->prepare($sqlComentarios);
+    $stmt->bind_param("i", $projeto_id);
+    $stmt->execute();
+    $resultComentarios = $stmt->get_result();
+    $stmt->close();
+
+    $nomeProjeto = $resultComentarios->fetch_assoc()['projeto_nome'] ?? '';
+    $resultComentarios->data_seek(0);
+} else {
+    $resultComentarios = null;
+    $nomeProjeto = '';
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -58,62 +76,77 @@ $resultComentarios = $stmt->get_result();
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
 <link rel="stylesheet" href="../Assets/css/Comments.css">
+<style>
+.comentario-box { border:1px solid #ccc; padding:10px; margin-bottom:10px; border-radius:5px; }
+.editar-comentario { margin-top:5px; }
+textarea { width:100%; min-height:60px; }
+</style>
 </head>
 <body>
 
 <?php include("../Includes/Header.php"); ?>
 
 <section class="form-container">
-<h2>💬 Comentários — <?= htmlspecialchars($projeto['nome']) ?></h2>
+    <h1>Comentários do Projeto</h1>
 
-<!-- LISTA DE COMENTÁRIOS -->
-<div class="comentarios-lista">
+    <!-- Seleção de Projeto -->
+    <form method="GET" action="ViewComments.php">
+        <label for="projeto_id">Selecionar Projeto:</label>
+        <select name="projeto_id" onchange="this.form.submit()">
+            <?php foreach ($projetos as $p): ?>
+                <option value="<?= $p['id'] ?>" <?= $p['id'] == $projeto_id ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($p['nome']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </form>
 
-<?php if ($resultComentarios->num_rows === 0): ?>
-<p>Nenhum comentário ainda.</p>
-<?php endif; ?>
+    <h2><?= htmlspecialchars($nomeProjeto) ?></h2>
 
-<?php while ($c = $resultComentarios->fetch_assoc()): ?>
-<div class="comentario-item">
+    <?php if (!$resultComentarios || $resultComentarios->num_rows === 0): ?>
+        <p>Não há comentários para este projeto.</p>
+    <?php else: ?>
+        <?php while ($c = $resultComentarios->fetch_assoc()): ?>
+            <div class="comentario-box">
+                <strong><?= htmlspecialchars($c['usuario_nome']) ?> (<?= htmlspecialchars($c['tipo_solicitado']) ?>)</strong>
+                <small><?= date("d/m/Y H:i", strtotime($c['criado_em'])) ?></small>
+                <p id="texto-comentario-<?= $c['comentario_id'] ?>"><?= nl2br(htmlspecialchars($c['comentario'])) ?></p>
 
-  <strong><?= htmlspecialchars($c['nome']) ?></strong>
-  <span><?= date("d/m/Y H:i", strtotime($c['criado_em'])) ?></span>
+                <?php if ($c['usuario_id'] == $usuario_id): ?>
+                    <!-- Formulário de edição -->
+                    <div class="editar-comentario">
+                        <button type="button" onclick="mostrarEditar(<?= $c['comentario_id'] ?>)">Editar</button>
+                        <form id="form-editar-<?= $c['comentario_id'] ?>" action="../Config/ProcessEditComment.php" method="POST" style="display:none; margin-top:5px;">
+                            <input type="hidden" name="comentario_id" value="<?= $c['comentario_id'] ?>">
+                            <textarea name="comentario" required><?= htmlspecialchars($c['comentario']) ?></textarea>
+                            <button type="submit">Salvar</button>
+                            <button type="button" onclick="fecharEditar(<?= $c['comentario_id'] ?>)">Cancelar</button>
+                        </form>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endwhile; ?>
+    <?php endif; ?>
 
-  <p><?= nl2br(htmlspecialchars($c['comentario'])) ?></p>
-
-  <?php if ($c['usuario_id'] == $usuario_id): ?>
-    <a 
-      href="EditComment.php?id=<?= $c['id'] ?>&projeto_id=<?= $projeto_id ?>" 
-      class="btn-editar-comentario"
-    >
-      ✏️ Editar
-    </a>
-  <?php endif; ?>
-
-</div>
-<?php endwhile; ?>
-
-
-</div>
-
-<hr>
-
-<!-- NOVO COMENTÁRIO -->
-<h3>✍️ Novo Comentário</h3>
-
-<form method="POST" action="../Config/ProcessComments.php">
-  <input type="hidden" name="projeto_id" value="<?= $projeto_id ?>">
-
-  <textarea name="comentario" required placeholder="Escreva seu comentário..."></textarea>
-
-  <div class="form-actions">
-    <button type="submit">Enviar</button>
-    <a href="ViewProject.php?id=<?= $projeto_id ?>" class="btn-voltar">⬅ Voltar</a>
-  </div>
-</form>
-
+    <!-- Adicionar comentário -->
+    <hr>
+    <h3>Adicionar novo comentário</h3>
+    <form action="../Config/ProcessComments.php" method="POST">
+        <input type="hidden" name="projeto_id" value="<?= $projeto_id ?>">
+        <textarea name="comentario" required placeholder="Escreva seu comentário..."></textarea>
+        <button type="submit">Enviar comentário</button>
+    </form>
 </section>
 
 <?php include("../Includes/Footer.php"); ?>
+
+<script>
+function mostrarEditar(id) {
+    document.getElementById('form-editar-' + id).style.display = 'block';
+}
+function fecharEditar(id) {
+    document.getElementById('form-editar-' + id).style.display = 'none';
+}
+</script>
 </body>
 </html>
