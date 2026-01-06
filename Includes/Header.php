@@ -68,12 +68,21 @@
              <li>
                  <a href="#">Gerenciamento</a>
                  <ul class="submenu">
-                     <li><a href="../Users/Admin/UserManagerAdmin.php">Gerenciar Usuários</a></li>
-                     <li><a href="../Shared/ManageCalls.php">Gerenciar Chamados</a></li>
+                     <li><a href="../Shared/UserManagerAdmin.php">Gerenciar Usuários</a></li>
+                     <li><a href="../Shared/UserManagerCoord.php">Gerenciar Alunos e Professores</a></li>
+                 </ul>
+             </li>
+
+
+             <li>
+                 <a href="#">Suporte</a>
+                 <ul class="submenu">
+                     <li><a href="../Shared/Support.php">Solicitar Suporte</a></li>
+                     <li><a href="../Shared/SuportAdmin.php">Painel de Solicitações</a></li>
                  </ul>
              </li>
  
-             <li><a href="../Shared/Support.php">Suporte</a></li>
+        
              <li><a href="../Public/Logout.php">Sair</a></li>
  
              <li class="bell-icon">

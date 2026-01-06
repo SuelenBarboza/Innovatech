@@ -1,0 +1,576 @@
+/* ==========================
+   RESET E CONFIGURAÇÕES GERAIS
+   ========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Imagem de fundo */
+body {
+    background-image: url("../Img/FundoInnova.png"); 
+    background-size: cover; /* faz a imagem cobrir toda a tela */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    background-color: #f5f5f5; /* fallback color */
+}
+
+.container {
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 20px;
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.97);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================
+   TÍTULO PRINCIPAL
+   ========================== */
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #3498db;
+    font-size: 2.2rem;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+}
+
+/* ==========================
+   TABELA DE CHAMADOS
+   ========================== */
+.support-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.support-table thead {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+}
+
+.support-table th {
+    padding: 18px 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    border-bottom: 3px solid #3498db;
+}
+
+.support-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.support-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.support-table tbody tr:hover {
+    background-color: #f0f7ff;
+    transform: translateX(5px);
+}
+
+.support-table td {
+    padding: 16px 15px;
+    color: #444;
+    vertical-align: top;
+    border-bottom: 1px solid #eaeaea;
+}
+
+/* ==========================
+   CÉLULAS ESPECÍFICAS
+   ========================== */
+.support-table td:nth-child(1) { /* Usuário */
+    font-weight: 600;
+    color: #2c3e50;
+    min-width: 150px;
+}
+
+.support-table td:nth-child(2) { /* Email */
+    color: #3498db;
+    word-break: break-all;
+    min-width: 200px;
+}
+
+.support-table td:nth-child(3) { /* Assunto */
+    color: #555;
+    min-width: 180px;
+    font-weight: 500;
+}
+
+.support-table td:nth-child(4) { /* Mensagem */
+    color: #666;
+    max-width: 300px;
+    line-height: 1.5;
+}
+
+.support-table td:nth-child(5) { /* Resposta */
+    color: #666;
+    max-width: 300px;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+.support-table td:nth-child(6) { /* Status */
+    font-weight: 600;
+    text-align: center;
+    min-width: 100px;
+}
+
+.support-table td:nth-child(7) { /* Ações */
+    min-width: 180px;
+    text-align: center;
+}
+
+/* ==========================
+   BADGES DE STATUS
+   ========================== */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-aberto {
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+    color: white;
+}
+
+.status-em_andamento {
+    background: linear-gradient(135deg, #ffa726, #ff9800);
+    color: white;
+}
+
+.status-concluido {
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    color: white;
+}
+
+.status-pendente {
+    background: linear-gradient(135deg, #9e9e9e, #757575);
+    color: white;
+}
+
+/* ==========================
+   BOTÕES
+   ========================== */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Botão Responder */
+.btn:not(.btn-concluir):not(.btn-delete) {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+}
+
+.btn:not(.btn-concluir):not(.btn-delete):hover {
+    background: linear-gradient(135deg, #2980b9, #1f6399);
+}
+
+/* Botão Concluir */
+.btn-concluir {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.btn-concluir:hover {
+    background: linear-gradient(135deg, #27ae60, #219653);
+}
+
+/* Botão Cancelar/Delete */
+.btn-delete {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+/* Botão desabilitado */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================
+   MODAL
+   ========================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.3s ease;
+    position: relative;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+    font-size: 1.4rem;
+}
+
+.modal-content textarea {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+    transition: all 0.3s;
+    margin-bottom: 20px;
+}
+
+.modal-content textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.modal-content textarea::placeholder {
+    color: #95a5a6;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Botão de fechar no modal */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #7f8c8d;
+    cursor: pointer;
+    transition: color 0.3s;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.modal-close:hover {
+    color: #e74c3c;
+    background: #f8f9fa;
+}
+
+/* ==========================
+   MENSAGENS DE ESTADO VAZIO
+   ========================== */
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #7f8c8d;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 2px dashed #ddd;
+    margin-top: 20px;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #bdc3c7;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* ==========================
+   SCROLLBAR PERSONALIZADA
+   ========================== */
+.support-table {
+    overflow-x: auto;
+    display: block;
+}
+
+.support-table::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.support-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.support-table::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 4px;
+}
+
+.support-table::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+/* ==========================
+   RESPONSIVIDADE
+   ========================== */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 992px) {
+    .support-table {
+        font-size: 0.9rem;
+    }
+    
+    .support-table th,
+    .support-table td {
+        padding: 12px 10px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        margin: 10px auto;
+    }
+    
+    .support-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .support-table th,
+    .support-table td {
+        min-width: 150px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .support-table th,
+    .support-table td {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+    
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .modal-content {
+        padding: 15px;
+    }
+    
+    .modal-content h3 {
+        font-size: 1.2rem;
+    }
+    
+    .modal-content textarea {
+        height: 120px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ==========================
+   ANIMAÇÕES
+   ========================== */
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.support-table tbody tr {
+    animation: fadeInRow 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+.support-table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+.support-table tbody tr:nth-child(2) { animation-delay: 0.15s; }
+.support-table tbody tr:nth-child(3) { animation-delay: 0.2s; }
+.support-table tbody tr:nth-child(4) { animation-delay: 0.25s; }
+.support-table tbody tr:nth-child(5) { animation-delay: 0.3s; }
+.support-table tbody tr:nth-child(6) { animation-delay: 0.35s; }
+.support-table tbody tr:nth-child(7) { animation-delay: 0.4s; }
+
+/* ==========================
+   MELHORIAS DE ACESSIBILIDADE
+   ========================== */
+.btn:focus,
+.modal-close:focus,
+textarea:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* Alto contraste para status */
+.status-aberto {
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.3);
+}
+
+.status-concluido {
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+/* Indicador visual para links */
+a {
+    transition: all 0.3s ease;
+}
+
+/* Loading state */
+.loading {
+    position: relative;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
