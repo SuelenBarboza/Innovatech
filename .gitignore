@@ -1,0 +1,16 @@
+# Ignorar a pasta do banco de dados
+database/
+db/
+
+# Ignorar arquivos SQL
+*.sql
+
+# Ignorar arquivos de backup de banco
+*.bak
+*.sqlite
+*.sqlite3
+
+# Ignorar logs e temporários
+*.log
+*.tmp
+*.swp

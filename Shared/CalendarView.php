@@ -44,15 +44,16 @@ if ($projeto_id) {
     // Buscar apenas o projeto específico
     $sqlProjetos = "
     SELECT 
-    p.id,
-    p.nome,
-    p.descricao,
-    p.data_inicio,
-    p.data_fim,
-    p.status,
-    p.prioridade
+        p.id,
+        p.nome,
+        p.descricao,
+        p.data_inicio,
+        p.data_fim,
+        p.categoria,
+        p.status,
+        p.prioridade
     FROM projetos p
-    WHERE p.arquivado = 0
+    WHERE p.id = $projeto_id
       AND p.arquivado = 0
     ";
 } else {
@@ -107,39 +108,36 @@ while ($p = $resProjetos->fetch_assoc()) {
 
     // Buscar tarefas do projeto
     $tarefas = [];
-   $sqlTarefas = "
-    SELECT 
-        id,
-        nome,
-        descricao,
-        data_inicio,
-        data_fim,
-        status,
-        prioridade
-    FROM tarefas
-    WHERE projeto_id = $projetoId
-      AND arquivado = 0
-    ORDER BY data_inicio
+    $sqlTarefas = "
+        SELECT 
+            id,
+            titulo,
+            descricao,
+            data_prevista,
+            status,
+            prioridade
+        FROM tarefas
+        WHERE projeto_id = $projetoId
+        ORDER BY data_prevista
     ";
-
     $resTarefas = $conn->query($sqlTarefas);
     while ($t = $resTarefas->fetch_assoc()) {
         $tarefas[] = $t;
     }
 
-   $projects[] = [
+    $projects[] = [
         "id" => $p['id'],
         "nome" => $p['nome'],
         "descricao" => $p['descricao'],
         "data_inicio" => $p['data_inicio'],
         "data_fim" => $p['data_fim'],
+        "tipo" => $p['categoria'],
         "status" => $p['status'],
         "prioridade" => $p['prioridade'],
         "alunos" => $alunos,
         "orientadores" => $orientadores,
         "tarefas" => $tarefas
     ];
-
 }
 
 /*

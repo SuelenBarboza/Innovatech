@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 include("db.php"); // seu arquivo de conexão
 
-$sql = "SELECT id, nome, descricao, data_inicio, data_fim, tipo FROM projetos";
+$sql = "SELECT id, nome, descricao, data_inicio, data_fim FROM projetos WHERE arquivado = 0";
 $result = $conn->query($sql);
 
 $projects = [];
@@ -19,7 +19,6 @@ while ($row = $result->fetch_assoc()) {
         'descricao' => $row['descricao'],
         'data_inicio' => $row['data_inicio'],
         'data_fim' => $row['data_fim'],
-        'tipo' => $row['tipo'],
         'alunos' => $alunos
     ];
 }
