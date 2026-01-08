@@ -1,6 +1,7 @@
-# Ignorar a pasta do banco de dados
-database/
-db/
+# Ignorar o arquivo do banco
+innovatech_db.sql
+*.sql
+
 
 # Ignorar arquivos SQL
 *.sql
