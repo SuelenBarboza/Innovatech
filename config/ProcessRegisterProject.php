@@ -48,6 +48,17 @@ try {
         $stmtProjeto->execute();
 
     $projeto_id = $stmtProjeto->insert_id;
+    // 🔹 VINCULA CRIADOR AO PROJETO
+    $sqlCriador = "
+        INSERT INTO projeto_usuario 
+        (projeto_id, usuario_id, papel, prioridade, arquivado)
+        VALUES (?, ?, 'Criador', 'Baixa', 0)
+    ";
+
+    $stmtCriador = $conn->prepare($sqlCriador);
+    $stmtCriador->bind_param("ii", $projeto_id, $criador_id);
+    $stmtCriador->execute();
+    $stmtCriador->close();
     $stmtProjeto->close();
 
     // 6️⃣ VINCULA ALUNOS

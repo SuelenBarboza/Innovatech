@@ -9,148 +9,178 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 include("db.php");
-
-// Verificar se foi passado um projeto específico via GET
-$projeto_id = isset($_GET['projeto_id']) ? (int)$_GET['projeto_id'] : null;
+session_start();
 
 /*
 ====================================
- BUSCAR TODOS OS PROJETOS PARA O SELECTOR
+ IDENTIFICAÇÃO DO USUÁRIO
 ====================================
 */
-$allProjects = [];
-$sqlAllProjects = "
-SELECT 
-    p.id,
-    p.nome
-FROM projetos p
-WHERE p.arquivado = 0
-ORDER BY p.nome
-";
+$usuario_id   = $_SESSION['usuario_id']   ?? null;
+$usuario_tipo = $_SESSION['usuario_tipo'] ?? 'comum';
 
-$resAllProjects = $conn->query($sqlAllProjects);
-while ($proj = $resAllProjects->fetch_assoc()) {
-    $allProjects[] = $proj;
+// 🔴 APENAS PARA TESTE LOCAL
+if (!$usuario_id) {
+    $usuario_id   = 1;
+    $usuario_tipo = 'admin';
 }
 
 /*
 ====================================
- PROJETO ESPECÍFICO OU TODOS
+ PROJETO SELECIONADO
+====================================
+*/
+$projeto_id = (isset($_GET['projeto_id']) && $_GET['projeto_id'] !== 'all')
+    ? (int) $_GET['projeto_id']
+    : null;
+
+/*
+====================================
+ PROJETOS PARA O SELECT
+====================================
+*/
+$allProjects = [];
+
+if ($usuario_tipo === 'admin') {
+
+    $sqlAllProjects = "
+        SELECT DISTINCT p.id, p.nome
+        FROM projetos p
+        LEFT JOIN projeto_usuario pu ON pu.projeto_id = p.id
+        WHERE COALESCE(pu.arquivado, 0) = 0
+        ORDER BY p.nome
+    ";
+
+    $stmt = $conn->prepare($sqlAllProjects);
+
+} else {
+
+    $sqlAllProjects = "
+        SELECT DISTINCT p.id, p.nome
+        FROM projetos p
+        JOIN projeto_usuario pu ON pu.projeto_id = p.id
+        WHERE pu.usuario_id = ?
+          AND COALESCE(pu.arquivado, 0) = 0
+        ORDER BY p.nome
+    ";
+
+    $stmt = $conn->prepare($sqlAllProjects);
+    $stmt->bind_param("i", $usuario_id);
+}
+
+$stmt->execute();
+$res = $stmt->get_result();
+
+while ($row = $res->fetch_assoc()) {
+    $allProjects[] = $row;
+}
+
+/*
+====================================
+ PROJETOS + DADOS DO CALENDÁRIO
 ====================================
 */
 $projects = [];
 
-if ($projeto_id) {
-    // Buscar apenas o projeto específico
+if ($usuario_tipo === 'admin') {
+
     $sqlProjetos = "
-    SELECT 
-    p.id,
-    p.nome,
-    p.descricao,
-    p.data_inicio,
-    p.data_fim,
-    p.status,
-    p.prioridade
-    FROM projetos p
-    WHERE p.arquivado = 0
-      AND p.arquivado = 0
+        SELECT DISTINCT p.*
+        FROM projetos p
+        LEFT JOIN projeto_usuario pu ON pu.projeto_id = p.id
+        WHERE COALESCE(pu.arquivado, 0) = 0
+        " . ($projeto_id ? "AND p.id = ?" : "") . "
+        ORDER BY p.nome
     ";
+
+    $stmt = $conn->prepare($sqlProjetos);
+
+    if ($projeto_id) {
+        $stmt->bind_param("i", $projeto_id);
+    }
+
 } else {
-    // Buscar todos os projetos
+
     $sqlProjetos = "
-    SELECT 
-        p.id,
-        p.nome,
-        p.descricao,
-        p.data_inicio,
-        p.data_fim,
-        p.categoria,
-        p.status,
-        p.prioridade
-    FROM projetos p
-    WHERE p.arquivado = 0
+        SELECT DISTINCT p.*
+        FROM projetos p
+        JOIN projeto_usuario pu ON pu.projeto_id = p.id
+        WHERE pu.usuario_id = ?
+          AND COALESCE(pu.arquivado, 0) = 0
+          " . ($projeto_id ? "AND p.id = ?" : "") . "
+        ORDER BY p.nome
     ";
+
+    $stmt = $conn->prepare($sqlProjetos);
+
+    if ($projeto_id) {
+        $stmt->bind_param("ii", $usuario_id, $projeto_id);
+    } else {
+        $stmt->bind_param("i", $usuario_id);
+    }
 }
 
-$resProjetos = $conn->query($sqlProjetos);
+$stmt->execute();
+$res = $stmt->get_result();
 
-while ($p = $resProjetos->fetch_assoc()) {
-    $projetoId = $p['id'];
+while ($p = $res->fetch_assoc()) {
+    $projetoId = (int) $p['id'];
 
-    // Alunos do projeto
+    // Alunos
     $alunos = [];
-    $sqlAlunos = "
+    $r = $conn->query("
         SELECT u.nome
         FROM projeto_usuario pu
         JOIN usuarios u ON u.id = pu.usuario_id
         WHERE pu.projeto_id = $projetoId
           AND pu.papel = 'Aluno'
-    ";
-    $resAlunos = $conn->query($sqlAlunos);
-    while ($a = $resAlunos->fetch_assoc()) {
-        $alunos[] = $a['nome'];
-    }
+    ");
+    while ($a = $r->fetch_assoc()) $alunos[] = $a['nome'];
 
     // Orientadores
     $orientadores = [];
-    $sqlOrientadores = "
+    $r = $conn->query("
         SELECT u.nome
         FROM projeto_usuario pu
         JOIN usuarios u ON u.id = pu.usuario_id
         WHERE pu.projeto_id = $projetoId
           AND pu.papel = 'Orientador'
-    ";
-    $resOrient = $conn->query($sqlOrientadores);
-    while ($o = $resOrient->fetch_assoc()) {
-        $orientadores[] = $o['nome'];
-    }
+    ");
+    while ($o = $r->fetch_assoc()) $orientadores[] = $o['nome'];
 
-    // Buscar tarefas do projeto
+    // Tarefas
     $tarefas = [];
-   $sqlTarefas = "
-    SELECT 
-        id,
-        nome,
-        descricao,
-        data_inicio,
-        data_fim,
-        status,
-        prioridade
-    FROM tarefas
-    WHERE projeto_id = $projetoId
-      AND arquivado = 0
-    ORDER BY data_inicio
-    ";
+    $r = $conn->query("
+        SELECT id, nome, descricao, data_inicio, data_fim, status, prioridade
+        FROM tarefas
+        WHERE projeto_id = $projetoId
+          AND arquivado = 0
+        ORDER BY data_inicio
+    ");
+    while ($t = $r->fetch_assoc()) $tarefas[] = $t;
 
-    $resTarefas = $conn->query($sqlTarefas);
-    while ($t = $resTarefas->fetch_assoc()) {
-        $tarefas[] = $t;
-    }
-
-   $projects[] = [
-        "id" => $p['id'],
-        "nome" => $p['nome'],
-        "descricao" => $p['descricao'],
-        "data_inicio" => $p['data_inicio'],
-        "data_fim" => $p['data_fim'],
-        "status" => $p['status'],
-        "prioridade" => $p['prioridade'],
-        "alunos" => $alunos,
+    $projects[] = [
+        "id"           => $p['id'],
+        "nome"         => $p['nome'],
+        "descricao"    => $p['descricao'],
+        "data_inicio"  => $p['data_inicio'],
+        "data_fim"     => $p['data_fim'],
+        "categoria"    => $p['categoria'],
+        "status"       => $p['status'],
+        "prioridade"   => $p['prioridade'],
+        "alunos"       => $alunos,
         "orientadores" => $orientadores,
-        "tarefas" => $tarefas
+        "tarefas"      => $tarefas
     ];
-
 }
 
 /*
 ====================================
- TIME SLOTS
+ RETORNO
 ====================================
 */
-$timeSlots = [];
-
 echo json_encode([
     "allProjects" => $allProjects,
-    "projects" => $projects,
-    "timeSlots" => $timeSlots
+    "projects"    => $projects,
+    "timeSlots"   => []
 ]);
