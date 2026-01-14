@@ -148,30 +148,57 @@ while ($p = $res->fetch_assoc()) {
     ");
     while ($o = $r->fetch_assoc()) $orientadores[] = $o['nome'];
 
+    
     // Tarefas
     $tarefas = [];
     $r = $conn->query("
-        SELECT id, nome, descricao, data_inicio, data_fim, status, prioridade
+        SELECT 
+            id,
+            nome,
+            descricao,
+            data_inicio,
+            data_fim,
+            created_at,
+            status,
+            prioridade
         FROM tarefas
         WHERE projeto_id = $projetoId
-          AND arquivado = 0
-        ORDER BY data_inicio
+        AND arquivado = 0
+        ORDER BY created_at
     ");
     while ($t = $r->fetch_assoc()) $tarefas[] = $t;
 
-    $projects[] = [
-        "id"           => $p['id'],
-        "nome"         => $p['nome'],
-        "descricao"    => $p['descricao'],
-        "data_inicio"  => $p['data_inicio'],
-        "data_fim"     => $p['data_fim'],
-        "categoria"    => $p['categoria'],
-        "status"       => $p['status'],
-        "prioridade"   => $p['prioridade'],
-        "alunos"       => $alunos,
-        "orientadores" => $orientadores,
-        "tarefas"      => $tarefas
+    // Comentários
+    $comentarios = [];
+    $r = $conn->query("
+        SELECT 
+            id,
+            comentario,
+            usuario_id,
+            created_at
+        FROM comentarios
+        WHERE projeto_id = $projetoId
+        ORDER BY created_at
+    ");
+    while ($c = $r->fetch_assoc()) $comentarios[] = $c;
+
+
+
+   $projects[] = [
+    "id"           => $p['id'],
+    "nome"         => $p['nome'],
+    "descricao"    => $p['descricao'],
+    "data_inicio"  => $p['data_inicio'],
+    "data_fim"     => $p['data_fim'],
+    "categoria"    => $p['categoria'],
+    "status"       => $p['status'],
+    "prioridade"   => $p['prioridade'],
+    "alunos"       => $alunos,
+    "orientadores" => $orientadores,
+    "tarefas"      => $tarefas,
+    "comentarios"  => $comentarios
     ];
+
 }
 
 /*
