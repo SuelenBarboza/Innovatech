@@ -168,19 +168,29 @@ while ($p = $res->fetch_assoc()) {
     ");
     while ($t = $r->fetch_assoc()) $tarefas[] = $t;
 
-    // Comentários
-    $comentarios = [];
-    $r = $conn->query("
-        SELECT 
-            id,
-            comentario,
-            usuario_id,
-            created_at
-        FROM comentarios
-        WHERE projeto_id = $projetoId
-        ORDER BY created_at
-    ");
-    while ($c = $r->fetch_assoc()) $comentarios[] = $c;
+   // Comentários
+// Comentários
+$comentarios = [];
+$r = $conn->query("
+    SELECT 
+        c.id,
+        c.comentario,
+        c.usuario_id,
+        u.nome AS usuario_nome,
+        c.created_at
+    FROM comentarios c
+    JOIN usuarios u ON u.id = c.usuario_id
+    WHERE c.projeto_id = $projetoId
+    ORDER BY c.created_at
+");
+
+while ($c = $r->fetch_assoc()) {
+    $comentarios[] = $c;
+}
+
+
+
+
 
 
 
