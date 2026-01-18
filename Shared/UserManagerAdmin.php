@@ -14,28 +14,75 @@ if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] !== 'Admin') 
 // ==========================
 // PROCESSAR APROVAÇÃO/REJEIÇÃO
 // ==========================
+// ==========================
+// PROCESSAR APROVAÇÃO/REJEIÇÃO (CORRIGIDO)
+// ==========================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
-    $usuario_id = (int)($_POST['usuario_id'] ?? 0);
+
+    $usuario_id = (int) ($_POST['usuario_id'] ?? 0);
     $acao = $_POST['acao'];
 
+    if ($usuario_id <= 0) {
+        $_SESSION['msg'] = "ID de usuário inválido.";
+        header("Location: UserManagerAdmin.php");
+        exit;
+    }
+
     if ($acao === 'aprovar') {
+
         $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
-        $stmt = $conn->prepare("UPDATE usuarios SET aprovado=1, tipo_solicitado=? WHERE id=? AND aprovado=0 AND ativo=1");
+
+        if (empty($tipo_aprovado)) {
+            $_SESSION['msg'] = "Tipo de usuário inválido.";
+            header("Location: UserManagerAdmin.php");
+            exit;
+        }
+
+        $stmt = $conn->prepare("
+            UPDATE usuarios 
+            SET 
+                aprovado = 1,
+                tipo_usuario = ?,
+                ativo = 1
+            WHERE id = ?
+        ");
+
+
         $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
         $stmt->execute();
+
+
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['msg'] = "Usuário aprovado com sucesso!";
+        } else {
+            $_SESSION['msg'] = "Nenhuma alteração realizada. Verifique se o usuário já foi aprovado.";
+        }
+
         $stmt->close();
-        $_SESSION['msg'] = "Usuário aprovado com sucesso!";
+
     } elseif ($acao === 'rejeitar') {
-        $stmt = $conn->prepare("DELETE FROM usuarios WHERE id=? AND aprovado=0 AND ativo=1");
+
+        $stmt = $conn->prepare("
+            DELETE FROM usuarios 
+            WHERE id = ?
+        ");
+
         $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            $_SESSION['msg'] = "Registro rejeitado e removido.";
+        } else {
+            $_SESSION['msg'] = "Não foi possível remover o usuário.";
+        }
+
         $stmt->close();
-        $_SESSION['msg'] = "Registro rejeitado e removido.";
     }
 
     header("Location: UserManagerAdmin.php?pagina=" . ($_GET['pagina'] ?? 1));
     exit;
 }
+
 
 // ==========================
 // PAGINAÇÃO (ORDEM CORRETA)

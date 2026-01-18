@@ -22,27 +22,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
     $acao = $_POST['acao'];
 
     if ($acao === 'aprovar') {
-        $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
-        // Verificar se o tipo é permitido
-        if (!in_array($tipo_aprovado, ['Professor', 'Aluno'])) {
-            $_SESSION['msg'] = "Tipo de usuário não permitido!";
-            header("Location: UserManagerCoordenador.php?pagina=" . ($_GET['pagina'] ?? 1));
-            exit;
-        }
-        
-        $stmt = $conn->prepare("
-            UPDATE usuarios 
-            SET aprovado = 1, tipo_solicitado = ?
-            WHERE id = ? 
-              AND aprovado = 0 
-              AND ativo = 1
-              AND tipo_solicitado IN ('Aluno','Professor')
-        ");
-        $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
-        $stmt->execute();
-        $stmt->close();
-        $_SESSION['msg'] = "Usuário aprovado com sucesso!";
+    $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
+
+    if (!in_array($tipo_aprovado, ['Professor', 'Aluno'])) {
+        $_SESSION['msg'] = "Tipo de usuário não permitido!";
+        header("Location: UserManagerCoordenador.php");
+        exit;
     }
+
+    $stmt = $conn->prepare("
+        UPDATE usuarios 
+        SET aprovado = 1,
+            tipo_usuario = ?
+        WHERE id = ?
+          AND aprovado = 0 
+          AND ativo = 1
+          AND tipo_solicitado IN ('Aluno','Professor')
+    ");
+    $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
+    $stmt->execute();
+    $stmt->close();
+
+    $_SESSION['msg'] = "Usuário aprovado com sucesso!";
+    }
+
 
     if ($acao === 'rejeitar') {
         $stmt = $conn->prepare("

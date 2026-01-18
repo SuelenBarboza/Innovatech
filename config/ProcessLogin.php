@@ -12,9 +12,12 @@ $email = trim($_POST['email'] ?? '');
 $senha = $_POST['password'] ?? '';
 
 // Buscar usuário
-$sql = "SELECT id, nome, email, senha, tipo_solicitado, aprovado, ativo
-        FROM usuarios
-        WHERE email = ? LIMIT 1";
+$sql = "
+    SELECT id, nome, email, senha, tipo_usuario, aprovado, ativo
+    FROM usuarios
+    WHERE email = ? LIMIT 1
+";
+
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
@@ -50,8 +53,9 @@ if (!password_verify($senha, $user['senha'])) {
 $_SESSION['usuario_id']    = $user['id'];
 $_SESSION['usuario_nome']  = $user['nome'];
 $_SESSION['usuario_email'] = $user['email'];
-$tipoNormalizado = ucfirst(strtolower(trim($user['tipo_solicitado'])));
+$tipoNormalizado = ucfirst(strtolower(trim($user['tipo_usuario'])));
 $_SESSION['usuario_tipo'] = $tipoNormalizado;
+
 
 
 header("Location: ../Public/Home.php");
