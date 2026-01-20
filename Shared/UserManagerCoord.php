@@ -1,15 +1,12 @@
 <?php
-//Pagina de gerenciamento de aprovações de cadastros para coordenadores 
+// Página de gerenciamento de aprovações de cadastros para coordenadores
 session_start();
 include("../Config/db.php");
 
 // ==========================
 // VERIFICAÇÃO DE PERMISSÃO
 // ==========================
-if (
-    !isset($_SESSION['usuario_tipo']) ||
-    !in_array($_SESSION['usuario_tipo'], ['Admin', 'Coordenador'])
-) {
+if (!isset($_SESSION['usuario_tipo']) || !in_array($_SESSION['usuario_tipo'], ['Admin', 'Coordenador'])) {
     header("Location: ../View/Login.php?msg=acesso_negado");
     exit;
 }
@@ -22,112 +19,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
     $acao = $_POST['acao'];
 
     if ($acao === 'aprovar') {
-    $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
+        $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
+        if (!in_array($tipo_aprovado, ['Professor', 'Aluno'])) {
+            $_SESSION['msg'] = "Tipo de usuário não permitido!";
+            header("Location: UserManagerCoordenador.php");
+            exit;
+        }
 
-    if (!in_array($tipo_aprovado, ['Professor', 'Aluno'])) {
-        $_SESSION['msg'] = "Tipo de usuário não permitido!";
-        header("Location: UserManagerCoordenador.php");
-        exit;
+        $stmt = $conn->prepare("
+            UPDATE usuarios 
+            SET aprovado = 1, tipo_usuario = ?
+            WHERE id = ? AND aprovado = 0 AND ativo = 1
+              AND tipo_solicitado IN ('Aluno','Professor')
+        ");
+        $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
+        $stmt->execute();
+        $stmt->close();
+
+        $_SESSION['msg'] = "Usuário aprovado com sucesso!";
     }
-
-    $stmt = $conn->prepare("
-        UPDATE usuarios 
-        SET aprovado = 1,
-            tipo_usuario = ?
-        WHERE id = ?
-          AND aprovado = 0 
-          AND ativo = 1
-          AND tipo_solicitado IN ('Aluno','Professor')
-    ");
-    $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
-    $stmt->execute();
-    $stmt->close();
-
-    $_SESSION['msg'] = "Usuário aprovado com sucesso!";
-    }
-
 
     if ($acao === 'rejeitar') {
         $stmt = $conn->prepare("
             DELETE FROM usuarios 
-            WHERE id = ? 
-              AND aprovado = 0 
-              AND ativo = 1
+            WHERE id = ? AND aprovado = 0 AND ativo = 1
               AND tipo_solicitado IN ('Aluno','Professor')
         ");
         $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
         $stmt->close();
+
         $_SESSION['msg'] = "Solicitação rejeitada.";
     }
 
-    header("Location: UserManagerCoordenador.php?pagina=" . ($_GET['pagina'] ?? 1) . "&limite=" . ($_GET['limite'] ?? 10));
+    header("Location: UserManagerCoordenador.php");
     exit;
 }
 
 // ==========================
-// PAGINAÇÃO
-// ==========================
-$limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 10;
-$limitesPermitidos = [5, 10, 25, 50];
-if (!in_array($limite, $limitesPermitidos)) {
-    $limite = 10;
-}
-
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-if ($pagina < 1) $pagina = 1;
-
-$offset = ($pagina - 1) * $limite;
-
-// ==========================
-// TOTAL DE REGISTROS
-// ==========================
-$result_total = $conn->query("
-    SELECT COUNT(*) AS total 
-    FROM usuarios 
-    WHERE ativo = 1 
-      AND aprovado = 0
-      AND tipo_solicitado IN ('Aluno','Professor')
-");
-$total_registros = $result_total->fetch_assoc()['total'];
-$total_paginas = ceil($total_registros / $limite);
-
-// Ajustar página se for maior que o total
-if ($pagina > $total_paginas && $total_paginas > 0) {
-    $pagina = $total_paginas;
-    $offset = ($pagina - 1) * $limite;
-}
-
-// ==========================
-// BUSCAR USUÁRIOS
+// BUSCAR TODOS OS USUÁRIOS PENDENTES (SEM LIMITE)
 // ==========================
 $result = $conn->query("
     SELECT id, nome, email, tipo_solicitado, criado_em 
     FROM usuarios 
-    WHERE ativo = 1 
-      AND aprovado = 0
+    WHERE ativo = 1 AND aprovado = 0
       AND tipo_solicitado IN ('Aluno','Professor')
     ORDER BY criado_em ASC
-    LIMIT $limite OFFSET $offset
 ");
 $usuarios = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
 // ==========================
 // ESTATÍSTICAS
 // ==========================
-$result_stats = $conn->query("
-    SELECT tipo_solicitado, COUNT(*) AS total 
-    FROM usuarios 
-    WHERE ativo = 1 
-      AND aprovado = 0
-      AND tipo_solicitado IN ('Aluno','Professor')
-    GROUP BY tipo_solicitado
-");
 $estatisticas = ['Professor' => 0, 'Aluno' => 0];
-if ($result_stats) {
-    while ($row = $result_stats->fetch_assoc()) {
-        $estatisticas[$row['tipo_solicitado']] = $row['total'];
-    }
+foreach ($usuarios as $u) {
+    $estatisticas[$u['tipo_solicitado']]++;
 }
 
 // Tipos permitidos para aprovação
@@ -161,13 +107,13 @@ $tipos_permitidos = ['Professor', 'Aluno'];
 <div class="stats-grid">
     <div class="stat-card teacher">
         <i class="fas fa-chalkboard-teacher fa-2x"></i>
-        <div class="stat-number"><?= $estatisticas['Professor'] ?? 0 ?></div>
+        <div class="stat-number"><?= $estatisticas['Professor'] ?></div>
         <div>Professores Pendentes</div>
     </div>
 
     <div class="stat-card student">
         <i class="fas fa-user-graduate fa-2x"></i>
-        <div class="stat-number"><?= $estatisticas['Aluno'] ?? 0 ?></div>
+        <div class="stat-number"><?= $estatisticas['Aluno'] ?></div>
         <div>Alunos Pendentes</div>
     </div>
 </div>
@@ -175,7 +121,7 @@ $tipos_permitidos = ['Professor', 'Aluno'];
 <div class="main-content">
     <h2 class="section-title">
         <i class="fas fa-user-check"></i> Aprovação de Cadastros
-        <span class="total-counter">(Total: <?= $total_registros ?>)</span>
+        <span class="total-counter">(Total: <?= count($usuarios) ?>)</span>
     </h2>
 
     <?php if(empty($usuarios)): ?>
@@ -185,7 +131,7 @@ $tipos_permitidos = ['Professor', 'Aluno'];
         </div>
     <?php else: ?>
 
-    <!-- Barra de busca e filtros -->
+    <!-- Barra de busca e filtros (100% JavaScript) -->
     <div class="barra-busca-container">
         <div class="barra-busca">
             <div class="grupo-busca">
@@ -203,14 +149,28 @@ $tipos_permitidos = ['Professor', 'Aluno'];
                 <button class="limpar-busca" id="limpar-busca"><i class="fas fa-times"></i> Limpar</button>
             </div>
         </div>
+        
+        <!-- Controles de paginação (TOP) -->
+        <div class="controles-tabela" style="margin-top: 10px; justify-content: flex-end;">
+            <div class="itens-por-pagina">
+                <span>Itens por página:</span>
+                <select id="itens-por-pagina-select">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="9999">Todos</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="contador-resultados">
         <i class="fas fa-filter"></i>
         Mostrando <span id="contador-resultados"><?= count($usuarios) ?></span> de 
-        <span id="total-resultados"><?= $total_registros ?></span> solicitações
+        <span id="total-resultados"><?= count($usuarios) ?></span> solicitações
         <span style="margin-left: 15px; color: #6c63ff;">
-            Página <?= $pagina ?> de <?= $total_paginas ?>
+            Página <span id="pagina-atual">1</span> de <span id="total-paginas">1</span>
         </span>
     </div>
 
@@ -221,8 +181,8 @@ $tipos_permitidos = ['Professor', 'Aluno'];
                 <tr>
                     <th data-ordenar="nome"><i class="fas fa-user"></i> Nome <span class="ordenacao"></span></th>
                     <th data-ordenar="email"><i class="fas fa-envelope"></i> E-mail <span class="ordenacao"></span></th>
-                    <th data-ordenar="data"><i class="fas fa-calendar-alt"></i> Data de Solicitação <span class="ordenacao"></span></th>
-                    <th data-ordenar="tipo"><i class="fas fa-tag"></i> Tipo Solicitado <span class="ordenacao"></span></th>
+                    <th data-ordenar="data"><i class="fas fa-calendar-alt"></i> Data <span class="ordenacao"></span></th>
+                    <th data-ordenar="tipo"><i class="fas fa-tag"></i> Tipo <span class="ordenacao"></span></th>
                     <th><i class="fas fa-cogs"></i> Ações</th>
                 </tr>
             </thead>
@@ -249,7 +209,6 @@ $tipos_permitidos = ['Professor', 'Aluno'];
                                         <?= $usuario['tipo_solicitado']; ?> (solicitado)
                                     </option>
                                     <?php 
-                                    // Mostrar apenas os tipos alternativos permitidos
                                     foreach($tipos_permitidos as $tipo):
                                         if($tipo !== $usuario['tipo_solicitado']): ?>
                                             <option value="<?= $tipo ?>"><?= $tipo ?></option>
@@ -273,89 +232,23 @@ $tipos_permitidos = ['Professor', 'Aluno'];
         </table>
     </div>
 
-    <!-- Controles de paginação -->
-    <?php if($total_paginas > 1): ?>
-    <div class="controles-tabela">
+    <!-- Controles de paginação (BOTTOM) - Renderizado pelo JavaScript -->
+    <div id="paginacao-container" class="controles-tabela" style="margin-top: 20px; display: none;">
         <div class="itens-por-pagina">
             <span>Itens por página:</span>
-            <select id="itens-por-pagina-select">
-                <option value="5" <?= $limite == 5 ? 'selected' : '' ?>>5</option>
-                <option value="10" <?= $limite == 10 ? 'selected' : '' ?>>10</option>
-                <option value="25" <?= $limite == 25 ? 'selected' : '' ?>>25</option>
-                <option value="50" <?= $limite == 50 ? 'selected' : '' ?>>50</option>
+            <select id="itens-por-pagina-select-bottom">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="9999">Todos</option>
             </select>
         </div>
-        <div class="paginacao">
-            <?php if($pagina > 1): ?>
-                <a href="?pagina=1&limite=<?= $limite ?>" class="pagina-btn">
-                    <i class="fas fa-angle-double-left"></i>
-                </a>
-                <a href="?pagina=<?= $pagina - 1 ?>&limite=<?= $limite ?>" class="pagina-btn">
-                    <i class="fas fa-angle-left"></i>
-                </a>
-            <?php else: ?>
-                <span class="pagina-btn disabled">
-                    <i class="fas fa-angle-double-left"></i>
-                </span>
-                <span class="pagina-btn disabled">
-                    <i class="fas fa-angle-left"></i>
-                </span>
-            <?php endif; ?>
-
-            <?php
-            // Calcular intervalo de páginas para mostrar
-            $inicio = max(1, $pagina - 2);
-            $fim = min($total_paginas, $pagina + 2);
-            
-            // Ajustar para sempre mostrar 5 páginas se possível
-            if ($fim - $inicio < 4 && $total_paginas > 5) {
-                if ($pagina <= 3) {
-                    $fim = min(5, $total_paginas);
-                } elseif ($pagina >= $total_paginas - 2) {
-                    $inicio = max(1, $total_paginas - 4);
-                }
-            }
-            
-            // Mostrar "..." no início se necessário
-            if ($inicio > 1): ?>
-                <span class="pagina-btn">...</span>
-            <?php endif;
-            
-            // Mostrar páginas
-            for ($i = $inicio; $i <= $fim; $i++): ?>
-                <a href="?pagina=<?= $i ?>&limite=<?= $limite ?>" class="pagina-btn <?= $i == $pagina ? 'ativa' : '' ?>">
-                    <?= $i ?>
-                </a>
-            <?php endfor;
-            
-            // Mostrar "..." no final se necessário
-            if ($fim < $total_paginas): ?>
-                <span class="pagina-btn">...</span>
-            <?php endif; ?>
-
-            <?php if($pagina < $total_paginas): ?>
-                <a href="?pagina=<?= $pagina + 1 ?>&limite=<?= $limite ?>" class="pagina-btn">
-                    <i class="fas fa-angle-right"></i>
-                </a>
-                <a href="?pagina=<?= $total_paginas ?>&limite=<?= $limite ?>" class="pagina-btn">
-                    <i class="fas fa-angle-double-right"></i>
-                </a>
-            <?php else: ?>
-                <span class="pagina-btn disabled">
-                    <i class="fas fa-angle-right"></i>
-                </span>
-                <span class="pagina-btn disabled">
-                    <i class="fas fa-angle-double-right"></i>
-                </span>
-            <?php endif; ?>
-        </div>
-        
+        <div class="paginacao" id="paginacao-botoes"></div>
         <div class="paginacao-info">
-            <span>Página <?= $pagina ?> de <?= $total_paginas ?></span>
+            Página <span id="pagina-info">1</span> de <span id="total-paginas-info">1</span>
         </div>
     </div>
-    <?php endif; ?>
-    <!-- Fim dos controles de paginação -->
 
     <?php endif; ?>
 </div>
