@@ -13,10 +13,11 @@ $senha = $_POST['password'] ?? '';
 
 // Buscar usuário
 $sql = "
-    SELECT id, nome, email, senha, tipo_usuario, aprovado, ativo
+    SELECT id, nome, email, senha, tipo_usuario, aprovado, ativo, foto
     FROM usuarios
     WHERE email = ? LIMIT 1
 ";
+
 
 
 $stmt = $conn->prepare($sql);
@@ -53,12 +54,15 @@ if (!password_verify($senha, $user['senha'])) {
 $_SESSION['usuario_id']    = $user['id'];
 $_SESSION['usuario_nome']  = $user['nome'];
 $_SESSION['usuario_email'] = $user['email'];
+
 $tipoNormalizado = ucfirst(strtolower(trim($user['tipo_usuario'])));
-$_SESSION['usuario_tipo'] = $tipoNormalizado;
+$_SESSION['usuario_tipo']  = $tipoNormalizado;
 
-
+// 🔥 ESSENCIAL
+$_SESSION['usuario_foto']  = $user['foto'];
 
 header("Location: ../Public/Home.php");
 exit;
+
 
 

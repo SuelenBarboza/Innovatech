@@ -1,11 +1,22 @@
 <?php
-// Mostra os relatorios enviados pelo aluno
+// Mostra os relatórios enviados pelo aluno, mas apenas para professores
 session_start();
 include("../Config/db.php");
 
+// ==========================
+// VERIFICAÇÃO DE LOGIN
+// ==========================
 if (!isset($_SESSION['usuario_id'])) {
     die("Usuário não logado.");
 }
+
+// ==========================
+// VERIFICAÇÃO DE PERMISSÃO
+// ==========================
+if (!isset($_SESSION['usuario_tipo']) || $_SESSION['usuario_tipo'] !== 'Aluno') {
+    die("Acesso negado. Apenas alunos podem acessar esta página.");
+}
+
 
 $aluno_id = $_SESSION['usuario_id'];
 
@@ -21,6 +32,7 @@ $stmt->bind_param("i", $aluno_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

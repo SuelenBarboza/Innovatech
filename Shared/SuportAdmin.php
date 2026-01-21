@@ -1,10 +1,60 @@
 <?php
+// Admin  responde e conclui chamados de suporte
 session_start();
 include("../Config/db.php"); // Conexão
 
 // Verifica admin
 if (!isset($_SESSION['usuario_tipo']) || strtolower(trim($_SESSION['usuario_tipo'])) !== 'admin') {
     die("Acesso negado.");
+}
+// ========================
+// CONCLUIR CHAMADO
+// ========================
+if (isset($_GET['concluir'])) {
+
+    $chamado_id = (int) $_GET['concluir'];
+
+    $sql = "
+        UPDATE suporte_chamados
+        SET status = 'concluido'
+        WHERE id = ?
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $chamado_id);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: SupportAdmin.php");
+    exit;
+}
+
+// ========================
+// RESPONDER CHAMADO
+// ========================
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chamado_id'])) {
+
+    $chamado_id = (int) $_POST['chamado_id'];
+    $resposta = trim($_POST['resposta']);
+
+    if (!empty($resposta)) {
+        $sql = "
+            UPDATE suporte_chamados
+            SET 
+                resposta = ?,
+                status = 'respondido',
+                data_resposta = NOW()
+            WHERE id = ?
+        ";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $resposta, $chamado_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    header("Location: SupportAdmin.php");
+    exit;
 }
 
 // ========================
