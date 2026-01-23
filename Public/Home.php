@@ -11,7 +11,6 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,7 +22,6 @@ if (!isset($_SESSION['usuario_id'])) {
     <link rel="stylesheet" href="../Assets/Css/Footer.css">
     <link rel="stylesheet" href="../Assets/Css/Home.css"> 
     <title>Innovatech</title>
-    
 </head>
 
 <body>
@@ -31,11 +29,46 @@ if (!isset($_SESSION['usuario_id'])) {
     
     <section class="sobre">
         <div class="container">
-             <!-- <img src="../Assets/Img/FundoInnova.png" alt="Innovatech" class="logo">  -->
-           
+            <!-- Ícone -->
+            <div class="icon-container">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            
+            <!-- Mensagem -->
+            <div class="welcome-message">
+                <h1>Bem-vindo ao Academic Hub</h1>
+                <h2>Gerenciador de projetos acadêmicos</h2>
+            </div>
+            
+            <!-- Descrição -->
+            <div class="description">
+                <p>Gerencie seus projetos, acompanhe prazos e colabore com sua equipe de forma simples e eficiente.</p>
+            </div>
+            
+            <!-- Destaques -->
+            <div class="highlights">
+                <div class="highlight-item">
+                    <i class="fas fa-folder-open"></i>
+                    <h3>Organize Projetos</h3>
+                    <p>Mantenha todos os seus projetos organizados em um só lugar.</p>
+                </div>
+                
+                <div class="highlight-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Acompanhe Prazos</h3>
+                    <p>Nunca perca um prazo importante com nosso sistema de alertas.</p>
+                </div>
+                
+                <div class="highlight-item">
+                    <i class="fas fa-comments"></i>
+                    <h3>Colabore</h3>
+                    <p>Trabalhe em equipe com professores e colegas.</p>
+                </div>
+            </div>
+            
+        </div>
     </section>    
     
     <?php include("../Includes/Footer.php"); ?>
-
 </body>
 </html>

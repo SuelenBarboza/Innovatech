@@ -76,7 +76,7 @@ if ($projeto_id > 0 && ($tipo === 'Admin' || in_array($projeto_id, array_column(
 <title>Comentários do Projeto</title>
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
-<link rel="stylesheet" href="../Assets/css/Comments.css">
+<link rel="stylesheet" href="../Assets/css/ViewComments.css">
 
 </head>
 <body>

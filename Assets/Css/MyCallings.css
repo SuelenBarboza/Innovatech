@@ -1,0 +1,222 @@
+/* img fundo */
+body {
+    background-image: url("../Img/FundoInnova.png"); 
+    background-size: cover; /* faz a imagem cobrir toda a tela */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Garante altura para scroll */
+html, body {
+    overflow-y: auto !important;
+    height: 100%;
+}
+
+/* Container principal */
+.container {
+    background-color: #fff;
+    padding: 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1;
+}
+
+/* Título */
+.container h1 {
+    margin-bottom: 20px;
+    font-size: 32px; 
+    color: #333; 
+    text-align: center; 
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Mensagem quando não há chamados */
+.container p {
+    text-align: center;
+    color: #555;
+    font-size: 16px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+/* ================= TABELA ================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+th {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    color: #555;
+    font-size: 15px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #f1f8ff;
+    transition: background-color 0.2s ease;
+}
+
+/* ================= STATUS ================= */
+.status {
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+}
+
+.status.aberto { 
+    color: #e67e22;
+    background-color: #fef9e7;
+    border: 1px solid #f9e79f;
+}
+
+.status.respondido { 
+    color: #3498db;
+    background-color: #e8f4fc;
+    border: 1px solid #bbdefb;
+}
+
+.status.concluido { 
+    color: #27ae60;
+    background-color: #e8f8ef;
+    border: 1px solid #a3e9c4;
+}
+
+/* ================= BOTÕES ================= */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    min-width: 120px;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* ================= BARRA DE ROLAGEM ================= */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3498db; /* Azul */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9; /* Azul mais escuro no hover */
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #f1f1f1;
+}
+
+/* ================= RESPONSIVIDADE ================= */
+@media (max-width: 992px) {
+    .container {
+        padding: 40px;
+        width: 95%;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+    
+    .container h1 {
+        font-size: 24px;
+    }
+    
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .btn {
+        padding: 6px 12px;
+        font-size: 13px;
+        min-width: 100px;
+    }
+    
+    .status {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    
+    table {
+        font-size: 13px;
+    }
+    
+    th, td {
+        padding: 8px;
+    }
+    
+    .container h1 {
+        font-size: 20px;
+    }
+}

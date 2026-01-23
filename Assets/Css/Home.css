@@ -1,4 +1,4 @@
-/* ===== RESET E CONFIGURAÇÕES GERAIS ===== */
+/* ===== RESET ===== */
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +9,7 @@ html {
     scroll-behavior: smooth;
 }
 
-/* ===== CORPO DA PÁGINA ===== */
+/* ===== BODY ===== */
 body {
     background-image: url("../Img/FundoInnova.png");
     background-size: cover;
@@ -20,125 +20,221 @@ body {
     font-family: 'Roboto', sans-serif;
     display: flex;
     flex-direction: column;
+    color: #1f2937;
 }
 
-/* ===== SEÇÃO SOBRE (container da imagem) ===== */
+/* ===== SEÇÃO PRINCIPAL ===== */
 .sobre {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    padding: 40px 20px;
-    min-height: calc(100vh - 150px); /* Altura mínima considerando header/footer */
+    padding: 30px 20px;
+    min-height: calc(100vh - 150px);
 }
 
-/* ===== CONTAINER DA IMAGEM ===== */
+/* ===== CONTAINER PRINCIPAL ===== */
 .sobre .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1000px;
+    padding: 50px 45px;
+    border-radius: 18px;
+    text-align: center;
+
+    /* visual refinado */
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.12),
+        0 2px 8px rgba(0, 0, 0, 0.05);
+
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* ===== ÍCONE ===== */
+.icon-container {
+    margin-bottom: 22px;
+}
+
+.icon-container i {
+    font-size: 52px;
+    color: #2563eb;
+    padding: 18px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.1);
+}
+
+/* ===== TÍTULOS ===== */
+.welcome-message h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.welcome-message h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #4b5563;
+    margin-bottom: 28px;
+}
+
+/* ===== DESCRIÇÃO ===== */
+.description {
+    max-width: 720px;
+    margin: 0 auto 35px;
+    padding: 22px 26px;
+    border-radius: 12px;
+
+    background: rgba(37, 99, 235, 0.08);
+    border-left: 4px solid #2563eb;
+}
+
+.description p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #374151;
+}
+
+/* ===== DESTAQUES ===== */
+.highlights {
     display: flex;
+    gap: 22px;
     justify-content: center;
-    align-items: center;
-    height: 100%;
+    flex-wrap: wrap;
 }
 
-/* ===== LOGO/IMAGEM PRINCIPAL - REDUZIDA ===== */
-.sobre .logo {
-    max-width: 80%;
-    max-height: 60vh; /* REDUZIDO significativamente */
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
+.highlight-item {
+    flex: 1;
+    min-width: 230px;
+    max-width: 280px;
+    padding: 24px 22px;
+    border-radius: 14px;
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* ===== VERSÃO MAIS COMPACTA - se ainda estiver muito grande ===== */
-/* Remova o comentário abaixo se quiser ainda menor */
-/*
-.sobre .logo {
-    max-width: 70%;
-    max-height: 50vh;
+.highlight-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
 }
-*/
+
+/* ÍCONE DOS CARDS */
+.highlight-item i {
+    font-size: 2.2rem;
+    color: #2563eb;
+    margin-bottom: 14px;
+}
+
+/* TÍTULO DOS CARDS */
+.highlight-item h3 {
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+    color: #1f2937;
+}
+
+/* TEXTO DOS CARDS */
+.highlight-item p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #4b5563;
+}
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== SCROLLBAR PERSONALIZADA - AZUL ===== */
+/* Para Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3498db; /* Azul */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9; /* Azul mais escuro no hover */
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #f1f1f1;
+}
+
+
+
+
 
 /* ===== RESPONSIVIDADE ===== */
-
-/* Tablets */
 @media (max-width: 1024px) {
-    .sobre {
-        padding: 30px 15px;
-        min-height: calc(100vh - 130px);
-    }
-    
-    .sobre .logo {
-        max-width: 85%;
-        max-height: 55vh;
+    .welcome-message h1 {
+        font-size: 2.1rem;
     }
 }
 
-/* Tablets menores */
 @media (max-width: 768px) {
-    .sobre {
-        padding: 25px 15px;
-        min-height: calc(100vh - 120px);
+    .sobre .container {
+        padding: 40px 25px;
     }
-    
-    .sobre .logo {
-        max-width: 90%;
-        max-height: 50vh; /* Ainda menor em tablets */
+
+    .highlights {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .highlight-item {
+        max-width: 100%;
+        width: 100%;
     }
 }
 
-/* Celulares */
 @media (max-width: 480px) {
-    .sobre {
-        padding: 20px 10px;
-        min-height: calc(100vh - 110px);
+    .welcome-message h1 {
+        font-size: 1.7rem;
     }
-    
-    .sobre .logo {
-        max-width: 95%;
-        max-height: 45vh; /* Bem reduzido em celulares */
-    }
-    
-    body {
-        background-attachment: scroll;
-    }
-}
 
-/* Telas muito grandes */
-@media (min-width: 1600px) {
-    .sobre .logo {
-        max-width: 70%;
-        max-height: 55vh;
+    .welcome-message h2 {
+        font-size: 1.1rem;
+    }
+
+    .icon-container i {
+        font-size: 44px;
+        padding: 14px;
     }
 }
 
-/* ===== GARANTIR VISIBILIDADE DO FOOTER ===== */
-body {
-    min-height: 100vh;
+/* ===== ANIMAÇÃO ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
-/* Se o footer estiver saindo da tela, ajuste o .sobre */
-.sobre {
-    padding-bottom: 60px; /* Espaço extra para garantir que o footer seja visível */
-}
-
-/* ===== DEBUG - Remova depois de testar ===== */
-/*
-header {
-    background-color: rgba(255, 0, 0, 0.2);
-    height: 80px;
-}
-
-footer {
-    background-color: rgba(0, 0, 255, 0.2);
-    height: 70px;
-}
-
-.sobre {
-    background-color: rgba(0, 255, 0, 0.1);
-}
-*/

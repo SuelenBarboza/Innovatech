@@ -103,8 +103,8 @@
 
         <!-- BOTÕES -->
         <div class="form-actions">
-            <button type="submit">Salvar</button>
-            <button type="button" onclick="history.back()">Cancelar</button>
+            <button type="submit" id="salvar">Salvar</button>
+            <button type="button" id="cancelar" onclick="history.back()">Cancelar</button>
         </div>
 
     </form>

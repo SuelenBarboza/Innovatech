@@ -15,24 +15,21 @@ if (!isset($_SESSION['usuario_tipo']) || !in_array($_SESSION['usuario_tipo'], ['
 // PROCESSAR APROVAÇÃO / REJEIÇÃO
 // ==========================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
-    $usuario_id = (int)($_POST['usuario_id'] ?? 0);
+
+    $usuario_id = (int) ($_POST['usuario_id'] ?? 0);
     $acao = $_POST['acao'];
 
     if ($acao === 'aprovar') {
-        $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
-        if (!in_array($tipo_aprovado, ['Professor', 'Aluno'])) {
-            $_SESSION['msg'] = "Tipo de usuário não permitido!";
-            header("Location: UserManagerCoordenador.php");
-            exit;
-        }
 
         $stmt = $conn->prepare("
             UPDATE usuarios 
-            SET aprovado = 1, tipo_usuario = ?
-            WHERE id = ? AND aprovado = 0 AND ativo = 1
+            SET aprovado = 1, tipo_usuario = tipo_solicitado
+            WHERE id = ? 
+              AND aprovado = 0 
+              AND ativo = 1
               AND tipo_solicitado IN ('Aluno','Professor')
         ");
-        $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
+        $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
         $stmt->close();
 
@@ -40,9 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
     }
 
     if ($acao === 'rejeitar') {
+
         $stmt = $conn->prepare("
             DELETE FROM usuarios 
-            WHERE id = ? AND aprovado = 0 AND ativo = 1
+            WHERE id = ?
+              AND aprovado = 0 
+              AND ativo = 1
               AND tipo_solicitado IN ('Aluno','Professor')
         ");
         $stmt->bind_param("i", $usuario_id);
@@ -52,9 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
         $_SESSION['msg'] = "Solicitação rejeitada.";
     }
 
-    header("Location: UserManagerCoordenador.php");
+    header("Location: UserManagerCoord.php");
     exit;
 }
+
+
 
 // ==========================
 // BUSCAR TODOS OS USUÁRIOS PENDENTES (SEM LIMITE)

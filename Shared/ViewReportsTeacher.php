@@ -60,42 +60,42 @@ $result = $stmt->get_result();
 <title>Relatórios Recebidos</title>
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
-<link rel="stylesheet" href="../Assets/css/Report.css">
+<link rel="stylesheet" href="../Assets/css/ViewReportsTeacher.css"> 
 </head>
 <body>
 
 <?php include("../Includes/Header.php"); ?>
 
-<section class="form-container">
-<h2>📥 Relatórios Recebidos</h2>
+<!-- Alterar de section para div com classe container -->
+<div class="container">
+    <h2> Relatórios Recebidos</h2>
 
-<?php if ($result->num_rows === 0): ?>
-<p>Nenhum relatório recebido.</p>
-<?php endif; ?>
+    <?php if ($result->num_rows === 0): ?>
+    <p>Nenhum relatório recebido.</p>
+    <?php endif; ?>
 
-<table class="tabela">
-<tr>
-  <th>Projeto</th>
-  <th>Aluno</th>
-  <th>Título</th>
-  <th>Data</th>
-  <th>Ação</th>
-</tr>
+    <table class="tabela">
+    <tr>
+        <th>Projeto</th>
+        <th>Aluno</th>
+        <th>Título</th>
+        <th>Data</th>
+        <th>Ação</th>
+    </tr>
 
-<?php while ($r = $result->fetch_assoc()): ?>
-<tr>
-  <td><?= htmlspecialchars($r['projeto']) ?></td>
-  <td><?= htmlspecialchars($r['aluno']) ?></td>
-  <td><?= htmlspecialchars($r['titulo']) ?></td>
-  <td><?= date("d/m/Y", strtotime($r['criado_em'])) ?></td>
-  <td>
-    <a href="RespondReport.php?id=<?= $r['id'] ?>">Responder</a>
-  </td>
-</tr>
-<?php endwhile; ?>
-
-</table>
-</section>
+    <?php while ($r = $result->fetch_assoc()): ?>
+    <tr>
+        <td><?= htmlspecialchars($r['projeto']) ?></td>
+        <td><?= htmlspecialchars($r['aluno']) ?></td>
+        <td><?= htmlspecialchars($r['titulo']) ?></td>
+        <td><?= date("d/m/Y", strtotime($r['criado_em'])) ?></td>
+        <td>
+            <a href="RespondReport.php?id=<?= $r['id'] ?>">Responder</a>
+        </td>
+    </tr>
+    <?php endwhile; ?>
+    </table>
+</div>
 
 <?php include("../Includes/Footer.php"); ?>
 </body>

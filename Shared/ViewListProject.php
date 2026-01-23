@@ -10,17 +10,32 @@ if (!isset($_SESSION['usuario_id'])) {
 $usuario_id = (int) $_SESSION['usuario_id'];
 
 // ================= QUERY CORRIGIDA =================
-$sql = "
-SELECT DISTINCT
-    p.*,
-    pu.prioridade AS prioridade_usuario,
-    COALESCE(pu.arquivado, 0) AS arquivado_usuario
-FROM projetos p
-LEFT JOIN projeto_usuario pu
-    ON pu.projeto_id = p.id
-   AND pu.usuario_id = ?
-ORDER BY p.id DESC
-";
+if ($_SESSION['usuario_tipo'] === 'Admin') {
+
+    $sql = "
+        SELECT p.*
+        FROM projetos p
+        ORDER BY p.criado_em DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+}
+else {
+
+    $sql = "
+        SELECT DISTINCT p.*
+        FROM projetos p
+        INNER JOIN projeto_usuario pu ON pu.projeto_id = p.id
+        WHERE pu.usuario_id = ?
+          AND pu.arquivado = 0
+        ORDER BY p.criado_em DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $_SESSION['usuario_id']);
+}
+
+
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $usuario_id);

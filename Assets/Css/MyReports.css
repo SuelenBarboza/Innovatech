@@ -1,0 +1,174 @@
+/* img fundo */
+body {
+    background-image: url("../Img/FundoInnova.png"); 
+    background-size: cover; /* faz a imagem cobrir toda a tela */
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+/*  Formulário */
+.form-container {
+    background-color: #fff;
+    padding: 60px 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    box-sizing: border-box;
+    position: relative; 
+    z-index: 1;
+}
+
+html, body {
+    overflow-y: auto !important;
+    height: 100%;
+}
+
+/* Título do formulário */
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 32px; 
+    color: #333; 
+    text-align: center; 
+}
+
+/* Estilo para mensagem quando não há relatórios */
+.form-container p {
+    text-align: center;
+    color: #555;
+    font-size: 16px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+/* Cartão de relatório */
+.report-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.report-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Título do relatório */
+.report-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #333;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+/* Informações do projeto */
+.report-card small {
+    display: block;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Descrição do relatório */
+.report-card p {
+    color: #555;
+    line-height: 1.6;
+    margin: 0 0 15px 0;
+    padding: 0;
+    background-color: transparent;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+/* Data do relatório */
+.report-card span {
+    display: inline-block;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Botão Ver Resposta */
+.btn-ver {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-ver:hover {
+    background-color: #2980b9;
+}
+
+/* Barra de rolagem personalizada */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3498db; /* Azul */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9; /* Azul mais escuro no hover */
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #f1f1f1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 30px;
+        width: 95%;
+    }
+    
+    .form-container h2 {
+        font-size: 24px;
+    }
+    
+    .report-card {
+        padding: 15px;
+    }
+    
+    .report-card h3 {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px;
+    }
+    
+    .report-card {
+        padding: 10px;
+    }
+    
+    .btn-ver {
+        width: 100%;
+        text-align: center;
+    }
+}

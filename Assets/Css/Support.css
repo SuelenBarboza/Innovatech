@@ -1,21 +1,22 @@
 /* img fundo */
- body {
+body {
     background-image: url("../Img/FundoInnova.png"); 
     background-size: cover; /* faz a imagem cobrir toda a tela */
     background-position: center; 
     background-repeat: no-repeat; 
 }
 
+/*  Formulário */
 .form-container {
     background-color: #fff;
-    padding: 60px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+    padding: 60px 60px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 30px auto;
     box-sizing: border-box;
-    position: relative;
+    position: relative; 
     z-index: 1;
 }
 
@@ -24,71 +25,173 @@ html, body {
     height: 100%;
 }
 
+/* Título do formulário */
 .form-container h1 {
-    margin-bottom: 25px;
-    font-size: 36px;
-    color: #2c3e50;
-    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px; 
+    color: #333; 
+    text-align: center; 
 }
 
+/* Mensagens de sucesso/erro */
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #f5c6cb;
+}
+
+/* Estilo dos campos e labels */
 .form-group {
     margin-bottom: 20px;
 }
 
+/* Estilo da label */
 .form-group label {
-    font-size: 16px;
+    font-size: 16px; 
     font-weight: bold;
-    color: #34495e;
+    color: #555;
     margin-bottom: 5px;
-    display: block;
+    display: block; 
 }
 
+/* Área do texto e dos quadrados */
 input, textarea {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     margin-top: 5px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 5px;
     font-size: 16px;
-    background-color: #f9f9f9;
 }
 
+/* Inputs somente leitura */
+input[readonly] {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Removendo o redimensionamento da área de texto */
 textarea {
-    height: 140px;
-    resize: vertical;
+    height: 100px; 
+    resize: none;  
 }
 
+/* Botões do formulário */
 .form-actions {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-#enviarSupport, #cancelarSupport {
-    padding: 10px 20px;
+/* Estilo dos botões */
+button {
+    padding: 8px 16px;  
     border: none;
-    border-radius: 6px;
-    font-size: 16px;
+    border-radius: 4px;
+    font-size: 14px;
     cursor: pointer;
-    width: 120px;
-    transition: 0.3s;
+    width: 150px;
 }
 
-#enviarSupport {
-    background-color: #28a745; /* verde */
-    color: #fff;
+button[type="submit"] {
+    background-color: #218838; 
+    color: white;              
 }
 
-#enviarSupport:hover {
-    background-color: #43c46b;
+button[type="submit"]:hover {
+    background-color: #52d44e;
 }
 
-#cancelarSupport {
-    background-color: #dc3545; /* vermelho */
-    color: #fff;
+button[type="reset"] {
+    background-color: #dc3545; 
+    color: white;              
 }
 
-#cancelarSupport:hover {
+button[type="reset"]:hover {
     background-color: #791c1c;
+}
+
+/* Estilo quando os campos estão em foco */
+input:focus, textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Barra de rolagem personalizada */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3498db; /* Azul */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9; /* Azul mais escuro no hover */
+}
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #f1f1f1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 30px;
+        width: 95%;
+    }
+    
+    .form-container h1 {
+        font-size: 24px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px;
+    }
+    
+    .form-group label {
+        font-size: 14px;
+    }
+    
+    input, textarea {
+        padding: 10px;
+        font-size: 14px;
+    }
 }

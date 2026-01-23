@@ -78,13 +78,13 @@ $professores = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         <!-- Nome -->
         <div class="form-group">
             <label>Nome do Projeto</label>
-            <input type="text" name="nome" value="<?= $projeto['nome'] ?>" required>
+            <input type="text" name="nome" value="<?= htmlspecialchars($projeto['nome']) ?>" required>
         </div>
 
         <!-- Descrição -->
         <div class="form-group">
             <label>Descrição</label>
-            <textarea name="descricao" required><?= $projeto['descricao'] ?></textarea>
+            <textarea name="descricao" required><?= htmlspecialchars($projeto['descricao']) ?></textarea>
         </div>
 
         <!-- Categoria -->
@@ -124,7 +124,7 @@ $professores = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 <div class="autocomplete-wrapper">
                     <input type="text"
                            class="autocomplete-input aluno-input"
-                           value="<?= $aluno['nome'] ?>"
+                           value="<?= htmlspecialchars($aluno['nome']) ?>"
                            autocomplete="off"
                            required>
 
@@ -150,7 +150,7 @@ $professores = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 <div class="autocomplete-wrapper">
                     <input type="text"
                            class="autocomplete-input professor-input"
-                           value="<?= $prof['nome'] ?>"
+                           value="<?= htmlspecialchars($prof['nome']) ?>"
                            autocomplete="off"
                            required>
 
@@ -167,9 +167,10 @@ $professores = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             <button type="button" id="addProfessor">Adicionar Professor</button>
         </div>
 
+       
         <div class="form-actions">
-            <button type="submit">Salvar</button>
-            <button type="button" onclick="history.back()">Cancelar</button>
+            <button type="submit" id="salvar">Salvar</button>
+            <button type="button" id="cancelar" onclick="history.back()">Cancelar</button>
         </div>
 
     </form>

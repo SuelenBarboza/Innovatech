@@ -7,19 +7,19 @@ include("../Config/db.php");
 if (!isset($_SESSION['usuario_id'])) {
     die("Usuário não autenticado.");
 }
-$criador_id = $_SESSION['usuario_id'];
+
+$criador_id = (int) $_SESSION['usuario_id'];
 
 // 2️⃣ Verifica se é POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: ../ViewListProject.php");
+    header("Location: ../Shared/ViewListProject.php");
     exit;
 }
 
 // 3️⃣ Recebe dados do formulário
 $nome        = trim($_POST['nome'] ?? '');
 $descricao   = trim($_POST['descricao'] ?? '');
-$categoria = !empty($_POST['categoria']) ? $_POST['categoria'] : NULL;
-
+$categoria   = !empty($_POST['categoria']) ? $_POST['categoria'] : NULL;
 $data_inicio = $_POST['data_inicio'] ?? null;
 $data_fim    = $_POST['data_fim'] ?? null;
 
@@ -30,65 +30,71 @@ $professores = $_POST['professor'] ?? [];
 $conn->begin_transaction();
 
 try {
-    // 5️⃣ INSERE PROJETO com prioridade NULL
-    $sqlProjeto = "INSERT INTO projetos 
-        (nome, descricao, categoria, data_inicio, data_fim, criador_id, prioridade)
-        VALUES (?, ?, ?, ?, ?, ?, NULL)";
+    // 5️⃣ INSERE PROJETO
+    $sqlProjeto = "
+        INSERT INTO projetos 
+        (nome, descricao, categoria, data_inicio, data_fim, criador_id)
+        VALUES (?, ?, ?, ?, ?, ?)
+    ";
 
     $stmtProjeto = $conn->prepare($sqlProjeto);
-        $stmtProjeto->bind_param(
-            "sssssi",
-            $nome,
-            $descricao,
-            $categoria,
-            $data_inicio,
-            $data_fim,
-            $criador_id
-        );
-        $stmtProjeto->execute();
+    $stmtProjeto->bind_param(
+        "sssssi",
+        $nome,
+        $descricao,
+        $categoria,
+        $data_inicio,
+        $data_fim,
+        $criador_id
+    );
+    $stmtProjeto->execute();
 
     $projeto_id = $stmtProjeto->insert_id;
+    $stmtProjeto->close();
+
     // 🔹 VINCULA CRIADOR AO PROJETO
     $sqlCriador = "
         INSERT INTO projeto_usuario 
         (projeto_id, usuario_id, papel, prioridade, arquivado)
         VALUES (?, ?, 'Criador', 'Baixa', 0)
     ";
-
     $stmtCriador = $conn->prepare($sqlCriador);
     $stmtCriador->bind_param("ii", $projeto_id, $criador_id);
     $stmtCriador->execute();
     $stmtCriador->close();
-    $stmtProjeto->close();
 
-    // 6️⃣ VINCULA ALUNOS
+    // 🔹 VINCULA ALUNOS (controle de acesso)
     if (!empty($alunos)) {
-        $sqlAluno = "INSERT INTO projeto_aluno (projeto_id, usuario_id) VALUES (?, ?)";
-        $stmtAluno = $conn->prepare($sqlAluno);
+        $stmtAlunoPU = $conn->prepare("
+            INSERT INTO projeto_usuario (projeto_id, usuario_id, papel)
+            VALUES (?, ?, 'Aluno')
+        ");
 
         foreach ($alunos as $aluno_id) {
-            $aluno_id = (int)$aluno_id; // garante que seja inteiro
+            $aluno_id = (int) $aluno_id;
             if ($aluno_id > 0) {
-                $stmtAluno->bind_param("ii", $projeto_id, $aluno_id);
-                $stmtAluno->execute();
+                $stmtAlunoPU->bind_param("ii", $projeto_id, $aluno_id);
+                $stmtAlunoPU->execute();
             }
         }
-        $stmtAluno->close();
+        $stmtAlunoPU->close();
     }
 
-    // 7️⃣ VINCULA PROFESSORES
+    // 🔹 VINCULA PROFESSORES (controle de acesso)
     if (!empty($professores)) {
-        $sqlProf = "INSERT INTO projeto_orientador (projeto_id, professor_id) VALUES (?, ?)";
-        $stmtProf = $conn->prepare($sqlProf);
+        $stmtProfPU = $conn->prepare("
+            INSERT INTO projeto_usuario (projeto_id, usuario_id, papel)
+            VALUES (?, ?, 'Orientador')
+        ");
 
         foreach ($professores as $prof_id) {
-            $prof_id = (int)$prof_id; // garante que seja inteiro
+            $prof_id = (int) $prof_id;
             if ($prof_id > 0) {
-                $stmtProf->bind_param("ii", $projeto_id, $prof_id);
-                $stmtProf->execute();
+                $stmtProfPU->bind_param("ii", $projeto_id, $prof_id);
+                $stmtProfPU->execute();
             }
         }
-        $stmtProf->close();
+        $stmtProfPU->close();
     }
 
     // 8️⃣ COMMIT
@@ -102,4 +108,3 @@ try {
 }
 
 $conn->close();
-?>

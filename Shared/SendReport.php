@@ -37,7 +37,7 @@ $resultProjetos = $stmt->get_result();
 
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
-<link rel="stylesheet" href="../Assets/css/Report.css">
+<link rel="stylesheet" href="../Assets/css/SendReport.css">
 
 <script>
 async function carregarProfessores(projetoId) {
@@ -74,7 +74,7 @@ async function carregarProfessores(projetoId) {
 <?php include("../Includes/Header.php"); ?>
 
 <section class="form-container">
-<h2>📄 Enviar Relatório ao Professor</h2>
+<h2>Enviar Relatório ao Professor</h2>
 
 <form method="POST" action="../Config/ProcessSendReport.php">
 
@@ -108,8 +108,8 @@ async function carregarProfessores(projetoId) {
   </div>
 
   <div class="form-actions">
-    <button type="submit">📤 Enviar Relatório</button>
-    <a href="Home.php" class="btn-voltar">⬅ Voltar</a>
+    <button type="submit">Enviar Relatório</button>
+    <a href="Home.php" class="btn-voltar"> Voltar</a>
   </div>
 
 </form>

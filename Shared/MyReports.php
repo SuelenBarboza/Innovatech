@@ -40,7 +40,7 @@ $result = $stmt->get_result();
 <title>Meus Relatórios</title>
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
-<link rel="stylesheet" href="../Assets/css/Report.css">
+<link rel="stylesheet" href="../Assets/css/MyReports.css">
 </head>
 <body>
 

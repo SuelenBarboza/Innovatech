@@ -39,52 +39,9 @@ include("../Includes/Header.php");
 
     <link rel="stylesheet" href="/Innovatech/Assets/css/Header.css">
     <link rel="stylesheet" href="/Innovatech/Assets/css/Footer.css">
+    <link rel="stylesheet" href="/Innovatech/Assets/css/MyCallings.css">
 
-    <style>
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 14px;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-        }
-
-        th {
-            background: #f5f5f5;
-        }
-
-        .status {
-            font-weight: bold;
-        }
-
-        .status.aberto { color: #ff9800; }
-        .status.respondido { color: #2196F3; }
-        .status.concluido { color: #4CAF50; }
-
-        a.btn {
-            padding: 6px 12px;
-            background: #2196F3;
-            color: #fff;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        a.btn:hover {
-            background: #1976D2;
-        }
-    </style>
+    
 </head>
 <body>
 

@@ -91,8 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="form-actions">
-            <button type="submit">Enviar Chamado</button>
-            <button type="reset">Cancelar</button>
+            <button type="submit" id="enviarSupport">Enviar Chamado</button>
+            <button type="reset" id="cancelarSupport">Cancelar</button>
         </div>
     </form>
 </div>

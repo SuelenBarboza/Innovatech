@@ -1,5 +1,5 @@
 <?php
-// Garante que só Professor ou Admin entra
+// Professor responde ao relatório enviado pelo aluno
 session_start();
 include("../Config/db.php");
 

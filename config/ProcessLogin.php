@@ -1,5 +1,4 @@
 <?php
-// Usuarios fazem Login no sistema e são redirecionados conforme o tipo de usuário.
 session_start();
 require_once "db.php";
 
@@ -13,12 +12,14 @@ $senha = $_POST['password'] ?? '';
 
 // Buscar usuário
 $sql = "
-    SELECT id, nome, email, senha, tipo_usuario, aprovado, ativo, foto
+    SELECT 
+        id, nome, email, senha, 
+        tipo_usuario, tipo_solicitado,
+        aprovado, ativo, foto
     FROM usuarios
-    WHERE email = ? LIMIT 1
+    WHERE email = ?
+    LIMIT 1
 ";
-
-
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $email);
@@ -50,19 +51,18 @@ if (!password_verify($senha, $user['senha'])) {
     exit;
 }
 
-// LOGIN OK
+// Define tipo corretamente
+$tipoFinal = !empty($user['tipo_usuario'])
+    ? $user['tipo_usuario']
+    : $user['tipo_solicitado'];
+
+// Sessão
 $_SESSION['usuario_id']    = $user['id'];
 $_SESSION['usuario_nome']  = $user['nome'];
 $_SESSION['usuario_email'] = $user['email'];
-
-$tipoNormalizado = ucfirst(strtolower(trim($user['tipo_usuario'])));
-$_SESSION['usuario_tipo']  = $tipoNormalizado;
-
-// 🔥 ESSENCIAL
+$_SESSION['usuario_tipo']  = $tipoFinal;
 $_SESSION['usuario_foto']  = $user['foto'];
 
+// Redireciona
 header("Location: ../Public/Home.php");
 exit;
-
-
-
