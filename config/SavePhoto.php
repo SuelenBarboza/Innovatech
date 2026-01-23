@@ -1,5 +1,5 @@
 <?php
-//Salva a foto de perfil do usuário
+// Salva a foto de perfil do usuário
 session_start();
 include("../Config/db.php");
 
@@ -19,7 +19,9 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
     $ext = strtolower(pathinfo($arquivo['name'], PATHINFO_EXTENSION));
 
     if (!in_array($ext, $tiposPermitidos)) {
-        die("Formato de imagem inválido.");
+        // Redireciona para perfil com mensagem de erro
+        header("Location: ../Shared/Profile.php?erro=tipo_invalido");
+        exit;
     }
 
     // Pasta de destino
@@ -33,7 +35,10 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
     $nomeArquivo = "usuario_" . $idUsuario . "." . $ext;
     $destino = $pasta . $nomeArquivo;
 
-    move_uploaded_file($arquivo['tmp_name'], $destino);
+    if (!move_uploaded_file($arquivo['tmp_name'], $destino)) {
+        header("Location: ../Shared/Profile.php?erro=upload_falhou");
+        exit;
+    }
 
     // Salva no banco
     $sql = "UPDATE usuarios SET foto = ? WHERE id = ?";
@@ -44,7 +49,11 @@ if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
     // Atualiza session
     $_SESSION['usuario_foto'] = $destino;
 
-    // Volta para o perfil
-    header("Location: ../Shared/Profile.php");
+    // Redireciona para perfil com sucesso
+    header("Location: ../Shared/Profile.php?sucesso=foto_salva");
+    exit;
+} else {
+    // Nenhum arquivo enviado
+    header("Location: ../Shared/Profile.php?erro=nenhum_arquivo");
     exit;
 }

@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: Login.php");
+    header("Location: ../Public/Login.php");
     exit;
 }
 ?>
@@ -13,7 +13,6 @@ if (!isset($_SESSION['usuario_id'])) {
     <meta charset="UTF-8">
     <title>Meu Perfil</title>
 
-    
     <link rel="stylesheet" href="../Assets/css/Header.css">
     <link rel="stylesheet" href="../Assets/css/Footer.css">
     <link rel="stylesheet" href="../Assets/css/Profile.css">
@@ -65,6 +64,29 @@ if (!isset($_SESSION['usuario_id'])) {
         <!-- FOTO -->
         <div class="profile-box">
             <h3>Foto de Perfil</h3>
+
+            <!-- Mensagem de erro ou sucesso -->
+            <?php
+            if (isset($_GET['erro'])) {
+                echo '<div class="mensagem erro">';
+                switch ($_GET['erro']) {
+                    case 'tipo_invalido':
+                        echo 'Formato de imagem inválido! Apenas JPG, PNG ou WEBP são permitidos.';
+                        break;
+                    case 'upload_falhou':
+                        echo 'Erro ao fazer upload da foto. Tente novamente.';
+                        break;
+                    case 'nenhum_arquivo':
+                        echo 'Nenhum arquivo enviado.';
+                        break;
+                }
+                echo '</div>';
+            }
+
+            if (isset($_GET['sucesso']) && $_GET['sucesso'] === 'foto_salva') {
+                echo '<div class="mensagem sucesso">Foto atualizada com sucesso!</div>';
+            }
+            ?>
 
             <form 
                 action="../Config/SavePhoto.php" 

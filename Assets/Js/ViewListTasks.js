@@ -147,7 +147,7 @@ function criarLinha(t) {
             <button class="botao-editar-prioridade" title="Editar Prioridade">📋</button>
             <button class="botao-editar-status" title="Editar Status">📈</button>
             <button class="botao-ocultar">
-                ${t.arquivado ? "♻️ Restaurar" : "📂 Arquivar"}
+                ${t.arquivado ? "♻️ " : "📂 "}
             </button>
         </td>
     `;

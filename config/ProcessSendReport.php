@@ -1,5 +1,4 @@
 <?php
-//Processa o do envio de resposta ao relatório pelo professor/admin
 session_start();
 include("db.php");
 
@@ -7,29 +6,30 @@ if (!isset($_SESSION['usuario_id'])) {
     die("Usuário não logado.");
 }
 
-$respondente_id = (int) $_SESSION['usuario_id'];
-$relatorio_id   = (int) ($_POST['relatorio_id'] ?? 0);
-$mensagem       = trim($_POST['resposta'] ?? '');
+$aluno_id      = (int) $_SESSION['usuario_id'];
+$projeto_id    = (int) ($_POST['projeto_id'] ?? 0);
+$professor_id  = (int) ($_POST['professor_id'] ?? 0);
+$titulo        = trim($_POST['titulo'] ?? '');
+$descricao     = trim($_POST['descricao'] ?? '');
 
-if ($relatorio_id <= 0 || empty($mensagem)) {
+if ($projeto_id <= 0 || $professor_id <= 0 || empty($titulo) || empty($descricao)) {
     die("Dados inválidos.");
 }
 
-// Inserir nova resposta
+// Inserir relatório
 $sql = "
-    INSERT INTO resposta_relatorio (relatorio_id, respondente_id, resposta)
-    VALUES (?, ?, ?)
+    INSERT INTO relatorios (projeto_id, aluno_id, professor_id, titulo, descricao)
+    VALUES (?, ?, ?, ?, ?)
 ";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("iis", $relatorio_id, $respondente_id, $mensagem);
+$stmt->bind_param("iiiss", $projeto_id, $aluno_id, $professor_id, $titulo, $descricao);
 
 if ($stmt->execute()) {
-    header("Location: ../Shared/ViewReport.php?id=$relatorio_id&msg=sucesso");
+    header("Location: ../Shared/SendReport.php?msg=sucesso");
     exit;
 } else {
-    echo "Erro ao enviar resposta.";
+    echo "Erro ao enviar relatório.";
 }
 
 $stmt->close();
 $conn->close();
-?>

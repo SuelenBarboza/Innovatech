@@ -1,16 +1,22 @@
 <?php
-// Visualizar detalhes de um relatório específico e histórico de respostas
 session_start();
 include("../Config/db.php");
 
+// ==========================
+// Verifica login
+// ==========================
 if (!isset($_SESSION['usuario_id'])) {
     header("Location: ../Public/Login.php");
     exit;
 }
 
-$usuario_id = $_SESSION['usuario_id'];
+$usuario_id = (int)$_SESSION['usuario_id'];
+// Pegamos o tipo do banco para garantir
 $tipo = $_SESSION['usuario_tipo'] ?? 'Aluno';
 
+// ==========================
+// ID do relatório
+// ==========================
 $relatorio_id = (int) ($_GET['id'] ?? 0);
 if ($relatorio_id <= 0) {
     header("Location: MyReports.php");
@@ -18,42 +24,48 @@ if ($relatorio_id <= 0) {
 }
 
 // ==========================
-// Buscar dados do relatório
+// Buscar relatório
 // ==========================
-$sqlRelatorio = "
-    SELECT r.id, r.titulo, r.descricao, r.aluno_id, r.criado_em, u.nome AS aluno, p.nome AS projeto
-    FROM relatorios r
-    INNER JOIN usuarios u ON u.id = r.aluno_id
-    INNER JOIN projetos p ON p.id = r.projeto_id
-    WHERE r.id = ?
+$sql = "
+SELECT r.*, u.nome AS aluno_nome, p.nome AS projeto_nome, up.nome AS professor_nome
+FROM relatorios r
+INNER JOIN usuarios u ON u.id = r.aluno_id
+INNER JOIN projetos p ON p.id = r.projeto_id
+LEFT JOIN usuarios up ON up.id = r.professor_id
+WHERE r.id = ?
 ";
-$stmt = $conn->prepare($sqlRelatorio);
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $relatorio_id);
 $stmt->execute();
 $relatorio = $stmt->get_result()->fetch_assoc();
 
-if (!$relatorio) {
-    die("Relatório não encontrado.");
-}
+if (!$relatorio) die("Relatório não encontrado.");
 
 // ==========================
-// Verificar se usuário pode acessar
+// Controle de acesso
 // ==========================
-if ($tipo === 'Aluno' && $usuario_id !== (int)$relatorio['aluno_id']) {
+// Aluno dono, professor vinculado, admin ou coordenador
+if (
+    !(
+        ($tipo === 'Aluno' && $usuario_id === (int)$relatorio['aluno_id']) ||
+        ($tipo === 'Professor' && $usuario_id === (int)$relatorio['professor_id']) ||
+        in_array($tipo, ['Admin','Coordenador'])
+    )
+) {
     die("Acesso negado.");
 }
 
 // ==========================
-// Histórico de respostas
+// Buscar respostas
 // ==========================
-$sqlRespostas = "
-    SELECT rr.resposta, rr.respondido_em, u.nome AS respondente, u.tipo_solicitado
-    FROM resposta_relatorio rr
-    INNER JOIN usuarios u ON u.id = rr.respondente_id
-    WHERE rr.relatorio_id = ?
-    ORDER BY rr.respondido_em ASC
+$sql = "
+SELECT rr.*, u.nome AS respondente_nome, u.tipo_usuario
+FROM resposta_relatorio rr
+INNER JOIN usuarios u ON u.id = rr.respondente_id
+WHERE rr.relatorio_id = ?
+ORDER BY rr.respondido_em ASC
 ";
-$stmt = $conn->prepare($sqlRespostas);
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $relatorio_id);
 $stmt->execute();
 $respostas = $stmt->get_result();
@@ -62,10 +74,10 @@ $respostas = $stmt->get_result();
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Chat do Relatório</title>
+<title>Relatório</title>
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
-<link rel="stylesheet" href="../Assets/css/Report.css">
+<link rel="stylesheet" href="../Assets/css/ViewReport.css">
 </head>
 <body>
 
@@ -73,44 +85,41 @@ $respostas = $stmt->get_result();
 
 <section class="form-container">
 
-<h2>📄 Relatório Enviado </h2>
-<p><strong>Projeto:</strong> <?= htmlspecialchars($relatorio['projeto']) ?></p>
+<h2> Relatório</h2>
+<p><strong>Projeto:</strong> <?= htmlspecialchars($relatorio['projeto_nome']) ?></p>
 <p><strong>Título:</strong> <?= htmlspecialchars($relatorio['titulo']) ?></p>
+<p><strong>Aluno:</strong> <?= htmlspecialchars($relatorio['aluno_nome']) ?></p>
+<p><strong>Professor:</strong> <?= htmlspecialchars($relatorio['professor_nome'] ?? 'Não definido') ?></p>
 <p><strong>Enviado em:</strong> <?= date("d/m/Y H:i", strtotime($relatorio['criado_em'])) ?></p>
 
-<div class="relatorio-descricao">
-    <?= nl2br(htmlspecialchars($relatorio['descricao'])) ?>
-</div>
+<div class="relatorio-descricao"><?= nl2br(htmlspecialchars($relatorio['descricao'])) ?></div>
 
 <hr>
 
-<h3>💬 Conversa</h3>
-
+<h3> Conversa</h3>
 <?php if ($respostas->num_rows === 0): ?>
-    <p>⏳ Nenhuma resposta ainda.</p>
+<p> Nenhuma resposta ainda.</p>
 <?php endif; ?>
 
-<?php while ($r = $respostas->fetch_assoc()): ?>
-    <div class="resposta-box <?= $r['respondente'] === $relatorio['aluno'] ? 'aluno' : 'professor' ?>">
-        <strong><?= htmlspecialchars($r['respondente']) ?> (<?= htmlspecialchars($r['tipo_solicitado']) ?>)</strong><br>
-        <small><?= date("d/m/Y H:i", strtotime($r['respondido_em'])) ?></small>
-        <p><?= nl2br(htmlspecialchars($r['resposta'])) ?></p>
-    </div>
+<?php while($r = $respostas->fetch_assoc()): ?>
+<div class="resposta-box <?= $r['respondente_nome'] === $relatorio['aluno_nome'] ? 'aluno' : 'professor' ?>">
+<strong><?= htmlspecialchars($r['respondente_nome']) ?> (<?= htmlspecialchars($r['tipo_usuario']) ?>)</strong>
+<small><?= date("d/m/Y H:i", strtotime($r['respondido_em'])) ?></small>
+<p><?= nl2br(htmlspecialchars($r['resposta'])) ?></p>
+</div>
 <?php endwhile; ?>
 
 <hr>
 
-<h3>✍️ Responder</h3>
-
+<h3> Responder</h3>
 <form action="../Config/ProcessRespondReport.php" method="POST">
     <input type="hidden" name="relatorio_id" value="<?= $relatorio_id ?>">
-    <textarea name="resposta" required></textarea>
-    <button type="submit">Enviar</button>
+    <textarea name="resposta" required placeholder="Digite sua resposta..."></textarea>
+    <div class="button-group">
+        <button type="submit">Enviar</button>
+        <a href="<?= $tipo === 'Aluno' ? 'MyReports.php' : 'ViewReportsTeacher.php' ?>" class="btn-voltar">Voltar</a>
+    </div>
 </form>
-
-<div class="form-actions">
-    <a href="<?= $tipo === 'Aluno' ? 'MyReports.php' : 'ViewReportsTeacher.php' ?>" class="btn-voltar">⬅ Voltar</a>
-</div>
 
 </section>
 

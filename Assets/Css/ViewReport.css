@@ -1,0 +1,483 @@
+/* ViewReport.css - Página de Visualização de Relatório */
+
+/* ================= VARIÁVEIS CSS ================= */
+:root {
+    /* Cores principais */
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    
+    /* Cores para chat */
+    --chat-aluno-bg: #f0f9ff;
+    --chat-aluno-border: #bae6fd;
+    --chat-professor-bg: #fef7cd;
+    --chat-professor-border: #fde68a;
+    --chat-admin-bg: #f0fdf4;
+    --chat-admin-border: #bbf7d0;
+    
+    /* Cores de fundo */
+    --bg-body: #ffffff;
+    --bg-container: rgba(255, 255, 255, 0.95);
+    --bg-hover: #f1f5f9;
+    
+    /* Cores de texto */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #ffffff;
+    
+    /* Cores de borda */
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e1;
+    
+    /* Sombras */
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-chat: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    /* Bordas */
+    --radius-small: 4px;
+    --radius-medium: 8px;
+    --radius-large: 12px;
+    
+    /* Espaçamentos */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+}
+
+/* ================= SCROLLBAR PERSONALIZADA ================= */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3498db;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2980b9;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #f1f1f1;
+}
+
+/* ================= RESET E BASE ================= */
+body {
+    background-image: url("../Img/FundoInnova.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--bg-body);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+html, body {
+    overflow-y: auto !important;
+    height: 100%;
+}
+
+/* ================= CONTAINER PRINCIPAL ================= */
+.form-container {
+    background-color: var(--bg-container);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-medium);
+    width: 95%;
+    max-width: 900px;
+    margin: var(--spacing-lg) auto;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--border-light);
+}
+
+/* ================= TÍTULOS ================= */
+.form-container h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin: 0 0 var(--spacing-lg) 0;
+    padding-bottom: var(--spacing-md);
+    font-size: 1.8rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-light);
+    position: relative;
+}
+
+.form-container h3 {
+    color: var(--primary-dark);
+    margin: var(--spacing-xl) 0 var(--spacing-md) 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-light);
+}
+
+/* ================= INFORMAÇÕES DO RELATÓRIO ================= */
+.form-container > p {
+    margin: var(--spacing-sm) 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.form-container > p strong {
+    color: var(--primary-dark);
+    font-weight: 600;
+    min-width: 120px;
+    display: inline-block;
+}
+
+/* ================= DESCRIÇÃO DO RELATÓRIO ================= */
+.relatorio-descricao {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-medium);
+    border-left: 4px solid var(--primary-color);
+    margin: var(--spacing-lg) 0;
+    line-height: 1.7;
+    color: var(--text-primary);
+    box-shadow: var(--shadow-light);
+}
+
+/* ================= LINHA DIVISÓRIA ================= */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-medium), transparent);
+    margin: var(--spacing-xl) 0;
+}
+
+/* ================= MENSAGEM SEM RESPOSTAS ================= */
+.form-container > p:only-child {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+    font-style: italic;
+    background-color: #f9f9f9;
+    border-radius: var(--radius-medium);
+    border: 1px solid var(--border-light);
+    margin: var(--spacing-md) 0;
+}
+
+/* ================= CAIXAS DE MENSAGENS ================= */
+.resposta-box {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-medium);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    max-width: 85%;
+    box-shadow: var(--shadow-chat);
+    animation: slideIn 0.3s ease-out;
+}
+
+.resposta-box.aluno {
+    background-color: var(--chat-aluno-bg);
+    border: 1px solid var(--chat-aluno-border);
+    margin-right: auto;
+    border-bottom-left-radius: var(--radius-small);
+}
+
+.resposta-box.professor {
+    background-color: var(--chat-professor-bg);
+    border: 1px solid var(--chat-professor-border);
+    margin-left: auto;
+    border-bottom-right-radius: var(--radius-small);
+}
+
+.resposta-box.admin {
+    background-color: var(--chat-admin-bg);
+    border: 1px solid var(--chat-admin-border);
+    margin-left: auto;
+    border-bottom-right-radius: var(--radius-small);
+}
+
+.resposta-box strong {
+    color: var(--primary-dark);
+    font-size: 1rem;
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.resposta-box small {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.8;
+}
+
+.resposta-box p {
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+/* Indicador de quem enviou */
+.resposta-box.aluno::before {
+    content: "";
+    position: absolute;
+    left: -8px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid var(--chat-aluno-border);
+}
+
+.resposta-box.professor::before,
+.resposta-box.admin::before {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid var(--chat-professor-border);
+}
+
+.resposta-box.admin::before {
+    border-left-color: var(--chat-admin-border);
+}
+
+/* ================= FORMULÁRIO DE RESPOSTA ================= */
+form {
+    background: #f8fafc;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-medium);
+    border: 1px solid var(--border-light);
+    margin-top: var(--spacing-xl);
+}
+
+form textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-medium);
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    margin-bottom: var(--spacing-md);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* ================= BOTÕES LADO A LADO ================= */
+.button-group {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+/* Botão Enviar */
+form button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-medium);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+    flex: 1;
+}
+
+form button[type="submit"]:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Botão Voltar */
+.btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: linear-gradient(135deg, #64748b, #475569);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-medium);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    min-width: 150px;
+    text-align: center;
+    flex: 1;
+}
+
+.btn-voltar:hover {
+    background: linear-gradient(135deg, #475569, #334155);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
+}
+
+/* ================= ANIMAÇÕES ================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.form-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.resposta-box {
+    animation: slideIn 0.4s ease-out;
+    animation-fill-mode: both;
+}
+
+.resposta-box:nth-child(1) { animation-delay: 0.1s; }
+.resposta-box:nth-child(2) { animation-delay: 0.2s; }
+.resposta-box:nth-child(3) { animation-delay: 0.3s; }
+.resposta-box:nth-child(4) { animation-delay: 0.4s; }
+
+/* ================= RESPONSIVIDADE ================= */
+@media (max-width: 768px) {
+    .form-container {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto;
+        width: 98%;
+    }
+    
+    .form-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-container h3 {
+        font-size: 1.2rem;
+    }
+    
+    .resposta-box {
+        max-width: 95%;
+    }
+    
+    .relatorio-descricao {
+        padding: var(--spacing-md);
+    }
+    
+    form {
+        padding: var(--spacing-md);
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: var(--spacing-sm);
+    }
+    
+    .form-container h2 {
+        font-size: 1.3rem;
+    }
+    
+    .form-container h3 {
+        font-size: 1.1rem;
+    }
+    
+    .form-container > p strong {
+        min-width: auto;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .resposta-box::before {
+        display: none;
+    }
+    
+    .resposta-box {
+        max-width: 100%;
+    }
+    
+    form button[type="submit"],
+    .btn-voltar {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+/* ================= ESTILO PARA TEMPO ================= */
+time {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+/* ================= ÁREA DE CHAT ================= */
+.chat-area {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    background: #fafafa;
+    border-radius: var(--radius-medium);
+    border: 1px solid var(--border-light);
+    margin: var(--spacing-lg) 0;
+}
+
+.chat-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-area::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+    background: rgba(52, 152, 219, 0.5);
+    border-radius: 3px;
+}
+
+.chat-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(52, 152, 219, 0.7);
+}

@@ -151,3 +151,27 @@ a:hover {
 }
 
 
+/* Caixa de alerta */
+.alert {
+    width: 100%;
+    max-width: 380px;
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Erro */
+.alert-error {
+    background-color: #330022; /* tom escuro */
+    color: #e60099;           /* rosa do tema */
+    border: 1px solid #e60099;
+}
+
+/* Sucesso */
+.alert-success {
+    background-color: #003300; /* tom escuro verde */
+    color: #00ff66;            /* verde claro */
+    border: 1px solid #00ff66;
+}

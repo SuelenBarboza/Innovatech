@@ -47,7 +47,7 @@ $result = $stmt->get_result();
 <?php include("../Includes/Header.php"); ?>
 
 <section class="form-container">
-<h2>📑 Meus Relatórios</h2>
+<h2> Meus Relatórios</h2>
 
 <?php if ($result->num_rows === 0): ?>
 <p>Você ainda não enviou nenhum relatório.</p>
@@ -58,10 +58,10 @@ $result = $stmt->get_result();
   <h3><?= htmlspecialchars($r['titulo']) ?></h3>
   <small>Projeto: <?= htmlspecialchars($r['projeto']) ?></small>
   <p><?= nl2br(htmlspecialchars($r['descricao'])) ?></p>
-  <span>📅 <?= date("d/m/Y", strtotime($r['criado_em'])) ?></span>
+  <span> <?= date("d/m/Y", strtotime($r['criado_em'])) ?></span>
 
   <a href="ViewReport.php?id=<?= $r['id'] ?>" class="btn-ver">
-    👀 Ver Resposta
+     Ver Resposta
   </a>
 </div>
 <?php endwhile; ?>

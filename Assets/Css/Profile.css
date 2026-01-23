@@ -93,6 +93,24 @@ body {
     color: #0A0A33;
 }
 
+   /* Mensagens de erro/sucesso */
+        .mensagem {
+            padding: 12px 18px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .mensagem.erro {
+            background: #ffe5e5;
+            color: #d8000c;
+            border: 1px solid #d8000c;
+        }
+        .mensagem.sucesso {
+            background: #e5ffe5;
+            color: #006400;
+            border: 1px solid #006400;
+        }
+
 @media (max-width: 768px) {
     .profile-content {
         grid-template-columns: 1fr;
