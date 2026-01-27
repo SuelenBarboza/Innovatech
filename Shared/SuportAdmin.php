@@ -25,9 +25,11 @@ if (isset($_GET['concluir'])) {
     $stmt->execute();
     $stmt->close();
 
-    header("Location: SupportAdmin.php");
+    header("Location: /Innovatech/Shared/SuportAdmin.php");
     exit;
+
 }
+
 
 // ========================
 // RESPONDER CHAMADO
@@ -53,9 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['chamado_id'])) {
         $stmt->close();
     }
 
-    header("Location: SupportAdmin.php");
+    header("Location: /Innovatech/Shared/SuportAdmin.php");
     exit;
+
 }
+
 
 // ========================
 // Pega todos os chamados

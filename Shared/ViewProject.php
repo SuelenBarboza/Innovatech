@@ -136,10 +136,7 @@ while ($row = $resultProfessores->fetch_assoc()) {
       ✏️ Editar Projeto
     </a>
 
-    <a href="http://localhost:3000/?projeto=<?= $projeto['id'] ?>" class="btn-editar">
-    📅 Ver no Calendário
-</a>
-
+    
 
     <a href="ViewComments.php?projeto_id=<?= $projeto['id'] ?>" class="btn-editar">
     💬 Comentários do Projeto

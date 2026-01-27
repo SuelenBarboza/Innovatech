@@ -1,7 +1,12 @@
 <?php
-// Status da lista de projetos
+// Atualiza STATUS do projeto (GLOBAL)
+
 include("../Config/db.php");
 session_start();
+
+/* =========================
+   VALIDAÇÕES BÁSICAS
+========================= */
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo "metodo_invalido";
@@ -13,49 +18,64 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
-$status = $_POST['status'] ?? '';
-$usuario_id = intval($_SESSION['usuario_id']);
+$usuario_id = (int) $_SESSION['usuario_id'];
+$projeto_id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+$status     = $_POST['status'] ?? '';
 
-if ($id <= 0 || $status === '') {
+if ($projeto_id <= 0 || $status === '') {
     echo "dados_invalidos";
     exit;
 }
 
-// Verificar se usuário tem permissão para editar este projeto
-$sql_verifica = "
-    SELECT p.id FROM projetos p
-    LEFT JOIN projeto_usuario pu ON p.id = pu.projeto_id AND pu.usuario_id = ?
-    WHERE p.id = ? AND (p.criador_id = ? OR pu.usuario_id = ?)
-";
-$stmt_verifica = $conn->prepare($sql_verifica);
-$stmt_verifica->bind_param("iiii", $usuario_id, $id, $usuario_id, $usuario_id);
-$stmt_verifica->execute();
-$stmt_verifica->store_result();
+/* =========================
+   STATUS PERMITIDOS (ENUM)
+========================= */
 
-if ($stmt_verifica->num_rows == 0) {
-    echo "sem_permissao";
-    exit;
-}
+$permitidos = ['Planejamento', 'Andamento', 'Pendente', 'Concluído'];
 
-// 🔥 MAPEAMENTO FRONT → BANCO (ENUM alinhado)
-$mapaStatus = [
-    'Planejamento' => 'Planejamento',
-    'Andamento'    => 'Andamento',
-    'Pendente'     => 'Pendente',
-    'Concluído'    => 'Concluído'
-];
-
-
-if (!isset($mapaStatus[$status])) {
+if (!in_array($status, $permitidos)) {
     echo "status_invalido";
     exit;
 }
 
-$statusBanco = $mapaStatus[$status];
+/* =========================
+   PERMISSÃO: CRIADOR OU VINCULADO
+========================= */
 
-$stmt = $conn->prepare("UPDATE projetos SET status = ? WHERE id = ?");
-$stmt->bind_param("si", $statusBanco, $id);
+$sql = "
+    SELECT 1
+    FROM projetos p
+    WHERE p.id = ?
+      AND (
+          p.criador_id = ?
+          OR EXISTS (
+              SELECT 1
+              FROM projeto_usuario pu
+              WHERE pu.projeto_id = p.id
+                AND pu.usuario_id = ?
+          )
+      )
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("iii", $projeto_id, $usuario_id, $usuario_id);
+$stmt->execute();
+$stmt->store_result();
+
+if ($stmt->num_rows === 0) {
+    echo "sem_permissao";
+    exit;
+}
+
+$stmt->close();
+
+/* =========================
+   ATUALIZA STATUS (TABELA CORRETA)
+========================= */
+
+$sql = "UPDATE projetos SET status = ? WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("si", $status, $projeto_id);
 
 if ($stmt->execute()) {
     echo "ok";

@@ -1,5 +1,4 @@
 <?php
-// Visualiza a lista de projetos 
 include("../Config/db.php");
 session_start();
 
@@ -9,33 +8,29 @@ if (!isset($_SESSION['usuario_id'])) {
 
 $usuario_id = (int) $_SESSION['usuario_id'];
 
-// ================= QUERY CORRIGIDA =================
-if ($_SESSION['usuario_tipo'] === 'Admin') {
-
-    $sql = "
-        SELECT p.*
-        FROM projetos p
-        ORDER BY p.criado_em DESC
-    ";
-
-    $stmt = $conn->prepare($sql);
-}
-else {
-
-    $sql = "
-        SELECT DISTINCT p.*
-        FROM projetos p
-        INNER JOIN projeto_usuario pu ON pu.projeto_id = p.id
-        WHERE pu.usuario_id = ?
-          AND pu.arquivado = 0
-        ORDER BY p.criado_em DESC
-    ";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $_SESSION['usuario_id']);
-}
-
-
+/*
+|--------------------------------------------------------------------------
+| BUSCA SOMENTE PROJETOS VINCULADOS AO USUÁRIO
+|--------------------------------------------------------------------------
+| prioridade  -> projetos.prioridade
+| arquivado   -> projeto_usuario.arquivado
+*/
+$sql = "
+    SELECT 
+        p.id,
+        p.nome,
+        p.categoria,
+        p.prioridade,
+        p.status,
+        p.data_fim,
+        p.descricao,
+        pu.arquivado AS arquivado_usuario
+    FROM projetos p
+    INNER JOIN projeto_usuario pu
+        ON pu.projeto_id = p.id
+    WHERE pu.usuario_id = ?
+    ORDER BY p.criado_em DESC
+";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $usuario_id);
@@ -65,7 +60,6 @@ $result = $stmt->get_result();
     <option value="Andamento">Andamento</option>
     <option value="Concluído">Concluído</option>
     <option value="Pendente">Pendente</option>
-    <option value="Não definido">Não definido</option>
   </select>
 
   <select id="filtro-prioridade">
@@ -73,11 +67,10 @@ $result = $stmt->get_result();
     <option value="Alta">Alta</option>
     <option value="Média">Média</option>
     <option value="Baixa">Baixa</option>
-    <option value="Não definido">Não definido</option>
   </select>
 </div>
 
-<!-- ================= PROJETOS ATIVOS ================= -->
+<!-- ================= PROJETOS ================= -->
 <table id="tabela-projetos">
   <thead>
     <tr>
@@ -89,14 +82,11 @@ $result = $stmt->get_result();
       <th>Ações</th>
     </tr>
   </thead>
-  <tbody>
-    <!-- JS VAI RENDERIZAR -->
-  </tbody>
+  <tbody></tbody>
 </table>
 
 <button id="btnToggleArquivar">📂 Ver Projetos Arquivados</button>
 
-<!-- ================= PROJETOS ARQUIVADOS ================= -->
 <div id="containerArquivar" style="display:none;">
   <table id="tabela-ocultos">
     <thead>
@@ -109,58 +99,36 @@ $result = $stmt->get_result();
         <th>Ações</th>
       </tr>
     </thead>
-    <tbody>
-      <!-- JS VAI RENDERIZAR -->
-    </tbody>
+    <tbody></tbody>
   </table>
 </div>
 
-<!-- ================= DADOS INVISÍVEIS PARA O JS ================= -->
+<!-- ================= DADOS PARA O JS ================= -->
 <table style="display:none">
   <tbody id="dados-projetos">
-    <?php
-    // Array para controlar IDs já processados
-    $ids_processados = [];
-    $contador = 0;
-    
-    while ($row = $result->fetch_assoc()) {
-        $id = (int) $row['id'];
-        
-        // Se já processou este ID, pula para o próximo
-        if (in_array($id, $ids_processados)) {
-            continue;
-        }
-        
-        // Adiciona ID à lista de processados
-        $ids_processados[] = $id;
-        $contador++;
-        
-        $nome = htmlspecialchars($row['nome']);
+    <?php while ($row = $result->fetch_assoc()): 
+        $id        = (int) $row['id'];
+        $nome      = htmlspecialchars($row['nome']);
         $categoria = htmlspecialchars($row['categoria'] ?? "Não definido");
-        $prioridade = $row['prioridade_usuario'] ?? "Não definido";
-        $status = $row['status'] ?? "Não definido";
-        $prazo = $row['data_fim']
-            ? date("d/m/Y", strtotime($row['data_fim']))
-            : "Não definido";
+        $prioridade= $row['prioridade'] ?? "Não definido";
+        $status    = $row['status'] ?? "Não definido";
+        $prazo     = $row['data_fim'] 
+                        ? date("d/m/Y", strtotime($row['data_fim'])) 
+                        : "Não definido";
         $descricao = htmlspecialchars($row['descricao'] ?? "");
-        $dataObservacoes = ($status === "Concluído") ? htmlspecialchars($row['observacoes'] ?? "") : "";
-        $arquivado = (int) ($row['arquivado_usuario'] ?? 0);
-
-
-        echo "
-        <tr
-          data-id='$id'
-          data-nome='$nome'
-          data-categoria='$categoria'
-          data-prioridade='$prioridade'
-          data-status='$status'
-          data-prazo='$prazo'
-          data-descricao='$descricao'
-          data-observacoes='$dataObservacoes'
-          data-arquivado='$arquivado'
-        ></tr>";
-    }
+        $arquivado = (int) $row['arquivado_usuario'];
     ?>
+      <tr
+        data-id="<?= $id ?>"
+        data-nome="<?= $nome ?>"
+        data-categoria="<?= $categoria ?>"
+        data-prioridade="<?= $prioridade ?>"
+        data-status="<?= $status ?>"
+        data-prazo="<?= $prazo ?>"
+        data-descricao="<?= $descricao ?>"
+        data-arquivado="<?= $arquivado ?>"
+      ></tr>
+    <?php endwhile; ?>
   </tbody>
 </table>
 
@@ -169,15 +137,13 @@ $result = $stmt->get_result();
   <div class="modal-conteudo">
     <span class="fechar">&times;</span>
     <h2>Detalhes do Projeto</h2>
-    <div class="modal-detalhes">
-      <p><strong>Nome:</strong> <span id="detalhe-nome"></span></p>
-      <p><strong>Categoria:</strong> <span id="detalhe-categoria"></span></p>
-      <p><strong>Prazo:</strong> <span id="detalhe-prazo"></span></p>
-      <p><strong>Prioridade:</strong> <span id="detalhe-prioridade"></span></p>
-      <p><strong>Status:</strong> <span id="detalhe-status"></span></p>
-      <p><strong>Descrição:</strong></p>
-      <div id="detalhe-descricao" class="descricao-texto"></div>
-    </div>
+    <p><strong>Nome:</strong> <span id="detalhe-nome"></span></p>
+    <p><strong>Categoria:</strong> <span id="detalhe-categoria"></span></p>
+    <p><strong>Prioridade:</strong> <span id="detalhe-prioridade"></span></p>
+    <p><strong>Status:</strong> <span id="detalhe-status"></span></p>
+    <p><strong>Prazo:</strong> <span id="detalhe-prazo"></span></p>
+    <p><strong>Descrição:</strong></p>
+    <div id="detalhe-descricao"></div>
   </div>
 </div>
 

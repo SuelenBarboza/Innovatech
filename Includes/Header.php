@@ -38,6 +38,11 @@ $usuario_foto = $_SESSION['usuario_foto'] ?? '../Assets/img/avatar.png';
                 <ul class="submenu">
                     <li><a href="../Shared/RegisterProject.php">Cadastrar Projetos</a></li>
                     <li><a href="../Shared/ViewListProject.php">Visualizar Lista de Projetos</a></li>
+                    <?php if (isset($_SESSION['usuario_tipo']) && $_SESSION['usuario_tipo'] === 'Admin'): ?>
+                        <li>
+                                <a href="../Shared/AdminViewAllProjects.php">Todos os Projetos </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </li>
 

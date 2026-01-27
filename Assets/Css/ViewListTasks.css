@@ -114,7 +114,7 @@ h1 {
     color: var(--primary-color);
     text-align: center;
     padding: var(--spacing-md) 0;
-    margin: 0 0 var(--spacing-sm) 0;
+    margin: 20px 0 10px 0;
     border-bottom: 1px solid var(--border-light);
     font-size: 1.75rem;
     font-weight: 600;

@@ -1,0 +1,414 @@
+/* AdminViewAllProjects.css - Estilo para Página Admin */
+
+/* ================= VARIÁVEIS CSS (MANTIDAS) ================= */
+:root {
+    /* Cores principais */
+    --primary-color: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #60a5fa;
+    
+    /* Cores de fundo */
+    --bg-body: #ffffff;
+    --bg-header: #f8fafc;
+    --bg-table: #ffffff;
+    --bg-hover: #f1f5f9;
+    --bg-modal: #ffffff;
+    
+    /* Cores de texto */
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #ffffff;
+    --text-dark: #000000;
+    
+    /* Cores de borda */
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --border-dark: #475569;
+    
+    /* ================= PRIORIDADE ================= */
+    --priority-high: #dc2626;
+    --priority-medium: #f97316;
+    --priority-low: #22c55e;
+    --priority-undefined: #64748b;
+
+    /* ================= STATUS ================= */
+    --status-planning: #7c3aed;
+    --status-progress: #0ea5e9;
+    --status-completed: #16a34a;
+    --status-pending: #ef4444;
+    --status-start: #e5e7eb;
+    --status-start-text: #334155;
+    --status-undefined: #64748b;
+    
+    /* Sombras */
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-heavy: 0 10px 25px rgba(59, 130, 246, 0.3);
+    --shadow-button: 0 3px 6px rgba(59, 130, 246, 0.3);
+    
+    /* Bordas */
+    --radius-small: 4px;
+    --radius-medium: 8px;
+    --radius-large: 12px;
+    --radius-pill: 20px;
+    
+    /* Espaçamentos */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+}
+
+/* ================= RESET E BASE ================= */
+body {
+    background-image: url("../Img/FundoInnova.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: var(--bg-body);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+html, body {
+    overflow-y: auto !important;
+    height: 100%;
+}
+
+/* ================= CABEÇALHO DA PÁGINA ================= */
+h1 {
+    background-color: var(--bg-header);
+    color: var(--primary-color);
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    margin: 20px 0 10px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 1.75rem;
+    font-weight: 600;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), transparent);
+}
+
+/* ================= FILTROS ================= */
+.filtros {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background-color: var(--bg-header);
+    border-radius: var(--radius-medium);
+    margin: var(--spacing-md) auto;
+    max-width: 1100px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-light);
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filtros input[type="text"] {
+    flex: 2;
+    min-width: 200px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-medium);
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.filtros input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.filtros select {
+    flex: 1;
+    min-width: 150px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--border-medium);
+    border-radius: var(--radius-medium);
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%233b82f6' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    padding-right: 40px;
+}
+
+.filtros select:focus,
+.filtros input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.filtros select:hover,
+.filtros input[type="text"]:hover {
+    border-color: var(--primary-light);
+}
+
+.filtros button[type="submit"] {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-medium);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-button);
+    min-width: 100px;
+}
+
+.filtros button[type="submit"]:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+}
+
+.btn-limpar {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: linear-gradient(135deg, #64748b, #475569);
+    color: var(--text-light);
+    border: none;
+    border-radius: var(--radius-medium);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-width: 100px;
+}
+
+.btn-limpar:hover {
+    background: linear-gradient(135deg, #475569, #334155);
+    transform: translateY(-2px);
+    color: var(--text-light);
+}
+
+/* ================= TABELA ================= */
+table {
+    width: 95%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: var(--bg-table);
+    box-shadow: var(--shadow-medium);
+    border-radius: var(--radius-medium);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    margin: 0 auto var(--spacing-lg);
+}
+
+th {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-light);
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+th::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: middle;
+    transition: background-color 0.2s ease;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: var(--bg-hover);
+}
+
+/* ================= STATUS E PRIORIDADE ================= */
+td:nth-child(3), /* Prioridade */
+td:nth-child(4) { /* Status */
+    text-align: center;
+}
+
+/* Estilos para os badges de status e prioridade */
+.status-badge,
+.priority-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Cores para status */
+.status-badge[data-status="Planejamento"] {
+    background-color: var(--status-planning);
+    color: white;
+}
+
+.status-badge[data-status="Andamento"] {
+    background-color: var(--status-progress);
+    color: white;
+}
+
+.status-badge[data-status="Concluído"] {
+    background-color: var(--status-completed);
+    color: white;
+}
+
+.status-badge[data-status="Pendente"] {
+    background-color: var(--status-pending);
+    color: white;
+}
+
+.status-badge[data-status="Início"] {
+    background-color: var(--status-start);
+    color: var(--status-start-text);
+}
+
+/* Cores para prioridade */
+.priority-badge[data-priority="Alta"] {
+    background-color: var(--priority-high);
+    color: white;
+}
+
+.priority-badge[data-priority="Média"] {
+    background-color: var(--priority-medium);
+    color: white;
+}
+
+.priority-badge[data-priority="Baixa"] {
+    background-color: var(--priority-low);
+    color: white;
+}
+
+/* ================= MENSAGEM DE NENHUM PROJETO ================= */
+table tbody tr:only-child td {
+    text-align: center;
+    padding: var(--spacing-xl) !important;
+    font-style: italic;
+    color: var(--text-secondary);
+    background-color: var(--bg-table) !important;
+}
+
+/* ================= RESPONSIVIDADE ================= */
+@media (max-width: 1024px) {
+    .filtros {
+        max-width: 95%;
+    }
+    
+    table {
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .filtros {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .filtros input[type="text"],
+    .filtros select,
+    .filtros button[type="submit"],
+    .btn-limpar {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    table {
+        font-size: 0.9rem;
+        display: block;
+        overflow-x: auto;
+    }
+    
+    th, td {
+        padding: var(--spacing-sm);
+    }
+    
+    .status-badge,
+    .priority-badge {
+        min-width: 80px;
+        font-size: 0.75rem;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.4rem;
+        padding: var(--spacing-sm) 0;
+        margin: 10px 0 5px 0;
+    }
+    
+    .filtros {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-sm) auto;
+    }
+    
+    table {
+        width: 100%;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+    }
+}
+
+/* ================= ANIMAÇÕES ================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+table tbody tr {
+    animation: fadeIn 0.3s ease-out;
+}
