@@ -52,6 +52,11 @@ $usuario_foto = $_SESSION['usuario_foto'] ?? '../Assets/img/avatar.png';
                 <ul class="submenu">
                     <li><a href="../Shared/AddTasks.php">Adicionar Tarefas</a></li>
                     <li><a href="../Shared/ViewListTasks.php">Visualizar Lista de Tarefas</a></li>
+                    <?php if (isset($_SESSION['usuario_tipo']) && $_SESSION['usuario_tipo'] === 'Admin'): ?>
+                        <li>
+                                <a href="../Shared/AdminViewAllTasks.php">Todas as Tarefas </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </li>
 
