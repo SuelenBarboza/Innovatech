@@ -1,0 +1,139 @@
+/* ===== RESET BÁSICO ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: Arial, sans-serif;
+    background: #050114;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(255,255,255,0.2);
+}
+
+/* ===== SEÇÃO ESQUERDA (TEXTO) ===== */
+.form-section {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Introdução */
+.intro-section {
+    max-width: 80%;
+    margin-bottom: 30px;
+}
+
+.intro-section h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e60099;
+}
+
+.intro-section p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #ccc;
+}
+
+/* Botão principal */
+button {
+    background: #e60099;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Link de cadastro */
+.logcad {
+    color: #e60099;
+    text-decoration: none;
+}
+
+.logcad:hover {
+    text-decoration: underline;
+}
+
+/* ===== SEÇÃO DIREITA (IMAGEM) ===== */
+/* SEÇÃO DIREITA */
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CÍRCULO ROSA */
+
+.decoracao {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 2px solid #e60099;
+    background: rgba(230, 0, 153, 0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(230, 0, 153, 0.4);
+}
+
+/* LOGO RECORTADA EM CÍRCULO */
+.logo-img {
+    width: 245px;
+    height: 245px;
+    border-radius: 80%;   
+    object-fit: cover;   
+    background: #050114; 
+}
+
+
+
+
+
+
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .image-section {
+        display: none;
+    }
+
+    .form-section {
+        align-items: center;
+        text-align: center;
+    }
+
+    .intro-section {
+        max-width: 100%;
+    }
+}
