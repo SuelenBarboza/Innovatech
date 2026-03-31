@@ -21,7 +21,7 @@ if (isset($_GET['error'])) {
 <body>
     <div class="container">
         
-        <img src="../Assets/Img/Fundo-login.png" alt="Logo" class="img-menor">
+        <img src="../Assets/Img/Login.png" alt="Logo" class="img-menor">
 
         <aside class="image-section"></aside>
 

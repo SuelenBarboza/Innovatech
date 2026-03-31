@@ -20,25 +20,21 @@ body {
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 }
 
-
-
-
-/* Imagem*/
+/* Imagem - MANTIDA IGUAL */
 .image-section{
-    justify-content: center; /* centraliza horizontal */
-    align-items: center;     /* centraliza vertical */
+    justify-content: center;
+    align-items: center;
     height: 300px; 
     color: white;
     padding: 10px;
-    
 }
 
 .img-menor {
-    width: 54%;  /* reduz a imagem para 54% da div */
-    height: auto; /* mantém proporção */
+    width: 54%;
+    height: auto;
 }
 
-/* Área do form*/
+/* Área do form */
 .form-section {
     flex: 1;
     background: #050114;
@@ -47,42 +43,155 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Adicione esta linha para centralizar horizontalmente */
 }
 
 /* Formulário */
 form {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    max-width: 380px; /* Adicione esta linha para limitar a largura */
+    margin: 0 auto; /* Centraliza o form horizontalmente */
 }
 
-input {
+/* Para os inputs e containers ficarem alinhados com o form */
+.input-container {
+    position: relative;
     width: 100%;
-    max-width: 380px;   
-    height: 28px;       
-    padding: 0 18px;   
-    margin: 12px 0;
+    margin-bottom: 5px;
+}
+
+.input-container input,
+.input-container select {
+    width: 100%;
+    margin: 0;
+}
+
+/* Ajuste para os labels ficarem alinhados à esquerda dentro do form centralizado */
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 12px;
+    color: #e8e8e8;
+    display: block;
+    letter-spacing: 0.3px;
+    text-align: left; /* Garante que o texto fique alinhado à esquerda */
+    width: 100%;
+}
+
+/* Botão também centralizado */
+button {
+    background: #3b82f6;
+    color: white;
+    padding: 12px;
     border: none;
+    cursor: pointer;
+    border-radius: 55px;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+/* Alertas também centralizados */
+.alert {
+    width: 100%;
+    max-width: 380px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Ajuste para o título e parágrafo também ficarem centralizados */
+.form-section h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: 600;
+    text-align: center; /* Centraliza o título */
+    width: 100%;
+}
+
+.form-section p {
+    color: #888;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    text-align: center; /* Centraliza o parágrafo */
+    width: 100%;
+}
+
+/* INPUTS MELHORADOS */
+input, select {
+    width: 100%;
+    max-width: 380px;
+    height: 45px;
+    padding: 0 18px;
+    margin: 0 0 5px 0;
+    border: 2px solid rgba(59, 130, 246, 0.3);
     border-radius: 55px;
     background-color: #050114;
     color: white;
     box-sizing: border-box;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
 }
 
+/* Select personalizado */
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%233b82f6' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    padding-right: 35px;
+}
+
+/* Focus e hover dos inputs */
+input:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input:hover, select:hover {
+    border-color: #3b82f6;
+}
 
 /* Botão */
 button {
-    background: #e60099;
+    background: #3b82f6;
     color: white;
-    padding: 10px;
+    padding: 12px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
+    border-radius: 55px;
+    margin-top: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 380px;
+}
+
+button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 /* Links */
 a {
-    color: #e60099;
+    color: #3b82f6;
     text-decoration: none;
 }
 
@@ -90,21 +199,114 @@ a:hover {
     text-decoration: underline;
 }
 
+/* Input container com ícones */
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin-bottom: 5px;
+}
 
-/*parte de lembrar senha */
+.input-container i.fa-eye {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.input-container i.fa-eye:hover {
+    color: #3b82f6;
+}
+
+.input-container i:first-child {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #3b82f6;
+    z-index: 2;
+}
+
+.input-container input,
+.input-container select {
+    width: 100%;
+    max-width: 380px;
+    height: 45px;
+    padding-left: 45px;
+    padding-right: 45px;
+    margin: 0;
+    border-radius: 55px;
+    background-color: #050114;
+    color: white;
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    box-sizing: border-box;
+}
+
+/* Placeholder styling */
+::placeholder {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Caixa de alerta */
+.alert {
+    width: 100%;
+    max-width: 380px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Erro */
+.alert-error {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Sucesso */
+.alert-success {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* Parte de lembrar senha */
 .lembrar-esqueci {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     font-size: 14px;
     margin: 10px 0;
     width: 100%;
+    max-width: 380px;
 }
 
 .lembrar-esqueci label {
     display: flex;
     align-items: center;
     gap: 5px;
+    margin: 0;
+    font-weight: normal;
+    font-size: 0.85rem;
 }
 
 .lembrar-esqueci a {
@@ -116,62 +318,38 @@ a:hover {
     text-decoration: underline;
 }
 
-
-.input-container {
-    position: relative;
-    width: 100%;
+/* Responsividade */
+@media (max-width: 768px) {
+    .form-section {
+        padding: 30px;
+    }
+    
+    label {
+        font-size: 0.8rem;
+        margin-top: 10px;
+    }
+    
+    input, select, .input-container input {
+        height: 42px;
+    }
+    
+    button {
+        padding: 10px;
+    }
 }
 
-.input-container i.fa-eye {
-    position: absolute;
-    right: 15px; /* distância do lado direito */
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #ccc;
-    z-index: 2;
-}
-
-
-
-.input-container i.fa-eye:hover {
-    color: #e60099;
-}
-.input-container input[type="password"] {
-    width: 100%;
-    max-width: 380px; /* ou 400px se quiser maior */
-    height: 45px;      /* aumentar altura para caber o ícone melhor */
-    padding-left: 45px;  /* espaço para o ícone da esquerda (usuário/email) */
-    padding-right: 45px; /* espaço para o ícone do olho */
-    border-radius: 55px;
-    background-color: #050114;
-    color: white;
-    border: none;
-    box-sizing: border-box;
-}
-
-
-/* Caixa de alerta */
-.alert {
-    width: 100%;
-    max-width: 380px;
-    padding: 12px 20px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Erro */
-.alert-error {
-    background-color: #330022; /* tom escuro */
-    color: #e60099;           /* rosa do tema */
-    border: 1px solid #e60099;
-}
-
-/* Sucesso */
-.alert-success {
-    background-color: #003300; /* tom escuro verde */
-    color: #00ff66;            /* verde claro */
-    border: 1px solid #00ff66;
+@media (max-width: 480px) {
+    .form-section {
+        padding: 25px;
+    }
+    
+    label {
+        font-size: 0.75rem;
+        margin-top: 8px;
+    }
+    
+    .alert {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
 }

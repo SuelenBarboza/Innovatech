@@ -12,8 +12,8 @@
                     </span>
                     <div>
                         <strong>Endereço:</strong><br>
-                        Rua Exemplo, 123<br>
-                        São Paulo - SP
+                        Rua Innovação, 7070<br>
+                        Araçatuba - SP
                     </div>
                 </div>
                 <div class="contact-item">
@@ -35,7 +35,7 @@
                     </span>
                     <div>
                         <strong>Telefone:</strong><br>
-                        (11) 99999-9999
+                        (18) 99880-6990
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
     <!-- Rodapé Inferior -->
     <div class="footer-bottom">
         <div class="copyright">
-            © 2024 Innovatech. Todos os direitos reservados.
+            © 2026 Innovatech. Todos os direitos reservados.
         </div>
         <div class="footer-bottom-links">
             <a href="/privacidade">Política de Privacidade</a>
