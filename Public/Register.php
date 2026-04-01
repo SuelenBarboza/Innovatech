@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <div class="container">
 
-    <img src="../Assets/Img/Login.png" alt="Logo" class="img-menor">
+    <img src="../Assets/Img/Cadastro.png" alt="Logo" class="img-menor">
     <aside class="image-section"></aside>
 
     <main class="form-section cadastro">

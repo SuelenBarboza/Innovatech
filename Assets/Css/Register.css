@@ -18,9 +18,14 @@ body {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    .container {
+    display: flex;
+    width: 90%;
+    height: 90%;
+}
 }
 
-/* Imagem - MANTIDA IGUAL */
+/* Imagem */
 .image-section{
     justify-content: center;
     align-items: center;
@@ -30,9 +35,10 @@ body {
 }
 
 .img-menor {
-    width: 54%;
+    width: 62%;
     height: auto;
 }
+
 
 /* Área do form */
 .form-section {
