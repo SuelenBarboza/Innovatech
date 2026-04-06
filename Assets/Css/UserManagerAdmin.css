@@ -10,7 +10,7 @@
 
 /* img fundo */
  body {
-    background-image: url("../Img/FundoInnova.png"); 
+    background-image: url("../Img/Fundo.jpg"); 
     background-size: cover; /* faz a imagem cobrir toda a tela */
     background-position: center; 
     background-repeat: no-repeat; 

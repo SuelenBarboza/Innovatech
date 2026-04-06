@@ -5,7 +5,7 @@ body {
   color: #444;
 
   /* IMAGEM DE FUNDO */
-  background-image: url("../Img/FundoInnova.png");
+  background-image: url("../Img/Fundo.jpg");
   background-size: cover;        /* cobre toda a tela */
   background-position: center;   /* centraliza */
   background-repeat: no-repeat;  /* não repete */
