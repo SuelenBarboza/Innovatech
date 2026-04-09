@@ -18,11 +18,9 @@ const CONFIG = {
 // FUNÇÕES DE INICIALIZAÇÃO E DADOS
 // ======================================================
 
-/**
- * Inicializa o array de projetos a partir dos dados do PHP
- */
+
 function inicializarProjetos() {
-    projetos = []; // Limpa o array para evitar duplicação
+    projetos = []; 
     
     document.querySelectorAll("#dados-projetos tr").forEach(tr => {
         projetos.push({

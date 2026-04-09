@@ -518,12 +518,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
     // Inicializar após 1 segundo (para dar tempo de diagnosticar)
-    setTimeout(() => {
+    
         inicializarTarefas();
         renderizarTabelas();
         
         console.log("Endpoints configurados:", CONFIG.endpoints);
-    }, 1000);
+    
     
     // Elementos DOM
     const filtroStatus = document.getElementById("filtro-status");
@@ -635,7 +635,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Endpoints:", CONFIG.endpoints);
         console.log("Total tarefas:", tarefas.length);
         console.log("=== SISTEMA PRONTO ===");
-    }, 2000);
+    }, 1000);
 });
 
 // ======================================================
