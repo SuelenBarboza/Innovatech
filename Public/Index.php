@@ -14,7 +14,7 @@
         <!-- Lado esquerdo / apresentação -->
         <section class="form-section">
             <div class="intro-section">
-                <h1>Innovatech</h1>
+                <h1>Gerenciador De Projetos</h1>
                 <p>
                     Sistema desenvolvido para auxiliar alunos e professores
                     no gerenciamento de projetos acadêmicos, oferecendo organização,
@@ -41,6 +41,10 @@
                     <img src="../Assets/Img/logo/logo.png" alt="Logo Innovatech" class="logo-img">   
                 </div>
             </section>
+
+            <footer style="position: fixed; bottom: 16px; width: 100%; text-align: center; font-size: 0.72rem; color: #475569; letter-spacing: 0.06em;">
+                &copy;2026 <span style="color: #3b82f6; font-weight: 600;">Innovatech</span>. Todos os direitos reservados.
+            </footer>
 
     </div>
 
