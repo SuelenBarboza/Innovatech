@@ -7,10 +7,11 @@ if (!isset($_SESSION['usuario_id'])) {
     die("Usuário não logado.");
 }
 
+$usuario_id = (int)$_SESSION['usuario_id'];
 $tipo = $_SESSION['usuario_tipo'] ?? 'Aluno';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: ../Shared/Home.php");
+    header("Location: ../Public/Login.php");
     exit;
 }
 
@@ -19,35 +20,71 @@ $resposta       = trim($_POST['resposta'] ?? '');
 $respondente_id = (int) $_SESSION['usuario_id'];
 
 if ($relatorio_id <= 0 || empty($resposta)) {
-    die("Dados inválidos.");
+    header("Location: ../Shared/RespondReport.php?id=" . $relatorio_id . "&erro=1");
+    exit;
 }
 
-// Opcional: verificar se aluno está respondendo ao próprio relatório
-if ($tipo === 'Aluno') {
-    $sqlCheck = "SELECT aluno_id FROM relatorios WHERE id = ?";
-    $stmtCheck = $conn->prepare($sqlCheck);
-    $stmtCheck->bind_param("i", $relatorio_id);
-    $stmtCheck->execute();
-    $resCheck = $stmtCheck->get_result()->fetch_assoc();
-    
-    if (!$resCheck || (int)$resCheck['aluno_id'] !== $respondente_id) {
-        die("Acesso negado.");
-    }
+// ==========================
+// VERIFICAR PERMISSÃO E STATUS
+// ==========================
+$sqlCheck = "SELECT aluno_id, professor_id, status FROM relatorios WHERE id = ?";
+$stmtCheck = $conn->prepare($sqlCheck);
+$stmtCheck->bind_param("i", $relatorio_id);
+$stmtCheck->execute();
+$resCheck = $stmtCheck->get_result()->fetch_assoc();
+
+if (!$resCheck) {
+    die("Relatório não encontrado.");
 }
 
-// Inserir resposta
+// Verificar permissão
+$temPermissao = false;
+if ($tipo === 'Aluno' && (int)$resCheck['aluno_id'] === $respondente_id) {
+    $temPermissao = true;
+} elseif (($tipo === 'Professor' || $tipo === 'Admin' || $tipo === 'Coordenador') && (int)$resCheck['professor_id'] === $respondente_id) {
+    $temPermissao = true;
+} elseif (in_array($tipo, ['Admin', 'Coordenador'])) {
+    $temPermissao = true;
+}
+
+if (!$temPermissao) {
+    die("Acesso negado.");
+}
+
+// Verificar se o relatório já está concluído
+if ($resCheck['status'] === 'Concluído') {
+    header("Location: ../Shared/RespondReport.php?id=" . $relatorio_id . "&concluido=1");
+    exit;
+}
+
+// ==========================
+// INSERIR RESPOSTA
+// ==========================
 $sql = "
     INSERT INTO resposta_relatorio
-    (relatorio_id, respondente_id, resposta)
-    VALUES (?, ?, ?)
+    (relatorio_id, respondente_id, resposta, respondido_em)
+    VALUES (?, ?, ?, NOW())
 ";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("iis", $relatorio_id, $respondente_id, $resposta);
 
 if ($stmt->execute()) {
-    header("Location: ../Shared/ViewReport.php?id=".$relatorio_id);
+    // ==========================
+    // ATUALIZAR STATUS DO RELATÓRIO
+    // ==========================
+    $novo_status = 'Respondido';
+    
+    $sqlUpdate = "UPDATE relatorios SET status = ? WHERE id = ?";
+    $stmtUpdate = $conn->prepare($sqlUpdate);
+    $stmtUpdate->bind_param("si", $novo_status, $relatorio_id);
+    $stmtUpdate->execute();
+    
+    // REDIRECIONA PARA RespondReport.php na pasta Shared
+    header("Location: ../Shared/RespondReport.php?id=" . $relatorio_id . "&sucesso=1");
     exit;
 } else {
-    echo "Erro ao salvar resposta.";
+    header("Location: ../Shared/RespondReport.php?id=" . $relatorio_id . "&erro=1");
+    exit;
 }
+?>

@@ -1,10 +1,10 @@
 # Ignorar o arquivo do banco
 innovatech_db.sql
-*.sql
+
 
 
 # Ignorar arquivos SQL
-*.sql
+
 
 # Ignorar arquivos de backup de banco
 *.bak
