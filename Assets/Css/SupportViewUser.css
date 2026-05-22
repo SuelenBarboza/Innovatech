@@ -1,5 +1,6 @@
 /* =======================================================
-   RESPOND REPORT - CSS COMPLETO COM CORES
+   CHAMADO DETAILS - CSS COMPLETO COM CORES
+   Seguindo EXATAMENTE o padrão do ViewReport.css
    ======================================================= */
 
 :root {
@@ -73,7 +74,7 @@ body {
 ======================================================= */
 .container {
     width: 95%;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 30px auto;
     background: rgba(255, 255, 255, 0.96);
     padding: 30px;
@@ -148,7 +149,254 @@ hr {
 }
 
 /* =======================================================
-   HISTÓRICO DE RESPOSTAS
+   STATUS BADGES
+======================================================= */
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* 📋 ABERTO / ESPERANDO RESPOSTA - Azul */
+.status.aberto,
+.status.esperando {
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+    border: 1px solid #3b82f6 !important;
+}
+
+/* ⏳ AGUARDANDO ALUNO - Laranja */
+.status.aguardando {
+    background-color: #fed7aa !important;
+    color: #c2410c !important;
+    border: 1px solid #f97316 !important;
+}
+
+/* ✅ CONCLUÍDO - Verde */
+.status.concluido {
+    background-color: #dcfce7 !important;
+    color: #15803d !important;
+    border: 1px solid #22c55e !important;
+}
+
+/* 🔔 NOVO RELATÓRIO - Amarelo */
+.status.novo {
+    background-color: #fef3c7 !important;
+    color: #b45309 !important;
+    border: 1px solid #f59e0b !important;
+}
+
+/* =======================================================
+   FORMULÁRIO DE RESPOSTA
+======================================================= */
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.9rem;
+}
+
+form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    transition: all 0.25s;
+}
+
+form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* =======================================================
+   BOTÕES
+======================================================= */
+.btn-enviar {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 10px 28px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s;
+}
+
+.btn-enviar:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+}
+
+.btn-concluir {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border: none;
+    padding: 10px 28px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s;
+}
+
+.btn-concluir:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-success);
+}
+
+.btn-voltar {
+    background: #64748b;
+    color: white;
+    border: none;
+    padding: 10px 28px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.25s;
+}
+
+.btn-voltar:hover {
+    background: #475569;
+    transform: translateY(-2px);
+}
+
+/* =======================================================
+   CHAMADO CARD (ESTILO PRÓPRIO PARA ESTA PÁGINA)
+======================================================= */
+.chamado-card {
+    background: transparent;
+}
+
+.chamado-card h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* BLOCOS DE INFORMAÇÃO */
+.info {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary);
+    transition: transform 0.2s;
+}
+
+.info:hover {
+    transform: translateX(2px);
+}
+
+.info strong {
+    display: block;
+    color: var(--primary-dark);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+/* CAIXA DE MENSAGEM */
+.mensagem-box {
+    background: var(--bg-white);
+    padding: 15px;
+    border-radius: var(--radius-md);
+    line-height: 1.7;
+    color: var(--text);
+    border: 1px solid var(--border);
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.mensagem-box em {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* CHAMADO FINALIZADO */
+.finalizado {
+    background: var(--concluido-bg);
+    border-radius: var(--radius-lg);
+    padding: 20px 25px;
+    margin: 25px 0;
+    text-align: center;
+    border: 2px solid var(--concluido-border);
+    color: var(--concluido-text);
+    font-size: 1rem;
+}
+
+.finalizado strong {
+    font-weight: 700;
+}
+
+/* TÍTULO DO FORMULÁRIO */
+h3 {
+    color: var(--primary-dark);
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* BOTÃO VOLTAR */
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #64748b;
+    color: white;
+    padding: 10px 28px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.25s;
+    margin-top: 30px;
+}
+
+.voltar:hover {
+    background: #475569;
+    transform: translateY(-2px);
+}
+
+/* =======================================================
+   HISTÓRICO DE RESPOSTAS (CASO USE)
 ======================================================= */
 .history-header {
     display: flex;
@@ -258,146 +506,6 @@ hr {
     padding-top: 10px;
     border-top: 1px solid rgba(0,0,0,0.1);
     line-height: 1.6;
-}
-
-/* =======================================================
-   STATUS BADGES
-======================================================= */
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: var(--radius-pill);
-    font-size: 0.8rem;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-/* 🔔 NOVO RELATÓRIO - Amarelo */
-.status.novo {
-    background-color: #fef3c7 !important;
-    color: #b45309 !important;
-    border: 1px solid #f59e0b !important;
-}
-
-/* 💬 ESPERANDO RESPOSTA - Azul */
-.status.esperando {
-    background-color: #dbeafe !important;
-    color: #1e40af !important;
-    border: 1px solid #3b82f6 !important;
-}
-
-/* ⏳ AGUARDANDO ALUNO - Laranja */
-.status.aguardando {
-    background-color: #fed7aa !important;
-    color: #c2410c !important;
-    border: 1px solid #f97316 !important;
-}
-
-/* ✅ CONCLUÍDO - Verde */
-.status.concluido {
-    background-color: #dcfce7 !important;
-    color: #15803d !important;
-    border: 1px solid #22c55e !important;
-}
-
-/* =======================================================
-   FORMULÁRIO DE RESPOSTA
-======================================================= */
-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--text);
-    font-size: 0.9rem;
-}
-
-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 0.95rem;
-    font-family: inherit;
-    resize: vertical;
-    min-height: 120px;
-    transition: all 0.25s;
-}
-
-form textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-}
-
-.form-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-/* =======================================================
-   BOTÕES
-======================================================= */
-.btn-enviar {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    border: none;
-    padding: 10px 28px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.25s;
-}
-
-.btn-enviar:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-primary);
-}
-
-.btn-concluir {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: white;
-    border: none;
-    padding: 10px 28px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.25s;
-}
-
-.btn-concluir:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-success);
-}
-
-.btn-voltar {
-    background: #64748b;
-    color: white;
-    border: none;
-    padding: 10px 28px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.25s;
-}
-
-.btn-voltar:hover {
-    background: #475569;
-    transform: translateY(-2px);
 }
 
 /* =======================================================
@@ -589,6 +697,10 @@ form textarea:focus {
         font-size: 1.5rem;
     }
 
+    .chamado-card h1 {
+        font-size: 1.5rem;
+    }
+
     .report-header {
         flex-direction: column;
     }
@@ -607,7 +719,8 @@ form textarea:focus {
 
     .btn-enviar,
     .btn-concluir,
-    .btn-voltar {
+    .btn-voltar,
+    .voltar {
         justify-content: center;
         width: 100%;
     }
@@ -628,6 +741,10 @@ form textarea:focus {
         font-size: 1.3rem;
     }
 
+    .chamado-card h1 {
+        font-size: 1.3rem;
+    }
+
     .report-description {
         padding: 15px;
         font-size: 0.9rem;
@@ -635,6 +752,15 @@ form textarea:focus {
 
     .history-header h3 {
         font-size: 1.1rem;
+    }
+
+    .info {
+        padding: 12px;
+    }
+
+    .mensagem-box {
+        padding: 12px;
+        font-size: 0.9rem;
     }
 
     .resposta-topo {
@@ -677,8 +803,10 @@ form textarea:focus {
     .btn-concluir,
     .btn-enviar,
     .btn-voltar,
+    .voltar,
     .modal-overlay,
-    form {
+    form,
+    hr {
         display: none;
     }
 
@@ -692,6 +820,15 @@ form textarea:focus {
         box-shadow: none;
         border: 1px solid #ccc;
         page-break-inside: avoid;
+    }
+
+    .info {
+        border-left: 2px solid #ccc;
+        background: #fafafa;
+    }
+
+    .mensagem-box {
+        border: 1px solid #ccc;
     }
 }
 
@@ -715,119 +852,4 @@ form textarea:focus {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
-}
-
-/* =======================================================
-   ESTILOS ESPECÍFICOS PARA PÁGINA DE DETALHES DO CHAMADO
-   ======================================================= */
-
-/* Card do Chamado */
-.chamado-card {
-    background: transparent;
-}
-
-.chamado-card h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--primary);
-    font-size: 2rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-/* Blocos de Informação */
-.info {
-    margin-bottom: 25px;
-    padding: 15px;
-    background: var(--bg-light);
-    border-radius: var(--radius-lg);
-    border-left: 4px solid var(--primary);
-    transition: transform 0.2s;
-}
-
-.info:hover {
-    transform: translateX(2px);
-}
-
-.info strong {
-    display: block;
-    color: var(--primary-dark);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-}
-
-/* Caixa de Mensagem */
-.mensagem-box {
-    background: var(--bg-white);
-    padding: 15px;
-    border-radius: var(--radius-md);
-    line-height: 1.7;
-    color: var(--text);
-    border: 1px solid var(--border);
-    font-size: 0.95rem;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-}
-
-.mensagem-box em {
-    color: var(--text-light);
-    font-style: italic;
-}
-
-/* Chamado Finalizado */
-.finalizado {
-    background: var(--concluido-bg);
-    border-radius: var(--radius-lg);
-    padding: 20px 25px;
-    margin: 25px 0;
-    text-align: center;
-    border: 2px solid var(--concluido-border);
-    color: var(--concluido-text);
-    font-size: 1rem;
-}
-
-.finalizado strong {
-    font-weight: 700;
-}
-
-/* Título do Formulário */
-h3 {
-    color: var(--primary-dark);
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Botão Voltar */
-.voltar {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #64748b;
-    color: white;
-    padding: 10px 28px;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.25s;
-    margin-top: 30px;
-}
-
-.voltar:hover {
-    background: #475569;
-    transform: translateY(-2px);
-}
-
-/* Status Aberto (para chamados) */
-.status.aberto {
-    background-color: #dbeafe !important;
-    color: #1e40af !important;
-    border: 1px solid #3b82f6 !important;
 }

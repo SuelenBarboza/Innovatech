@@ -93,7 +93,7 @@ $usuario_foto = $_SESSION['usuario_foto'] ?? '../Assets/img/avatar.png';
                     <ul class="submenu">
                         <?php if ($usuario_tipo === 'Admin'): ?>
                             <li><a href="../Shared/UserManagerAdmin.php">Gerenciar Usuários</a></li>
-                            <li><a href="../Shared/Logs.php">Logs de Atividade</a></li>
+                            <li><a href="../Shared/Logs.php">Gerenciar Logs</a></li>
 
                         <?php endif; ?>
                         <?php if ($usuario_tipo === 'Coordenador'): ?>
