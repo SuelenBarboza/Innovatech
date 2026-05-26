@@ -3,20 +3,29 @@
 session_start();
 include("../Config/db.php");
 
-// 1️⃣ Verifica se o usuário está logado
+// ============================================================
+// HELPER LOG
+// ============================================================
+function registrarLog($conn, $usuario_id, $acao, $categoria, $descricao, $referencia_id = null, $referencia_tipo = null) {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+    $sql = "INSERT INTO logs (usuario_id, acao, categoria, descricao, referencia_id, referencia_tipo, ip_usuario)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssiss", $usuario_id, $acao, $categoria, $descricao, $referencia_id, $referencia_tipo, $ip);
+    $stmt->execute();
+}
+
 if (!isset($_SESSION['usuario_id'])) {
     die("Usuário não autenticado.");
 }
 
 $criador_id = (int) $_SESSION['usuario_id'];
 
-// 2️⃣ Verifica se é POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../Shared/ViewListProject.php");
     exit;
 }
 
-// 3️⃣ Recebe dados do formulário
 $nome        = trim($_POST['nome'] ?? '');
 $descricao   = trim($_POST['descricao'] ?? '');
 $categoria   = !empty($_POST['categoria']) ? $_POST['categoria'] : NULL;
@@ -26,11 +35,9 @@ $data_fim    = $_POST['data_fim'] ?? null;
 $alunos      = $_POST['aluno'] ?? [];
 $professores = $_POST['professor'] ?? [];
 
-// 4️⃣ Inicia transação
 $conn->begin_transaction();
 
 try {
-    // 5️⃣ INSERE PROJETO
     $sqlProjeto = "
         INSERT INTO projetos 
         (nome, descricao, categoria, data_inicio, data_fim, criador_id)
@@ -38,21 +45,12 @@ try {
     ";
 
     $stmtProjeto = $conn->prepare($sqlProjeto);
-    $stmtProjeto->bind_param(
-        "sssssi",
-        $nome,
-        $descricao,
-        $categoria,
-        $data_inicio,
-        $data_fim,
-        $criador_id
-    );
+    $stmtProjeto->bind_param("sssssi", $nome, $descricao, $categoria, $data_inicio, $data_fim, $criador_id);
     $stmtProjeto->execute();
 
     $projeto_id = $stmtProjeto->insert_id;
     $stmtProjeto->close();
 
-    // 🔹 VINCULA CRIADOR AO PROJETO
     $sqlCriador = "
         INSERT INTO projeto_usuario 
         (projeto_id, usuario_id, papel, prioridade, arquivado)
@@ -63,13 +61,11 @@ try {
     $stmtCriador->execute();
     $stmtCriador->close();
 
-    // 🔹 VINCULA ALUNOS (controle de acesso)
     if (!empty($alunos)) {
         $stmtAlunoPU = $conn->prepare("
             INSERT INTO projeto_usuario (projeto_id, usuario_id, papel)
             VALUES (?, ?, 'Aluno')
         ");
-
         foreach ($alunos as $aluno_id) {
             $aluno_id = (int) $aluno_id;
             if ($aluno_id > 0) {
@@ -80,13 +76,11 @@ try {
         $stmtAlunoPU->close();
     }
 
-    // 🔹 VINCULA PROFESSORES (controle de acesso)
     if (!empty($professores)) {
         $stmtProfPU = $conn->prepare("
             INSERT INTO projeto_usuario (projeto_id, usuario_id, papel)
             VALUES (?, ?, 'Orientador')
         ");
-
         foreach ($professores as $prof_id) {
             $prof_id = (int) $prof_id;
             if ($prof_id > 0) {
@@ -97,8 +91,13 @@ try {
         $stmtProfPU->close();
     }
 
-    // 8️⃣ COMMIT
     $conn->commit();
+
+    // ============================================================
+    // LOG
+    // ============================================================
+    registrarLog($conn, $criador_id, 'Projeto criado', 'projeto', "Projeto \"$nome\" criado", $projeto_id, 'projeto');
+
     header("Location: ../Shared/ViewListProject.php?msg=sucesso");
     exit;
 

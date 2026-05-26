@@ -7,6 +7,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// ============================================================
+// HELPER LOG
+// ============================================================
+function registrarLog($conn, $usuario_id, $acao, $categoria, $descricao, $referencia_id = null, $referencia_tipo = null) {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+    $sql = "INSERT INTO logs (usuario_id, acao, categoria, descricao, referencia_id, referencia_tipo, ip_usuario)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssiss", $usuario_id, $acao, $categoria, $descricao, $referencia_id, $referencia_tipo, $ip);
+    $stmt->execute();
+}
+
 $email = trim($_POST['email'] ?? '');
 $senha = $_POST['password'] ?? '';
 
@@ -62,6 +74,11 @@ $_SESSION['usuario_nome']  = $user['nome'];
 $_SESSION['usuario_email'] = $user['email'];
 $_SESSION['usuario_tipo']  = $tipoFinal;
 $_SESSION['usuario_foto']  = $user['foto'];
+
+// ============================================================
+// LOG
+// ============================================================
+registrarLog($conn, $user['id'], 'Login realizado', 'login', "Usuário {$user['nome']} fez login no sistema");
 
 // Redireciona
 header("Location: ../Public/Home.php");

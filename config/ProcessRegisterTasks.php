@@ -3,6 +3,18 @@
 include("db.php");
 session_start();
 
+// ============================================================
+// HELPER LOG
+// ============================================================
+function registrarLog($conn, $usuario_id, $acao, $categoria, $descricao, $referencia_id = null, $referencia_tipo = null) {
+    $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+    $sql = "INSERT INTO logs (usuario_id, acao, categoria, descricao, referencia_id, referencia_tipo, ip_usuario)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssiss", $usuario_id, $acao, $categoria, $descricao, $referencia_id, $referencia_tipo, $ip);
+    $stmt->execute();
+}
+
 if (!isset($_SESSION['usuario_id'])) {
     die("Usuário não logado.");
 }
@@ -12,50 +24,39 @@ $usuario_id = (int) $_SESSION['usuario_id'];
 // ==========================
 // VALIDAÇÃO DOS DADOS
 // ==========================
-$projeto_id   = isset($_POST['projeto']) ? (int) $_POST['projeto'] : 0;
-$responsavel  = isset($_POST['aluno']) ? (int) $_POST['aluno'] : 0;
-$nome_tarefa  = isset($_POST['nome_tarefa']) ? trim($_POST['nome_tarefa']) : '';
-$descricao    = isset($_POST['descricao']) ? trim($_POST['descricao']) : '';
-$data_inicio  = !empty($_POST['data_inicio']) ? $_POST['data_inicio'] : null;
-$data_fim     = !empty($_POST['data_fim']) ? $_POST['data_fim'] : null;
+$projeto_id  = isset($_POST['projeto'])     ? (int) $_POST['projeto']          : 0;
+$responsavel = isset($_POST['aluno'])       ? (int) $_POST['aluno']            : 0;
+$nome_tarefa = isset($_POST['nome_tarefa']) ? trim($_POST['nome_tarefa'])       : '';
+$descricao   = isset($_POST['descricao'])   ? trim($_POST['descricao'])         : '';
+$data_inicio = !empty($_POST['data_inicio']) ? $_POST['data_inicio']            : null;
+$data_fim    = !empty($_POST['data_fim'])    ? $_POST['data_fim']               : null;
 
-// Verifica campos obrigatórios
-if (!$projeto_id) {
-    die("O projeto é obrigatório.");
-}
-
-if (!$responsavel) {
-    die("O responsável é obrigatório.");
-}
-
-if (!$nome_tarefa) {
-    die("O nome da tarefa é obrigatório.");
-}
+if (!$projeto_id)  die("O projeto é obrigatório.");
+if (!$responsavel) die("O responsável é obrigatório.");
+if (!$nome_tarefa) die("O nome da tarefa é obrigatório.");
 
 // ==========================
 // INSERÇÃO NO BANCO
 // ==========================
 $sql = "
-INSERT INTO tarefas 
-(projeto_id, nome, descricao, responsavel_id, data_inicio, data_fim) 
-VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO tarefas 
+    (projeto_id, nome, descricao, responsavel_id, data_inicio, data_fim) 
+    VALUES (?, ?, ?, ?, ?, ?)
 ";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param(
-    "ississ", 
-    $projeto_id, 
-    $nome_tarefa, 
-    $descricao, 
-    $responsavel, 
-    $data_inicio, 
-    $data_fim
-);
+$stmt->bind_param("ississ", $projeto_id, $nome_tarefa, $descricao, $responsavel, $data_inicio, $data_fim);
 
 if ($stmt->execute()) {
+    $tarefa_id = $conn->insert_id;
+
+    // ============================================================
+    // LOG
+    // ============================================================
+    registrarLog($conn, $usuario_id, 'Tarefa criada', 'tarefa', "Tarefa \"$nome_tarefa\" criada no projeto #$projeto_id", $tarefa_id, 'tarefa');
+
     header("Location: ../Shared/ViewListTasks.php?success=1");
     exit;
 } else {
     die("Erro ao cadastrar tarefa: " . $stmt->error);
 }
-?>
