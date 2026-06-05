@@ -32,15 +32,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             // Insere no banco
             $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-            $sql = $conn->prepare("INSERT INTO usuarios (nome, email, senha, tipo_solicitado, aprovado, ativo) VALUES (?, ?, ?, ?, 0, 1)");
-            $sql->bind_param("ssss", $username, $email, $senhaHash, $tipoSelecionado);
+
+            $sql = $conn->prepare("
+                INSERT INTO usuarios
+                (nome, email, senha, tipo_solicitado, aprovado, ativo)
+                VALUES (?, ?, ?, ?, 0, 1)
+            ");
+
+            $sql->bind_param(
+                "ssss",
+                $username,
+                $email,
+                $senhaHash,
+                $tipoSelecionado
+            );
+
             if ($sql->execute()) {
+
+                // ID do usuário recém criado
+                $novo_id = $conn->insert_id;
+
+                // Dados do log
+                $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+                $acao = 'Cadastro realizado';
+                $categoria = 'cadastro';
+                $descricao = "Novo usuário \"$username\" ($email) cadastrado como $tipoSelecionado";
+                $referencia_tipo = 'usuario';
+
+                // Inserir log
+                $stmtLog = $conn->prepare("
+                    INSERT INTO logs
+                    (
+                        usuario_id,
+                        acao,
+                        categoria,
+                        descricao,
+                        referencia_id,
+                        referencia_tipo,
+                        ip_usuario
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                ");
+
+                $stmtLog->bind_param(
+                    "isssiss",
+                    $novo_id,
+                    $acao,
+                    $categoria,
+                    $descricao,
+                    $novo_id,
+                    $referencia_tipo,
+                    $ip
+                );
+
+                $stmtLog->execute();
+
                 $success = "Cadastro realizado com sucesso! Faça login.";
+
                 $username = '';
                 $email = '';
                 $tipoSelecionado = '';
+
             } else {
+
                 $erro = "Erro ao cadastrar usuário. Tente novamente.";
+
             }
         }
     }

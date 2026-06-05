@@ -25,51 +25,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['acao'])) {
     }
 
     if ($acao === 'aprovar') {
-        $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
+    $tipo_aprovado = $_POST['tipo_aprovado'] ?? '';
 
-        if (empty($tipo_aprovado)) {
-            $_SESSION['msg'] = "Tipo de usuário inválido.";
-            header("Location: UserManagerAdmin.php");
-            exit;
-        }
-
-        $stmt = $conn->prepare("
-            UPDATE usuarios 
-            SET 
-                aprovado = 1,
-                tipo_usuario = ?,
-                ativo = 1
-            WHERE id = ?
-        ");
-
-        $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            $_SESSION['msg'] = "Usuário aprovado com sucesso!";
-        } else {
-            $_SESSION['msg'] = "Nenhuma alteração realizada. Verifique se o usuário já foi aprovado.";
-        }
-
-        $stmt->close();
-
-    } elseif ($acao === 'rejeitar') {
-        $stmt = $conn->prepare("
-            DELETE FROM usuarios 
-            WHERE id = ?
-        ");
-
-        $stmt->bind_param("i", $usuario_id);
-        $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            $_SESSION['msg'] = "Registro rejeitado e removido.";
-        } else {
-            $_SESSION['msg'] = "Não foi possível remover o usuário.";
-        }
-
-        $stmt->close();
+    if (empty($tipo_aprovado)) {
+        $_SESSION['msg'] = "Tipo de usuário inválido.";
+        header("Location: UserManagerAdmin.php");
+        exit;
     }
+
+    $stmt = $conn->prepare("
+        UPDATE usuarios 
+        SET 
+            aprovado = 1,
+            tipo_usuario = ?,
+            ativo = 1
+        WHERE id = ?
+    ");
+
+    $stmt->bind_param("si", $tipo_aprovado, $usuario_id);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+
+        // Buscar dados do usuário aprovado
+        $busca = $conn->prepare("
+            SELECT nome, email
+            FROM usuarios
+            WHERE id = ?
+        ");
+
+        $busca->bind_param("i", $usuario_id);
+        $busca->execute();
+
+        $resultado = $busca->get_result();
+        $usuario = $resultado->fetch_assoc();
+
+        // Registrar log
+        $ip = $_SERVER['REMOTE_ADDR'] ?? null;
+
+        $stmtLog = $conn->prepare("
+            INSERT INTO logs
+            (
+                usuario_id,
+                acao,
+                categoria,
+                descricao,
+                referencia_id,
+                referencia_tipo,
+                ip_usuario
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        $acaoLog = 'Usuário aprovado';
+        $categoriaLog = 'usuario';
+        $descricaoLog = "Usuário {$usuario['nome']} ({$usuario['email']}) aprovado como {$tipo_aprovado}";
+        $referenciaTipo = 'usuario';
+
+        $stmtLog->bind_param(
+            "isssiss",
+            $usuario_id,
+            $acaoLog,
+            $categoriaLog,
+            $descricaoLog,
+            $usuario_id,
+            $referenciaTipo,
+            $ip
+        );
+
+        $stmtLog->execute();
+
+        $_SESSION['msg'] = "Usuário aprovado com sucesso!";
+
+    } else {
+        $_SESSION['msg'] = "Nenhuma alteração realizada. Verifique se o usuário já foi aprovado.";
+    }
+
+    $stmt->close();
+}
 
     header("Location: UserManagerAdmin.php");
     exit;
@@ -115,7 +148,6 @@ if ($result_stats) {
 <link rel="stylesheet" href="../Assets/css/Header.css">
 <link rel="stylesheet" href="../Assets/css/Footer.css">
 <link rel="stylesheet" href="../Assets/css/UserManagerAdmin.css">
-
 <script src="https://kit.fontawesome.com/d7734ef980.js" crossorigin="anonymous"></script>
 </head>
 <body>

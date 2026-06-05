@@ -129,7 +129,6 @@ $categoriasLabel = [
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Logs do Sistema | InnovaTech</title>
@@ -208,14 +207,16 @@ $categoriasLabel = [
     <div class="controls-bar">
 
         <div class="search-wrap">
-
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
             <input
                 type="text"
                 class="search-input"
                 id="searchInput"
-                placeholder="Buscar logs..."
+                placeholder="Buscar logs por ação, descrição ou usuário..."
             >
-
         </div>
 
     </div>
@@ -240,7 +241,7 @@ $categoriasLabel = [
     </div>
 
     <!-- ================================================= -->
-    <!-- TABELA -->
+    <!-- TABELA COM PAGINAÇÃO -->
     <!-- ================================================= -->
 
     <div class="logs-container">
@@ -257,159 +258,35 @@ $categoriasLabel = [
         </div>
 
         <div id="logsBody">
-
-            <?php if (empty($todosLogs)): ?>
-
-                <div class="empty-state">
-                    Nenhum log encontrado.
-                </div>
-
-            <?php else: ?>
-
-                <?php foreach ($todosLogs as $log): ?>
-
-                    <?php
-
-                    $data = new DateTime($log['criado_em']);
-
-                    $nomeUsuario = $log['usuario_nome'] ?? 'Sistema';
-
-                    $papelUsuario = $log['usuario_papel'] ?? 'Sistema';
-
-                    $emailUsuario = $log['usuario_email'] ?? '—';
-
-                    $iniciais = '';
-
-                    $nomes = explode(' ', $nomeUsuario);
-
-                    foreach ($nomes as $nome) {
-
-                        $iniciais .= strtoupper(substr($nome, 0, 1));
-
-                    }
-
-                    $iniciais = substr($iniciais, 0, 2);
-
-                    $refTexto = '';
-                    if (!empty($log['referencia_tipo']) && !empty($log['referencia_id'])) {
-                        $refTexto = ucfirst($log['referencia_tipo']) . ' #' . $log['referencia_id'];
-                    }
-
-                    ?>
-
-                    <div
-                        class="log-row"
-                        data-cat="<?= strtolower($log['categoria']) ?>"
-                        data-search="<?= strtolower($log['acao'] . ' ' . $log['descricao'] . ' ' . $nomeUsuario . ' ' . $emailUsuario) ?>"
-                    >
-
-                        <!-- DATA -->
-
-                        <div class="log-ts">
-
-                            <div class="date">
-                                <?= $data->format('d/m/Y') ?>
-                            </div>
-
-                            <div class="time">
-                                <?= $data->format('H:i:s') ?>
-                            </div>
-
-                        </div>
-
-                        <!-- CATEGORIA -->
-
-                        <div>
-
-                            <span class="log-cat cat-<?= strtolower($log['categoria']) ?>">
-
-                                <?= $categoriasLabel[$log['categoria']] ?? ucfirst($log['categoria']) ?>
-
-                            </span>
-
-                        </div>
-
-                        <!-- AÇÃO / DESCRIÇÃO -->
-
-                        <div class="log-desc">
-
-                            <strong><?= htmlspecialchars($log['acao']) ?></strong><br>
-                            <small><?= htmlspecialchars($log['descricao']) ?></small>
-
-                        </div>
-
-                        <!-- USUÁRIO -->
-
-                        <div class="log-actor">
-
-                            <div class="actor-avatar">
-
-                                <?= $iniciais ?>
-
-                            </div>
-
-                            <div class="actor-info">
-
-                                <div class="actor-name">
-
-                                    <?= htmlspecialchars($nomeUsuario) ?>
-
-                                </div>
-
-                                <div class="actor-role">
-
-                                    <?= htmlspecialchars($papelUsuario) ?>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <!-- REFERÊNCIA -->
-
-                        <div>
-
-                            <span class="log-status">
-
-                                <?= $refTexto !== '' ? htmlspecialchars($refTexto) : '—' ?>
-
-                            </span>
-
-                        </div>
-
-                        <!-- DETALHES -->
-
-                        <div class="log-detail-btn-wrap">
-
-                            <button
-                                class="btn-detail"
-                                onclick="openModal(this)"
-
-                                data-acao="<?= htmlspecialchars($log['acao']) ?>"
-                                data-descricao="<?= htmlspecialchars($log['descricao']) ?>"
-                                data-data="<?= $data->format('d/m/Y H:i:s') ?>"
-                                data-categoria="<?= htmlspecialchars($log['categoria']) ?>"
-                                data-usuario="<?= htmlspecialchars($nomeUsuario) ?>"
-                                data-email="<?= htmlspecialchars($emailUsuario) ?>"
-                                data-papel="<?= htmlspecialchars($papelUsuario) ?>"
-                                data-ip="<?= htmlspecialchars($log['ip_usuario'] ?? '—') ?>"
-                                data-referencia-tipo="<?= htmlspecialchars($log['referencia_tipo'] ?? '—') ?>"
-                                data-referencia-id="<?= htmlspecialchars($log['referencia_id'] ?? '—') ?>"
-                            >
-
-                                Detalhes
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                <?php endforeach; ?>
-
-            <?php endif; ?>
-
+            <!-- Os logs serão inseridos via JavaScript -->
+            <div class="empty-state" style="display:block">
+                <div>📋</div>
+                <h3>Carregando logs...</h3>
+                <p>Aguarde um momento</p>
+            </div>
+        </div>
+
+        <!-- PAGINAÇÃO -->
+        <div class="pagination" id="pagination">
+            <div class="items-per-page">
+                <label>Itens por página:</label>
+                <select id="itemsPerPage">
+                    <option value="10">10</option>
+                    <option value="25" selected>25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div class="pagination-info" id="paginationInfo">
+                Mostrando 0 de 0 registros
+            </div>
+            <div class="pagination-btns" id="paginationButtons">
+                <button class="pg-btn" disabled>«</button>
+                <button class="pg-btn" disabled>‹</button>
+                <button class="pg-btn active">1</button>
+                <button class="pg-btn" disabled>›</button>
+                <button class="pg-btn" disabled>»</button>
+            </div>
         </div>
 
     </div>
@@ -426,10 +303,13 @@ $categoriasLabel = [
 
         <div class="modal-header">
 
-            <h2>Detalhes do Log</h2>
+            <div class="modal-header-left">
+                <span class="modal-cat-badge" id="modalCatBadge">Log</span>
+                <h2>Detalhes do Log</h2>
+            </div>
 
             <button class="modal-close" onclick="closeModal()">
-                X
+                ✕
             </button>
 
         </div>
@@ -437,75 +317,48 @@ $categoriasLabel = [
         <div class="modal-body">
 
             <div class="modal-field">
-
                 <span class="mf-label">Ação</span>
-
                 <span class="mf-value" id="mAcao"></span>
-
             </div>
 
-            <div class="modal-field">
-
+            <div class="modal-field full-width">
                 <span class="mf-label">Descrição</span>
-
                 <span class="mf-value" id="mDescricao"></span>
-
             </div>
 
             <div class="modal-field">
-
-                <span class="mf-label">Data</span>
-
+                <span class="mf-label">Data/Hora</span>
                 <span class="mf-value" id="mData"></span>
-
             </div>
 
             <div class="modal-field">
-
                 <span class="mf-label">Categoria</span>
-
                 <span class="mf-value" id="mCategoria"></span>
-
             </div>
 
             <div class="modal-field">
-
                 <span class="mf-label">Usuário</span>
-
                 <span class="mf-value" id="mUsuario"></span>
-
             </div>
 
             <div class="modal-field">
-
                 <span class="mf-label">E-mail</span>
-
                 <span class="mf-value" id="mEmail"></span>
-
             </div>
 
             <div class="modal-field">
-
                 <span class="mf-label">Papel</span>
-
                 <span class="mf-value" id="mPapel"></span>
-
             </div>
 
             <div class="modal-field">
-
                 <span class="mf-label">IP</span>
-
                 <span class="mf-value" id="mIp"></span>
-
             </div>
 
             <div class="modal-field">
-
                 <span class="mf-label">Referência</span>
-
                 <span class="mf-value" id="mReferencia"></span>
-
             </div>
 
         </div>
@@ -517,107 +370,326 @@ $categoriasLabel = [
 <script src="../Assets/js/Header.js"></script>
 
 <script>
-
-const modal = document.getElementById("modalOverlay");
-
 // =====================================================
-// ABRIR MODAL
+// SISTEMA DE LOGS COM PAGINAÇÃO
 // =====================================================
 
-function openModal(button) {
+(function() {
+    'use strict';
 
-    document.getElementById("mAcao").innerText      = button.dataset.acao;
-    document.getElementById("mDescricao").innerText = button.dataset.descricao;
-    document.getElementById("mData").innerText      = button.dataset.data;
-    document.getElementById("mCategoria").innerText = button.dataset.categoria;
-    document.getElementById("mUsuario").innerText   = button.dataset.usuario;
-    document.getElementById("mEmail").innerText     = button.dataset.email;
-    document.getElementById("mPapel").innerText     = button.dataset.papel;
-    document.getElementById("mIp").innerText        = button.dataset.ip;
-
-    const refTipo = button.dataset.referenciaTipo;
-    const refId   = button.dataset.referenciaId;
-    document.getElementById("mReferencia").innerText =
-        (refTipo && refTipo !== '—' && refId && refId !== '—')
-        ? refTipo + ' #' + refId
-        : '—';
-
-    modal.style.display = "flex";
-}
-
-// =====================================================
-// FECHAR MODAL
-// =====================================================
-
-function closeModal() {
-
-    modal.style.display = "none";
-}
-
-// =====================================================
-// PESQUISA
-// =====================================================
-
-const searchInput = document.getElementById("searchInput");
-
-searchInput.addEventListener("keyup", function () {
-
-    const termo = this.value.toLowerCase();
-
-    document.querySelectorAll(".log-row").forEach(row => {
-
-        const texto = row.dataset.search;
-
-        if (texto.includes(termo)) {
-
-            row.style.display = "grid";
-
-        } else {
-
-            row.style.display = "none";
-
-        }
-
-    });
-
-});
-
-// =====================================================
-// FILTRO CATEGORIA
-// =====================================================
-
-document.querySelectorAll(".chip").forEach(chip => {
-
-    chip.addEventListener("click", function () {
-
-        document.querySelectorAll(".chip").forEach(c => {
-            c.classList.remove("active");
-        });
-
-        this.classList.add("active");
-
-        const categoria = this.dataset.cat;
-
-        document.querySelectorAll(".log-row").forEach(row => {
-
-            if (categoria === "all") {
-
-                row.style.display = "grid";
-
-            } else {
-
-                row.style.display =
-                    row.dataset.cat === categoria
-                    ? "grid"
-                    : "none";
+    // =====================================================
+    // DADOS
+    // =====================================================
+    let allLogs = [];      
+    let filteredLogs = []; 
+    let currentPage = 1;
+    let itemsPerPage = 25;
+    
+    // Elementos DOM
+    const logsBody = document.getElementById("logsBody");
+    const searchInput = document.getElementById("searchInput");
+    const chips = document.querySelectorAll(".chip");
+    const itemsPerPageSelect = document.getElementById("itemsPerPage");
+    const paginationInfo = document.getElementById("paginationInfo");
+    const paginationButtons = document.getElementById("paginationButtons");
+    const modal = document.getElementById("modalOverlay");
+    
+    // Categorias para label
+    const categoriasLabel = <?php echo json_encode($categoriasLabel); ?>;
+    
+    // =====================================================
+    // CARREGAR LOGS DO PHP
+    // =====================================================
+    function loadLogsData() {
+        // Pegar os logs que vieram do PHP
+        const phpLogs = <?php 
+            $logsArray = [];
+            foreach ($todosLogs as $log) {
+                $data = new DateTime($log['criado_em']);
+                $nomeUsuario = $log['usuario_nome'] ?? 'Sistema';
+                $iniciais = '';
+                $nomes = explode(' ', $nomeUsuario);
+                foreach ($nomes as $nome) {
+                    $iniciais .= strtoupper(substr($nome, 0, 1));
+                }
+                $iniciais = substr($iniciais, 0, 2);
+                
+                $logsArray[] = [
+                    'id' => $log['id'],
+                    'criado_em' => $log['criado_em'],
+                    'data_formatada' => $data->format('d/m/Y'),
+                    'hora_formatada' => $data->format('H:i:s'),
+                    'categoria' => strtolower($log['categoria']),
+                    'categoria_label' => $categoriasLabel[$log['categoria']] ?? ucfirst($log['categoria']),
+                    'acao' => htmlspecialchars($log['acao']),
+                    'descricao' => htmlspecialchars($log['descricao']),
+                    'usuario_nome' => htmlspecialchars($nomeUsuario),
+                    'usuario_papel' => htmlspecialchars($log['usuario_papel'] ?? 'Sistema'),
+                    'usuario_email' => htmlspecialchars($log['usuario_email'] ?? '—'),
+                    'iniciais' => $iniciais ?: 'S',
+                    'ip_usuario' => htmlspecialchars($log['ip_usuario'] ?? '—'),
+                    'referencia_tipo' => htmlspecialchars($log['referencia_tipo'] ?? ''),
+                    'referencia_id' => htmlspecialchars($log['referencia_id'] ?? ''),
+                    'search_text' => strtolower($log['acao'] . ' ' . $log['descricao'] . ' ' . $nomeUsuario . ' ' . ($log['usuario_email'] ?? ''))
+                ];
             }
-
+            echo json_encode($logsArray);
+        ?>;
+        
+        allLogs = phpLogs;
+        filteredLogs = [...allLogs];
+        renderCurrentView();
+    }
+    
+    // =====================================================
+    // RENDERIZAR VISÃO ATUAL (com paginação)
+    // =====================================================
+    function renderCurrentView() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const pageLogs = filteredLogs.slice(startIndex, endIndex);
+        
+        renderLogs(pageLogs);
+        renderPagination();
+    }
+    
+    // =====================================================
+    // RENDERIZAR LOGS
+    // =====================================================
+    function renderLogs(logs) {
+        if (!logsBody) return;
+        
+        if (logs.length === 0) {
+            logsBody.innerHTML = `
+                <div class="empty-state" style="display:block">
+                    <div style="font-size:3rem; margin-bottom:1rem;">📋</div>
+                    <h3 style="margin-bottom:0.5rem;">Nenhum log encontrado</h3>
+                    <p>Tente ajustar os filtros ou realizar uma nova busca</p>
+                </div>
+            `;
+            return;
+        }
+        
+        logsBody.innerHTML = logs.map(log => {
+            // Determinar classe do papel para o avatar
+            let roleClass = 'role-Sistema';
+            if (log.usuario_papel === 'Admin') roleClass = 'role-Admin';
+            else if (log.usuario_papel === 'Professor') roleClass = 'role-Professor';
+            else if (log.usuario_papel === 'Aluno') roleClass = 'role-Aluno';
+            else if (log.usuario_papel === 'Coordenador') roleClass = 'role-Coordenador';
+            
+            const refTexto = (log.referencia_tipo && log.referencia_tipo !== '' && log.referencia_id && log.referencia_id !== '') 
+                ? `<span class="log-status status-concluido">${log.referencia_tipo} #${log.referencia_id}</span>` 
+                : '<span class="log-status">—</span>';
+            
+            return `
+                <div class="log-row" data-cat="${log.categoria}" data-search="${log.search_text}">
+                    <div class="log-ts">
+                        <div class="date">${log.data_formatada}</div>
+                        <div class="time">${log.hora_formatada}</div>
+                    </div>
+                    <div>
+                        <span class="log-cat cat-${log.categoria}">${log.categoria_label}</span>
+                    </div>
+                    <div class="log-desc">
+                        <strong>${log.acao}</strong><br>
+                        <small>${log.descricao}</small>
+                    </div>
+                    <div class="log-actor">
+                        <div class="actor-avatar ${roleClass}">${log.iniciais}</div>
+                        <div class="actor-info">
+                            <div class="actor-name">${log.usuario_nome}</div>
+                            <div class="actor-role">${log.usuario_papel}</div>
+                        </div>
+                    </div>
+                    <div>
+                        ${refTexto}
+                    </div>
+                    <div class="log-detail-btn-wrap">
+                        <button class="btn-detail" onclick='openModal(${JSON.stringify(log).replace(/'/g, "\\'")})'>
+                            Detalhes
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // =====================================================
+    // RENDERIZAR PAGINAÇÃO
+    // =====================================================
+    function renderPagination() {
+        const totalItems = filteredLogs.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const startItem = (currentPage - 1) * itemsPerPage + 1;
+        const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+        
+        // Atualizar info
+        if (totalItems > 0) {
+            paginationInfo.innerHTML = `Mostrando ${startItem} - ${endItem} de ${totalItems} registros`;
+        } else {
+            paginationInfo.innerHTML = `Mostrando 0 de 0 registros`;
+        }
+        
+        // Gerar botões
+        let buttonsHtml = '';
+        
+        // Botão Primeira
+        buttonsHtml += `<button class="pg-btn" onclick="goToPage(1)" ${currentPage === 1 || totalPages === 0 ? 'disabled' : ''}>«</button>`;
+        
+        // Botão Anterior
+        buttonsHtml += `<button class="pg-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 || totalPages === 0 ? 'disabled' : ''}>‹</button>`;
+        
+        if (totalPages > 0) {
+            // Números das páginas
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+            
+            if (startPage > 1) {
+                buttonsHtml += `<button class="pg-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) buttonsHtml += `<span class="pg-dots">...</span>`;
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                buttonsHtml += `<button class="pg-btn ${currentPage === i ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) buttonsHtml += `<span class="pg-dots">...</span>`;
+                buttonsHtml += `<button class="pg-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+        } else {
+            buttonsHtml += `<button class="pg-btn active">1</button>`;
+        }
+        
+        // Botão Próximo
+        buttonsHtml += `<button class="pg-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>›</button>`;
+        
+        // Botão Última
+        buttonsHtml += `<button class="pg-btn" onclick="goToPage(${totalPages})" ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>»</button>`;
+        
+        paginationButtons.innerHTML = buttonsHtml;
+    }
+    
+    // =====================================================
+    // FUNÇÃO PARA MUDAR DE PÁGINA (global para os botões)
+    // =====================================================
+    window.goToPage = function(page) {
+        const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+        if (page < 1 || page > totalPages || totalPages === 0) return;
+        currentPage = page;
+        renderCurrentView();
+        // Scroll suave para o topo da lista
+        const container = document.querySelector('.logs-container');
+        if (container) {
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+    
+    // =====================================================
+    // FILTRAR LOGS
+    // =====================================================
+    function filterLogs() {
+        const searchTerm = searchInput?.value.toLowerCase().trim() || '';
+        const activeChip = document.querySelector(".chip.active");
+        const categoryFilter = activeChip?.dataset.cat || "all";
+        
+        filteredLogs = allLogs.filter(log => {
+            // Filtro por categoria
+            if (categoryFilter !== "all" && log.categoria !== categoryFilter) {
+                return false;
+            }
+            // Filtro por pesquisa
+            if (searchTerm && !log.search_text.includes(searchTerm)) {
+                return false;
+            }
+            return true;
         });
-
+        
+        // Resetar para primeira página ao filtrar
+        currentPage = 1;
+        renderCurrentView();
+    }
+    
+    // =====================================================
+    // MODAL FUNCTIONS
+    // =====================================================
+    window.openModal = function(log) {
+        const refTexto = (log.referencia_tipo && log.referencia_tipo !== '' && log.referencia_id && log.referencia_id !== '')
+            ? `${log.referencia_tipo} #${log.referencia_id}`
+            : '—';
+        
+        document.getElementById("mAcao").innerText = log.acao;
+        document.getElementById("mDescricao").innerText = log.descricao;
+        document.getElementById("mData").innerText = `${log.data_formatada} ${log.hora_formatada}`;
+        document.getElementById("mCategoria").innerText = log.categoria_label;
+        document.getElementById("mUsuario").innerText = log.usuario_nome;
+        document.getElementById("mEmail").innerText = log.usuario_email;
+        document.getElementById("mPapel").innerText = log.usuario_papel;
+        document.getElementById("mIp").innerText = log.ip_usuario;
+        document.getElementById("mReferencia").innerText = refTexto;
+        
+        // Atualizar badge da categoria no modal
+        const catBadge = document.getElementById("modalCatBadge");
+        if (catBadge) {
+            catBadge.innerText = log.categoria_label;
+            catBadge.style.background = `var(--cat-${log.categoria})`;
+        }
+        
+        modal.style.display = "flex";
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+    };
+    
+    window.closeModal = function() {
+        modal.style.display = "none";
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+    };
+    
+    // Fechar modal ao clicar no overlay
+    modal?.addEventListener("click", function(e) {
+        if (e.target === modal) closeModal();
     });
-
-});
-
+    
+    // Fechar modal com ESC
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape" && modal.style.display === "flex") closeModal();
+    });
+    
+    // =====================================================
+    // EVENT LISTENERS
+    // =====================================================
+    
+    // Pesquisa com debounce
+    let searchTimeout;
+    searchInput?.addEventListener("input", function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(filterLogs, 300);
+    });
+    
+    // Chips de categoria
+    chips.forEach(chip => {
+        chip.addEventListener("click", function() {
+            chips.forEach(c => c.classList.remove("active"));
+            this.classList.add("active");
+            filterLogs();
+        });
+    });
+    
+    // Items por página
+    itemsPerPageSelect?.addEventListener("change", function() {
+        itemsPerPage = parseInt(this.value);
+        currentPage = 1;
+        filterLogs();
+    });
+    
+    // =====================================================
+    // INICIALIZAR
+    // =====================================================
+    loadLogsData();
+    
+})();
 </script>
 
 <?php include("../Includes/Footer.php"); ?>
